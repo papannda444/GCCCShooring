@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LBJ-GE-tNS">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Top View Controller-->
+        <scene sceneID="aL4-TY-8LP">
+            <objects>
+                <viewController id="LBJ-GE-tNS" customClass="TopViewController" customModule="shooting_game" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yHq-DP-wbA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XEw-yA-ZHp">
+                                <rect key="frame" x="91" y="303.5" width="193" height="60"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <state key="normal" title="Game Start"/>
+                                <connections>
+                                    <segue destination="BV1-FR-VrT" kind="show" id="z9H-on-UKG"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fbY-4Z-hjz">
+                                <rect key="frame" x="166.5" y="423.5" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sdb-mm-ENd">
+                                <rect key="frame" x="166.5" y="504.5" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="XEw-yA-ZHp" firstAttribute="centerY" secondItem="yHq-DP-wbA" secondAttribute="centerY" id="6MK-tn-fNt"/>
+                            <constraint firstItem="fbY-4Z-hjz" firstAttribute="centerX" secondItem="yHq-DP-wbA" secondAttribute="centerX" id="6cE-xh-3H8"/>
+                            <constraint firstItem="sdb-mm-ENd" firstAttribute="centerX" secondItem="yHq-DP-wbA" secondAttribute="centerX" id="96m-EE-DVx"/>
+                            <constraint firstItem="sdb-mm-ENd" firstAttribute="top" secondItem="fbY-4Z-hjz" secondAttribute="bottom" constant="60" id="BIA-6f-3wP"/>
+                            <constraint firstItem="XEw-yA-ZHp" firstAttribute="centerX" secondItem="yHq-DP-wbA" secondAttribute="centerX" id="XbM-fE-inV"/>
+                            <constraint firstItem="fbY-4Z-hjz" firstAttribute="top" secondItem="XEw-yA-ZHp" secondAttribute="bottom" constant="60" id="i4x-kp-tPw"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="8gW-PR-BUs"/>
+                    </view>
+                    <connections>
+                        <outlet property="bestScoreLabel" destination="fbY-4Z-hjz" id="TwD-6m-wMH"/>
+                        <outlet property="currentScoreLabel" destination="sdb-mm-ENd" id="Ro1-XD-HBd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cIU-rh-rVw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-618.39999999999998" y="118.29085457271366"/>
+        </scene>
+        <!--Game View Controller-->
+        <scene sceneID="tXr-a1-R10">
+            <objects>
+                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="shooting_game" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="473" y="118"/>
+        </scene>
+    </scenes>
+</document>
