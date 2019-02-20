@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-protocol SpaceShipDelegate {
+protocol SpaceShipDelegate: class {
   func displayHeart(hearts: [SKSpriteNode])
   func addBullet()
 }
@@ -49,7 +49,7 @@ class SpaceShip: SKSpriteNode {
   var moveSpeed: CGFloat
   var viewFrame: CGRect
   var hearts: [SKSpriteNode] = []
-  var delegate: SpaceShipDelegate?
+  weak var delegate: SpaceShipDelegate?
   
   var timerForPowerItem: Timer?
   var powerUpTime: Float = 5.0 {
