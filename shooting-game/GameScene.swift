@@ -15,7 +15,7 @@ class GameScene: SKScene {
     var endGame: (() -> Void)!
 
     let motionManager = CMMotionManager()
-    var accelaration: CGFloat = 0.0
+    var acceleration: CGFloat = 0.0
 
     var powerItemTimer: Timer?
 
@@ -51,14 +51,14 @@ class GameScene: SKScene {
 
         spaceship = SpaceShip(shipType: .blueShip, shipSpeed: 50, addedViewFrame: frame)
         spaceship.delegate = self
-        spaceship.setHitPoint(hp: 5)
+        spaceship.setHitPoint(hitPoint: 5)
         spaceship.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
         addChild(spaceship)
 
         motionManager.accelerometerUpdateInterval = 0.1
         motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data, _) in
             guard let data = data else { return }
-            self.accelaration = CGFloat(data.acceleration.x) * 0.75 + self.accelaration * 0.25
+            self.acceleration = CGFloat(data.acceleration.x) * 0.75 + self.acceleration * 0.25
         }
 
         asteroidTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
@@ -79,7 +79,7 @@ class GameScene: SKScene {
     }
 
     override func didSimulatePhysics() {
-        let nextPosition = self.spaceship.position.x + self.accelaration * spaceship.moveSpeed
+        let nextPosition = self.spaceship.position.x + self.acceleration * spaceship.moveSpeed
         if nextPosition > frame.width / 2 - 30 { return }
         if nextPosition < -frame.width / 2 + 30 { return }
         self.spaceship.position.x = nextPosition
