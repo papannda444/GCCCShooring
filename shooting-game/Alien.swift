@@ -10,27 +10,28 @@ import Foundation
 import SpriteKit
 
 class Alien: SKSpriteNode {
-  
-  enum AilenType: String {
-    case easy
-    case normal
-    case hard
-  }
-  
-  convenience init() {
-    let texture = SKTexture(imageNamed: "spaceship")
-    self.init(texture: texture, color: .clear, size: texture.size())
-  }
-  
-  override init(texture: SKTexture?, color: UIColor, size: CGSize) {
-    super.init(texture: texture, color: color, size: size)
-  }
-  
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-  
-  func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32) {
-    
-  }
+
+    enum AilenType: String {
+        case easy
+        case normal
+        case hard
+    }
+
+    convenience init() {
+        let texture = SKTexture(imageNamed: "spaceship")
+        self.init(texture: texture, color: .clear, size: texture.size())
+    }
+
+    override init(texture: SKTexture?, color: UIColor, size: CGSize) {
+        super.init(texture: texture, color: color, size: size)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32) {
+
+    }
+
 }
