@@ -112,7 +112,7 @@ opt_in_rules:
 
 # Lint対象に追加するパス
 included:
-- MyLibrary
+- shooting-game
 
 # Lint対象から除外するパス
 excluded:
@@ -122,8 +122,8 @@ excluded:
 
 # 1行の文字列制限
 line_length:
-- 200   # warning
-- 300   # error
+- 300   # warning
+- 400   # error
 
 # 型の行数制限
 type_body_length:
