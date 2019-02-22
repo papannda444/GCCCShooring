@@ -10,7 +10,6 @@ import Foundation
 import SpriteKit
 
 class Bullet: SKSpriteNode {
-
     enum BulletType: String {
         case ball
         case missile
@@ -31,6 +30,7 @@ class Bullet: SKSpriteNode {
         super.init(texture: texture, color: color, size: size)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -41,5 +41,4 @@ class Bullet: SKSpriteNode {
         physicsBody?.contactTestBitMask = contactTestBitMask
         physicsBody?.collisionBitMask = 0
     }
-
 }

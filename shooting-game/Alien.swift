@@ -10,7 +10,6 @@ import Foundation
 import SpriteKit
 
 class Alien: SKSpriteNode {
-
     enum AilenType: String {
         case easy
         case normal
@@ -26,12 +25,11 @@ class Alien: SKSpriteNode {
         super.init(texture: texture, color: color, size: size)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32) {
-
     }
-
 }

@@ -9,13 +9,12 @@
 import Foundation
 import SpriteKit
 
-protocol SpaceShipDelegate: class {
+protocol SpaceShipDelegate: AnyObject {
     func displayHeart(hearts: [SKSpriteNode])
     func addBullet()
 }
 
 class SpaceShip: SKSpriteNode {
-
     enum ShipType: String {
         case red
         case blue
@@ -81,6 +80,7 @@ class SpaceShip: SKSpriteNode {
         super.init(texture: texture, color: color, size: size)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -91,7 +91,9 @@ class SpaceShip: SKSpriteNode {
             heart.position = CGPoint(x: -viewFrame.width / 2 + heart.frame.height * CGFloat(index), y: viewFrame.height / 2 - heart.frame.height)
             hearts.append(heart)
         }
-        guard let delegate = delegate else { return }
+        guard let delegate = delegate else {
+            return
+        }
         delegate.displayHeart(hearts: hearts)
     }
 
@@ -103,7 +105,9 @@ class SpaceShip: SKSpriteNode {
     }
 
     func powerUp(itemType: PowerItem.ItemType) {
-        guard let delegate = self.delegate else { return }
+        guard let delegate = self.delegate else {
+            return
+        }
         state.shipPowerUp(itemType: itemType)
         switch itemType {
         case .auto:
@@ -129,5 +133,4 @@ class SpaceShip: SKSpriteNode {
     func isShipState(equal state: SpaceShip.ShipState) -> Bool {
         return self.state == state
     }
-
 }

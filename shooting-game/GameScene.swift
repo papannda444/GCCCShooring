@@ -6,13 +6,12 @@
 //  Copyright © 2018 三野田脩. All rights reserved.
 //
 
-import SpriteKit
-import GameplayKit
 import CoreMotion
+import GameplayKit
+import SpriteKit
 
 class GameScene: SKScene {
-
-    var endGame: (() -> Void)!
+    var endGame: () -> Void = {}
 
     let motionManager = CMMotionManager()
     var acceleration: CGFloat = 0.0
@@ -30,12 +29,12 @@ class GameScene: SKScene {
     }
     var score: Int = 0 {
         didSet {
-            scoreLabel.text = "Score: \(score)"
+            scoreLabel?.text = "Score: \(score)"
         }
     }
 
-    var spaceship: SpaceShip!
-    var scoreLabel: SKLabelNode!
+    var spaceship: SpaceShip?
+    var scoreLabel: SKLabelNode?
 
     let planets = ["asteroid1", "asteroid2", "asteroid3"]
     let itemTypes: [PowerItem.ItemType] = [.speed, .auto, .stone]
@@ -49,40 +48,49 @@ class GameScene: SKScene {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
 
-        spaceship = SpaceShip(shipType: .blue, shipSpeed: 50, addedViewFrame: frame)
-        spaceship.delegate = self
-        spaceship.setHitPoint(hitPoint: 5)
-        spaceship.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
-        addChild(spaceship)
+        let ship = SpaceShip(shipType: .blue, shipSpeed: 50, addedViewFrame: frame)
+        ship.delegate = self
+        ship.setHitPoint(hitPoint: 5)
+        ship.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
+        addChild(ship)
+        spaceship = ship
 
         motionManager.accelerometerUpdateInterval = 0.1
-        motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data, _) in
-            guard let data = data else { return }
+        motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { data, _ in
+            guard let data = data else {
+                return
+            }
             self.acceleration = CGFloat(data.acceleration.x) * 0.75 + self.acceleration * 0.25
         }
 
-        asteroidTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
+        asteroidTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true ) { _ in
             self.addAsteroid()
-        })
-        timerForAsteroud = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true, block: { _ in
-            self.asteroudDuration -= 0.5
-        })
-        powerItemTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true, block: { _ in
-            self.addPowerItem()
-        })
+        }
 
-        scoreLabel = SKLabelNode(text: "Score: 0")
-        scoreLabel.fontName = "Papyrus"
-        scoreLabel.fontSize = 50
-        scoreLabel.position = CGPoint(x: -frame.width / 2 + scoreLabel.frame.width / 2 + 50, y: frame.height / 2 - scoreLabel.frame.height * 5)
-        addChild(scoreLabel)
+        timerForAsteroud = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
+            self.asteroudDuration -= 0.5
+        }
+        powerItemTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { _ in
+            self.addPowerItem()
+        }
+
+        let score = SKLabelNode(text: "Score: 0")
+        score.fontName = "Papyrus"
+        score.fontSize = 50
+        score.position = CGPoint(x: -frame.width / 2 + score.frame.width / 2 + 50, y: frame.height / 2 - score.frame.height * 5)
+        addChild(score)
+        scoreLabel = score
     }
 
     override func didSimulatePhysics() {
-        let nextPosition = self.spaceship.position.x + self.acceleration * spaceship.moveSpeed
-        if nextPosition > frame.width / 2 - 30 { return }
-        if nextPosition < -frame.width / 2 + 30 { return }
-        self.spaceship.position.x = nextPosition
+        guard let spaceship = spaceship else {
+            return
+        }
+        let nextPosition = spaceship.position.x + self.acceleration * spaceship.moveSpeed
+        if -frame.width / 2 + 30 > nextPosition || nextPosition > frame.width / 2 - 30 {
+            return
+        }
+        spaceship.position.x = nextPosition
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -154,6 +162,9 @@ extension GameScene: SpaceShipDelegate {
     }
 
     func addBullet() {
+        guard let spaceship = spaceship else {
+            return
+        }
         let bullet = Bullet(bulletType: .missile, position: spaceship.position)
         bullet.setPhysicsBody(categoryBitMask: missileCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
         addChild(bullet)
@@ -177,7 +188,8 @@ extension GameScene: SKPhysicsContactDelegate {
             target = contact.bodyA
         }
 
-        guard let effectingNode = effecting.node,
+        guard let spaceship = spaceship,
+            let effectingNode = effecting.node,
             let targetNode = target.node,
             let explosion = SKEmitterNode(fileNamed: "Explosion") else { return }
         explosion.position = effectingNode.position
@@ -188,7 +200,9 @@ extension GameScene: SKPhysicsContactDelegate {
         effectingNode.removeFromParent()
 
         if effecting.categoryBitMask == powerItemCategory {
-            guard let item = effectingNode as? PowerItem else { return }
+            guard let item = effectingNode as? PowerItem else {
+                return
+            }
             spaceship.powerUp(itemType: item.type)
         } else if target.categoryBitMask == missileCategory {
             targetNode.removeFromParent()
@@ -198,10 +212,11 @@ extension GameScene: SKPhysicsContactDelegate {
                 score += 5
                 return
             }
-            guard let heart = spaceship.hearts.popLast() else { return }
+            guard let heart = spaceship.hearts.popLast() else {
+                return
+            }
             heart.removeFromParent()
             if spaceship.hearts.isEmpty { gameOver() }
         }
     }
-
 }

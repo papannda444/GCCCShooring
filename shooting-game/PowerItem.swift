@@ -10,7 +10,6 @@ import Foundation
 import SpriteKit
 
 class PowerItem: SKSpriteNode {
-
     enum ItemType: String {
         case auto
         case speed
@@ -34,6 +33,7 @@ class PowerItem: SKSpriteNode {
         super.init(texture: texture, color: color, size: size)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -44,5 +44,4 @@ class PowerItem: SKSpriteNode {
         physicsBody?.contactTestBitMask = contactTestBitMask
         physicsBody?.collisionBitMask = 0
     }
-
 }
