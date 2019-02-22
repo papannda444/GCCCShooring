@@ -1,14 +1,14 @@
 # document: https://github.com/realm/SwiftLint
 
-disabled_rules: # rule identifiers to exclude from running
-  - colon
-  - comma
-  - control_statement
+# 無効にするルール
+disabled_rules:
 
-opt_in_rules: # some rules are only opt-in
-  - empty_count
-  # Find all the available rules by running:
-  # swiftlint rules
+# defaultルール以外にopt-inから採用するルール
+opt_in_rules:
+  - anyobject_protocol
+  - array_init
+  - attributes
+
 
 # Lint対象に追加するパス
 included:
@@ -21,8 +21,8 @@ excluded:
 
 # 1行の文字列制限
 line_length:
-- 300   # warning
-- 400   # error
+- 200   # warning
+- 300   # error
 
 # 型の行数制限
 type_body_length:

@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-protocol SpaceShipDelegate: class {
+protocol SpaceShipDelegate: AnyObject {
     func displayHeart(hearts: [SKSpriteNode])
     func addBullet()
 }
