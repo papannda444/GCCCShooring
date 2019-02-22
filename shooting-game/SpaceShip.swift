@@ -85,10 +85,10 @@ class SpaceShip: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setHitPoint(hp: Int) {
-        for i in 1...hp {
+    func setHitPoint(hitPoint: Int) {
+        for index in 1...hitPoint {
             let heart = SKSpriteNode(imageNamed: "heart")
-            heart.position = CGPoint(x: -viewFrame.width / 2 + heart.frame.height * CGFloat(i), y: viewFrame.height / 2 - heart.frame.height)
+            heart.position = CGPoint(x: -viewFrame.width / 2 + heart.frame.height * CGFloat(index), y: viewFrame.height / 2 - heart.frame.height)
             hearts.append(heart)
         }
         guard let delegate = delegate else { return }
