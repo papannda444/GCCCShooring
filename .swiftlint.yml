@@ -1,0 +1,56 @@
+# document: https://github.com/realm/SwiftLint
+
+disabled_rules: # rule identifiers to exclude from running
+  - colon
+  - comma
+  - control_statement
+
+opt_in_rules: # some rules are only opt-in
+  - empty_count
+  # Find all the available rules by running:
+  # swiftlint rules
+
+# Lint対象に追加するパス
+included:
+- shooting-game
+
+# Lint対象から除外するパス
+excluded:
+- Carthage
+- Pods
+
+# 1行の文字列制限
+line_length:
+- 300   # warning
+- 400   # error
+
+# 型の行数制限
+type_body_length:
+- 400   # warning
+- 600   # error
+
+# 1ファイルの行数制限
+file_length:
+- 500   # warning
+- 1000  # error
+
+# メソッドの行数制限
+function_body_length:
+- 100   # warning
+- 200   # error
+
+type_name:
+  min_length: 3
+  max_length: 40
+
+identifier_name:
+  min_length: # only min_length
+    error: 2 # only error
+  excluded: # excluded via string array
+    - id
+    - URL
+    - x
+    - y
+    - vc
+    - on
+  reporter: "xcode"

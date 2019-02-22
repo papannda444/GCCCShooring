@@ -9,22 +9,21 @@
 import UIKit
 
 class TopViewController: UIViewController {
-  
-  
-  @IBOutlet weak var bestScoreLabel: UILabel!
-  @IBOutlet weak var currentScoreLabel: UILabel!
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    UserDefaults.standard.removeObject(forKey: "currentScore")
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    let bestScore = UserDefaults.standard.integer(forKey: "bestScore")
-    bestScoreLabel.text = "Best Score: \(bestScore)"
-    let currentScore = UserDefaults.standard.integer(forKey: "currentScore")
-    currentScoreLabel.text = "Current Score: \(currentScore)"
-  }
-  
+
+    @IBOutlet weak var bestScoreLabel: UILabel!
+    @IBOutlet weak var currentScoreLabel: UILabel!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        UserDefaults.standard.removeObject(forKey: "currentScore")
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let bestScore = UserDefaults.standard.integer(forKey: "bestScore")
+        bestScoreLabel.text = "Best Score: \(bestScore)"
+        let currentScore = UserDefaults.standard.integer(forKey: "currentScore")
+        currentScoreLabel.text = "Current Score: \(currentScore)"
+    }
+
 }
