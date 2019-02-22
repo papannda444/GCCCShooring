@@ -49,7 +49,7 @@ class GameScene: SKScene {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
 
-        spaceship = SpaceShip(shipType: .blueShip, shipSpeed: 50, addedViewFrame: frame)
+        spaceship = SpaceShip(shipType: .blue, shipSpeed: 50, addedViewFrame: frame)
         spaceship.delegate = self
         spaceship.setHitPoint(hitPoint: 5)
         spaceship.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
