@@ -1,7 +1,3 @@
 linter:
   swiftlint:
-    ignore_warnings: true
-    path: shooting-game/
-    config: ./.swiftlint.yml
-    lenient: true
-    enable-all-rules: true
+    config: .swiftlint.yml
