@@ -17,9 +17,9 @@ protocol SpaceShipDelegate: class {
 class SpaceShip: SKSpriteNode {
 
     enum ShipType: String {
-        case redShip
-        case blueShip
-        case greenShip
+        case red
+        case blue
+        case yellow
     }
 
     enum ShipState: String {
@@ -75,7 +75,7 @@ class SpaceShip: SKSpriteNode {
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         state = ShipState()
 
-        type = .redShip // default value, please to change convenience init
+        type = .red // default value, please to change convenience init
         moveSpeed = 0.0
         viewFrame = CGRect.zero
         super.init(texture: texture, color: color, size: size)
