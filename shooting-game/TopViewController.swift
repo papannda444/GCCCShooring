@@ -9,9 +9,8 @@
 import UIKit
 
 class TopViewController: UIViewController {
-
-    @IBOutlet weak var bestScoreLabel: UILabel!
-    @IBOutlet weak var currentScoreLabel: UILabel!
+    @IBOutlet private weak var bestScoreLabel: UILabel!
+    @IBOutlet private weak var currentScoreLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,5 +24,4 @@ class TopViewController: UIViewController {
         let currentScore = UserDefaults.standard.integer(forKey: "currentScore")
         currentScoreLabel.text = "Current Score: \(currentScore)"
     }
-
 }

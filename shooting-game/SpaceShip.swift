@@ -15,7 +15,6 @@ protocol SpaceShipDelegate: AnyObject {
 }
 
 class SpaceShip: SKSpriteNode {
-
     enum ShipType: String {
         case red
         case blue
@@ -81,6 +80,7 @@ class SpaceShip: SKSpriteNode {
         super.init(texture: texture, color: color, size: size)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -133,5 +133,4 @@ class SpaceShip: SKSpriteNode {
     func isShipState(equal state: SpaceShip.ShipState) -> Bool {
         return self.state == state
     }
-
 }

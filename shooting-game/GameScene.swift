@@ -6,12 +6,11 @@
 //  Copyright © 2018 三野田脩. All rights reserved.
 //
 
-import SpriteKit
-import GameplayKit
 import CoreMotion
+import GameplayKit
+import SpriteKit
 
 class GameScene: SKScene {
-
     var endGame: () -> Void = {}
 
     let motionManager = CMMotionManager()
@@ -57,22 +56,23 @@ class GameScene: SKScene {
         spaceship = ship
 
         motionManager.accelerometerUpdateInterval = 0.1
-        motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data, _) in
+        motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { data, _ in
             guard let data = data else {
                 return
             }
             self.acceleration = CGFloat(data.acceleration.x) * 0.75 + self.acceleration * 0.25
         }
 
-        asteroidTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
+        asteroidTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true ) { _ in
             self.addAsteroid()
-        })
-        timerForAsteroud = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true, block: { _ in
+        }
+
+        timerForAsteroud = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
             self.asteroudDuration -= 0.5
-        })
-        powerItemTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true, block: { _ in
+        }
+        powerItemTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { _ in
             self.addPowerItem()
-        })
+        }
 
         let score = SKLabelNode(text: "Score: 0")
         score.fontName = "Papyrus"
@@ -219,5 +219,4 @@ extension GameScene: SKPhysicsContactDelegate {
             if spaceship.hearts.isEmpty { gameOver() }
         }
     }
-
 }
