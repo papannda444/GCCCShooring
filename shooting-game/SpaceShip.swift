@@ -91,7 +91,9 @@ class SpaceShip: SKSpriteNode {
             heart.position = CGPoint(x: -viewFrame.width / 2 + heart.frame.height * CGFloat(index), y: viewFrame.height / 2 - heart.frame.height)
             hearts.append(heart)
         }
-        guard let delegate = delegate else { return }
+        guard let delegate = delegate else {
+            return
+        }
         delegate.displayHeart(hearts: hearts)
     }
 
@@ -103,7 +105,9 @@ class SpaceShip: SKSpriteNode {
     }
 
     func powerUp(itemType: PowerItem.ItemType) {
-        guard let delegate = self.delegate else { return }
+        guard let delegate = self.delegate else {
+            return
+        }
         state.shipPowerUp(itemType: itemType)
         switch itemType {
         case .auto:
