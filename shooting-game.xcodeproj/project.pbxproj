@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC00F89822216EDF00C86005 /* CGPointExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00F89722216EDF00C86005 /* CGPointExtension.swift */; };
 		DC1F6C0421D0A8DB000E2878 /* PowerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1F6C0321D0A8DB000E2878 /* PowerItem.swift */; };
 		DC9CBC38221104E200BEA075 /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9CBC37221104E200BEA075 /* Bullet.swift */; };
 		DC9CBC3A22110C0600BEA075 /* SpaceShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9CBC3922110C0600BEA075 /* SpaceShip.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DC00F89722216EDF00C86005 /* CGPointExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPointExtension.swift; sourceTree = "<group>"; };
 		DC1F6C0321D0A8DB000E2878 /* PowerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerItem.swift; sourceTree = "<group>"; };
 		DC9CBC37221104E200BEA075 /* Bullet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
 		DC9CBC3922110C0600BEA075 /* SpaceShip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceShip.swift; sourceTree = "<group>"; };
@@ -55,11 +57,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC00F89622216E7E00C86005 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DC00F89722216EDF00C86005 /* CGPointExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		DCBA1D0621CF3EE20046AB45 = {
 			isa = PBXGroup;
 			children = (
 				DCBA1D3921CF5EFC0046AB45 /* Explosion.sks */,
 				DCBA1D3A21CF5EFC0046AB45 /* Assets.xcassets */,
+				DC00F89622216E7E00C86005 /* Extensions */,
 				DCBA1D1121CF3EE20046AB45 /* shooting-game */,
 				DCBA1D1021CF3EE20046AB45 /* Products */,
 			);
@@ -198,6 +209,7 @@
 				DCBA1D1321CF3EE20046AB45 /* AppDelegate.swift in Sources */,
 				DC9CBC38221104E200BEA075 /* Bullet.swift in Sources */,
 				DC9CBC3C221118AA00BEA075 /* Alien.swift in Sources */,
+				DC00F89822216EDF00C86005 /* CGPointExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
