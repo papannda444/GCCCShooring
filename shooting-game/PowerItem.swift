@@ -11,7 +11,6 @@ import SpriteKit
 
 class PowerItem: SKSpriteNode {
     enum ItemType: String {
-        case auto
         case speed
         case stone
     }
@@ -29,7 +28,7 @@ class PowerItem: SKSpriteNode {
     }
 
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
-        type = .auto // default value, please to change convenience init
+        type = .speed // default value, please to change convenience init
         super.init(texture: texture, color: color, size: size)
     }
 

@@ -35,7 +35,7 @@ class GameScene: SKScene {
     var scoreLabel: SKLabelNode?
 
     let planets = ["asteroid1", "asteroid2", "asteroid3"]
-    let itemTypes: [PowerItem.ItemType] = [.speed, .auto, .stone]
+    let itemTypes: [PowerItem.ItemType] = [.speed, .stone]
 
     let spaceshipCategory: UInt32 = 0b0001
     let missileCategory: UInt32   = 0b0010

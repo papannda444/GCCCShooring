@@ -23,7 +23,6 @@ class SpaceShip: SKSpriteNode {
 
     enum ShipState: String {
         case normal
-        case auto
         case speed
         case stone
 
@@ -33,8 +32,6 @@ class SpaceShip: SKSpriteNode {
 
         mutating func shipPowerUp(itemType: PowerItem.ItemType) {
             switch itemType {
-            case .auto:
-                self = .auto
             case .speed:
                 self = .speed
             case .stone:
@@ -105,22 +102,9 @@ class SpaceShip: SKSpriteNode {
     }
 
     func powerUp(itemType: PowerItem.ItemType) {
-        guard let delegate = self.delegate else {
-            return
-        }
         state.shipPowerUp(itemType: itemType)
         switch itemType {
-        case .auto:
-            timerForPowerItem = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in
-                self.powerUpTime -= 0.1
-                delegate.addBullet()
-            })
         case .speed:
-            moveSpeed = 100
-            timerForPowerItem = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true, block: { _ in
-                self.powerUpTime = 0.0
-                self.moveSpeed = 50
-            })
             let prevSpeed = moveSpeed
             moveSpeed *= 1.5
             timerForPowerItem = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
@@ -128,11 +112,6 @@ class SpaceShip: SKSpriteNode {
                 self?.moveSpeed = prevSpeed
             }
         case .stone:
-            moveSpeed = 25
-            timerForPowerItem = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true, block: { _ in
-                self.powerUpTime = 0.0
-                self.moveSpeed = 50
-            })
             let prevSpeed = moveSpeed
             moveSpeed /= 2
             timerForPowerItem = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
