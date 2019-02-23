@@ -61,11 +61,11 @@ class SpaceShip: SKSpriteNode {
         }
     }
 
-    convenience init(shipType type: ShipType, shipSpeed: CGFloat, addedViewFrame: CGRect) {
+    convenience init(shipType type: ShipType, moveSpeed: CGFloat, addedViewFrame: CGRect) {
         let texture = SKTexture(imageNamed: type.rawValue)
         self.init(texture: texture, color: .clear, size: texture.size())
         self.type = type
-        moveSpeed = shipSpeed
+        self.moveSpeed = moveSpeed
         self.viewFrame = addedViewFrame
         scale(to: CGSize(width: viewFrame.width / 5, height: viewFrame.width / 5))
         position = CGPoint(x: 0, y: -viewFrame.height / 2 + frame.height)
@@ -121,12 +121,24 @@ class SpaceShip: SKSpriteNode {
                 self.powerUpTime = 0.0
                 self.moveSpeed = 50
             })
+            let prevSpeed = moveSpeed
+            moveSpeed *= 1.5
+            timerForPowerItem = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
+                self?.powerUpTime = 0.0
+                self?.moveSpeed = prevSpeed
+            }
         case .stone:
             moveSpeed = 25
             timerForPowerItem = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true, block: { _ in
                 self.powerUpTime = 0.0
                 self.moveSpeed = 50
             })
+            let prevSpeed = moveSpeed
+            moveSpeed /= 2
+            timerForPowerItem = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
+                self?.powerUpTime = 0.0
+                self?.moveSpeed = prevSpeed
+            }
         }
     }
 

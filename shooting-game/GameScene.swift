@@ -13,9 +13,6 @@ import SpriteKit
 class GameScene: SKScene {
     var endGame: () -> Void = {}
 
-    let motionManager = CMMotionManager()
-    var acceleration: CGFloat = 0.0
-
     var powerItemTimer: Timer?
 
     var asteroidTimer: Timer?
@@ -48,25 +45,16 @@ class GameScene: SKScene {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
 
-        let ship = SpaceShip(shipType: .blue, shipSpeed: 50, addedViewFrame: frame)
+        let ship = SpaceShip(shipType: .blue, moveSpeed: 1, addedViewFrame: frame)
         ship.delegate = self
         ship.setHitPoint(hitPoint: 5)
         ship.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
         addChild(ship)
         spaceship = ship
 
-        motionManager.accelerometerUpdateInterval = 0.1
-        motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { data, _ in
-            guard let data = data else {
-                return
-            }
-            self.acceleration = CGFloat(data.acceleration.x) * 0.75 + self.acceleration * 0.25
-        }
-
         asteroidTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true ) { _ in
             self.addAsteroid()
         }
-
         timerForAsteroud = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
             self.asteroudDuration -= 0.5
         }
@@ -82,15 +70,16 @@ class GameScene: SKScene {
         scoreLabel = score
     }
 
-    override func didSimulatePhysics() {
-        guard let spaceship = spaceship else {
+        }
+    }
+
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let spaceship = spaceship,
+            let touch = touches.first else {
             return
         }
-        let nextPosition = spaceship.position.x + self.acceleration * spaceship.moveSpeed
-        if -frame.width / 2 + 30 > nextPosition || nextPosition > frame.width / 2 - 30 {
-            return
-        }
-        spaceship.position.x = nextPosition
+        let movement = convertPoint(fromView: touch.location(in: view)) - spaceship.position
+        spaceship.position += movement * spaceship.moveSpeed / 5
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
