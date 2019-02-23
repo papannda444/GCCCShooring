@@ -14,6 +14,7 @@ class GameScene: SKScene {
     var endGame: () -> Void = {}
 
     var powerItemTimer: Timer?
+    var bulletTimer: Timer?
 
     var asteroidTimer: Timer?
     var timerForAsteroud: Timer?
@@ -70,6 +71,11 @@ class GameScene: SKScene {
         scoreLabel = score
     }
 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        addBullet()
+        bulletTimer?.invalidate()
+        bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+            self?.addBullet()
         }
     }
 
@@ -84,7 +90,7 @@ class GameScene: SKScene {
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isPaused { endGame() }
-        addBullet()
+        bulletTimer?.invalidate()
     }
 
     func gameOver() {
