@@ -2,6 +2,8 @@
 
 # 無効にするルール
 disabled_rules:
+  - force_cast
+  - force_try
 
 # defaultルール以外にopt-inから採用するルール
 opt_in_rules:
