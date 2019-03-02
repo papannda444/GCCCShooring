@@ -16,9 +16,12 @@ protocol SpaceShipDelegate: AnyObject {
 
 class SpaceShip: SKSpriteNode {
     enum ShipType: String {
-        case red
-        case blue
-        case yellow
+        case red = "ship_red"
+        case blue = "ship_blue"
+        case yellow = "ship_yellow"
+        case purple = "ship_purple"
+        case silver = "ship_silver"
+        case pink = "ship_pink"
     }
 
     enum ShipState: String {

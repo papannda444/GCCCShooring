@@ -11,9 +11,12 @@ import SpriteKit
 
 class Bullet: SKSpriteNode {
     enum BulletType: String {
-        case ball
-        case missile
-        case laser
+        case red = "bullet_red"
+        case blue = "bullet_blue"
+        case yellow = "bullet_yellow"
+        case purple = "bullet_purple"
+        case silver = "bullet_silver"
+        case pink = "bullet_pink"
     }
 
     var type: BulletType
@@ -26,7 +29,7 @@ class Bullet: SKSpriteNode {
     }
 
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
-        type = .ball // default value, please to change convenience init
+        type = .red // default value, please to change convenience init
         super.init(texture: texture, color: color, size: size)
     }
 
