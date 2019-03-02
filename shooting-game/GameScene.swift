@@ -33,6 +33,7 @@ class GameScene: SKScene {
 
     var spaceship: SpaceShip?
     var scoreLabel: SKLabelNode?
+    var touchPosition: CGPoint?
 
     let planets = ["asteroid1", "asteroid2", "asteroid3"]
     let itemTypes: [PowerItem.ItemType] = [.speed, .stone]
@@ -72,6 +73,7 @@ class GameScene: SKScene {
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touchPosition = convertPoint(fromView: touches.first!.location(in: view))
         addBullet()
         bulletTimer?.invalidate()
         bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
@@ -80,17 +82,22 @@ class GameScene: SKScene {
     }
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let spaceship = spaceship,
-            let touch = touches.first else {
-            return
-        }
-        let movement = convertPoint(fromView: touch.location(in: view)) - spaceship.position
-        spaceship.position += movement * spaceship.moveSpeed / 5
+        touchPosition = convertPoint(fromView: touches.first!.location(in: view))
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isPaused { endGame() }
         bulletTimer?.invalidate()
+        touchPosition = nil
+    }
+
+    override func update(_ currentTime: TimeInterval) {
+        guard let spaceship = spaceship,
+            let position = touchPosition else {
+            return
+        }
+        let movement = position - spaceship.position
+        spaceship.position += movement * spaceship.moveSpeed / 5
     }
 
     func gameOver() {
