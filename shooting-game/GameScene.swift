@@ -31,7 +31,7 @@ class GameScene: SKScene {
         }
     }
 
-    var spaceship: SpaceShip?
+    var spaceship: SpaceShip!
     var scoreLabel: SKLabelNode?
     var touchPosition: CGPoint?
 
@@ -47,12 +47,11 @@ class GameScene: SKScene {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
 
-        let ship = SpaceShip(shipType: .blue, moveSpeed: 1, addedViewFrame: frame)
-        ship.delegate = self
-        ship.setHitPoint(hitPoint: 5)
-        ship.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
-        addChild(ship)
-        spaceship = ship
+        spaceship = SpaceShip(shipType: .blue, moveSpeed: 1, addedViewFrame: frame)
+        spaceship.delegate = self
+        spaceship.setHitPoint(hitPoint: 5)
+        spaceship.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
+        addChild(spaceship)
 
         asteroidTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true ) { _ in
             self.addAsteroid()
@@ -92,8 +91,7 @@ class GameScene: SKScene {
     }
 
     override func update(_ currentTime: TimeInterval) {
-        guard let spaceship = spaceship,
-            let position = touchPosition else {
+        guard let position = touchPosition else {
             return
         }
         let movement = position - spaceship.position
@@ -164,9 +162,6 @@ extension GameScene: SpaceShipDelegate {
     }
 
     func addBullet() {
-        guard let spaceship = spaceship else {
-            return
-        }
         let bullet = Bullet(bulletType: .missile, position: spaceship.position)
         bullet.setPhysicsBody(categoryBitMask: missileCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
         addChild(bullet)
@@ -190,8 +185,7 @@ extension GameScene: SKPhysicsContactDelegate {
             target = contact.bodyA
         }
 
-        guard let spaceship = spaceship,
-            let effectingNode = effecting.node,
+        guard let effectingNode = effecting.node,
             let targetNode = target.node,
             let explosion = SKEmitterNode(fileNamed: "Explosion") else { return }
         explosion.position = effectingNode.position
