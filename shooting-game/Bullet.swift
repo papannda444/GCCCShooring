@@ -11,9 +11,12 @@ import SpriteKit
 
 class Bullet: SKSpriteNode {
     enum BulletType: String {
-        case ball
-        case missile
-        case laser
+        case red = "bullet_red"
+        case blue = "bullet_blue"
+        case yellow = "bullet_yellow"
+        case purple = "bullet_purple"
+        case silver = "bullet_silver"
+        case pink = "bullet_pink"
     }
 
     var type: BulletType
@@ -22,11 +25,12 @@ class Bullet: SKSpriteNode {
         let texture = SKTexture(imageNamed: type.rawValue)
         self.init(texture: texture, color: .clear, size: texture.size())
         self.type = type
+        self.scale(to: CGSize(width: 70, height: 70))
         self.position = CGPoint(x: position.x, y: position.y + 50)
     }
 
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
-        type = .ball // default value, please to change convenience init
+        type = .red // default value, please to change convenience init
         super.init(texture: texture, color: color, size: size)
     }
 

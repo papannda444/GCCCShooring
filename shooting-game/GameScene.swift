@@ -35,7 +35,7 @@ class GameScene: SKScene {
     var scoreLabel: SKLabelNode?
     var touchPosition: CGPoint?
 
-    let planets = ["asteroid1", "asteroid2", "asteroid3"]
+    let planets = ["enemy_red", "enemy_yellow"]
     let itemTypes: [PowerItem.ItemType] = [.speed, .stone]
 
     let spaceshipCategory: UInt32 = 0b0001
@@ -47,7 +47,7 @@ class GameScene: SKScene {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
 
-        spaceship = SpaceShip(shipType: .blue, moveSpeed: 1, addedViewFrame: frame)
+        spaceship = SpaceShip(shipType: .red, moveSpeed: 1, addedViewFrame: frame)
         spaceship.delegate = self
         spaceship.setHitPoint(hitPoint: 5)
         spaceship.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
@@ -130,7 +130,7 @@ class GameScene: SKScene {
         let positionX = frame.width * (CGFloat.random(in: 0...1) - 0.5)
         asteroid.position = CGPoint(x: positionX, y: frame.height / 2 + asteroid.frame.height)
         asteroid.scale(to: CGSize(width: 70, height: 70))
-        asteroid.physicsBody = SKPhysicsBody(circleOfRadius: asteroid.frame.width)
+        asteroid.physicsBody = SKPhysicsBody(circleOfRadius: asteroid.frame.width / 2)
         asteroid.physicsBody?.categoryBitMask = asteroidCategory
         asteroid.physicsBody?.contactTestBitMask = missileCategory + spaceshipCategory
         asteroid.physicsBody?.collisionBitMask = 0
@@ -161,7 +161,7 @@ extension GameScene: SpaceShipDelegate {
     }
 
     func addBullet() {
-        let bullet = Bullet(bulletType: .missile, position: spaceship.position)
+        let bullet = Bullet(bulletType: .red, position: spaceship.position)
         bullet.setPhysicsBody(categoryBitMask: missileCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
         addChild(bullet)
 
