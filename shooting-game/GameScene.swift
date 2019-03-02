@@ -94,8 +94,7 @@ class GameScene: SKScene {
         guard let position = touchPosition else {
             return
         }
-        let movement = position - spaceship.position
-        spaceship.position += movement * spaceship.moveSpeed / 5
+        spaceship.moveToPosition(touchPosition: position)
     }
 
     func gameOver() {

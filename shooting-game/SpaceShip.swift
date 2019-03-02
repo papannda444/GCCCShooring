@@ -101,6 +101,11 @@ class SpaceShip: SKSpriteNode {
         physicsBody?.collisionBitMask = 0
     }
 
+    func moveToPosition(touchPosition position: CGPoint) {
+        let movement = position - self.position
+        self.position += movement * moveSpeed / 5
+    }
+
     func powerUp(itemType: PowerItem.ItemType) {
         state.shipPowerUp(itemType: itemType)
         switch itemType {
