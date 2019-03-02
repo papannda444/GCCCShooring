@@ -130,7 +130,7 @@ class GameScene: SKScene {
         let positionX = frame.width * (CGFloat.random(in: 0...1) - 0.5)
         asteroid.position = CGPoint(x: positionX, y: frame.height / 2 + asteroid.frame.height)
         asteroid.scale(to: CGSize(width: 70, height: 70))
-        asteroid.physicsBody = SKPhysicsBody(circleOfRadius: asteroid.frame.width)
+        asteroid.physicsBody = SKPhysicsBody(circleOfRadius: asteroid.frame.width / 2)
         asteroid.physicsBody?.categoryBitMask = asteroidCategory
         asteroid.physicsBody?.contactTestBitMask = missileCategory + spaceshipCategory
         asteroid.physicsBody?.collisionBitMask = 0

@@ -25,6 +25,7 @@ class Bullet: SKSpriteNode {
         let texture = SKTexture(imageNamed: type.rawValue)
         self.init(texture: texture, color: .clear, size: texture.size())
         self.type = type
+        self.scale(to: CGSize(width: 70, height: 70))
         self.position = CGPoint(x: position.x, y: position.y + 50)
     }
 

@@ -67,7 +67,7 @@ class SpaceShip: SKSpriteNode {
         self.type = type
         self.moveSpeed = moveSpeed
         self.viewFrame = addedViewFrame
-        scale(to: CGSize(width: viewFrame.width / 5, height: viewFrame.width / 5))
+        scale(to: CGSize(width: viewFrame.width / 8, height: viewFrame.width / 8))
         position = CGPoint(x: 0, y: -viewFrame.height / 2 + frame.height)
     }
 
@@ -88,6 +88,7 @@ class SpaceShip: SKSpriteNode {
     func setHitPoint(hitPoint: Int) {
         for index in 1...hitPoint {
             let heart = SKSpriteNode(imageNamed: "heart")
+            heart.scale(to: CGSize(width: viewFrame.width / 10, height: viewFrame.width / 10))
             heart.position = CGPoint(x: -viewFrame.width / 2 + heart.frame.height * CGFloat(index), y: viewFrame.height / 2 - heart.frame.height)
             hearts.append(heart)
         }
@@ -98,7 +99,7 @@ class SpaceShip: SKSpriteNode {
     }
 
     func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32) {
-        physicsBody = SKPhysicsBody(circleOfRadius: frame.width * 0.1)
+        physicsBody = SKPhysicsBody(circleOfRadius: frame.width / 2)
         physicsBody?.categoryBitMask = categoryBitMask
         physicsBody?.contactTestBitMask = contactTestBitMask
         physicsBody?.collisionBitMask = 0

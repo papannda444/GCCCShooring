@@ -22,7 +22,6 @@ class PowerItem: SKSpriteNode {
         self.init(texture: texture, color: .clear, size: texture.size())
         self.type = type
         scale(to: CGSize(width: 70, height: 70))
-        physicsBody = SKPhysicsBody(circleOfRadius: self.frame.width)
         let positionX = viewFrame.width * (CGFloat.random(in: 0...1) - 0.5)
         position = CGPoint(x: positionX, y: viewFrame.height / 2 + self.frame.height)
     }
