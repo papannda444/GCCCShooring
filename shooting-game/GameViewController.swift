@@ -11,6 +11,8 @@ import SpriteKit
 import UIKit
 
 class GameViewController: UIViewController {
+    var shipType: SpaceShip.ShipType?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,6 +27,7 @@ class GameViewController: UIViewController {
             gameScene.endGame = {
                 self.dismiss(animated: false, completion: nil)
             }
+            gameScene.shipType = shipType
         }
         // Set the scale mode to scale to fit the window
         scene.scaleMode = .aspectFit

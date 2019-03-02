@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -18,41 +19,140 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XEw-yA-ZHp">
-                                <rect key="frame" x="91" y="303.5" width="193" height="60"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <state key="normal" title="Game Start"/>
-                                <connections>
-                                    <segue destination="BV1-FR-VrT" kind="show" id="z9H-on-UKG"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fbY-4Z-hjz">
-                                <rect key="frame" x="166.5" y="423.5" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sdb-mm-ENd">
-                                <rect key="frame" x="166.5" y="504.5" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ayl-6Q-gpC">
+                                <rect key="frame" x="0.0" y="220" width="375" height="447"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pCT-c5-50M">
+                                        <rect key="frame" x="27.5" y="0.0" width="320" height="100"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qcR-Rd-yqw">
+                                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="100" id="0V5-fU-3eR"/>
+                                                    <constraint firstAttribute="height" constant="100" id="jGz-Tf-VUb"/>
+                                                </constraints>
+                                                <state key="normal" image="ship_red" backgroundImage="frame_border_red"/>
+                                                <connections>
+                                                    <action selector="tapRedShipButton:" destination="LBJ-GE-tNS" eventType="touchUpInside" id="qrs-zP-bp1"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sud-Ke-UIA">
+                                                <rect key="frame" x="110" y="0.0" width="100" height="100"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="100" id="1bw-qj-8v2"/>
+                                                    <constraint firstAttribute="height" constant="100" id="sbb-l5-1c1"/>
+                                                </constraints>
+                                                <state key="normal" image="ship_blue" backgroundImage="frame_border_black"/>
+                                                <connections>
+                                                    <action selector="tapBlueShipButton:" destination="LBJ-GE-tNS" eventType="touchUpInside" id="uIR-8n-wh0"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a13-Wp-AHD">
+                                                <rect key="frame" x="220" y="0.0" width="100" height="100"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="100" id="1J9-75-LQs"/>
+                                                    <constraint firstAttribute="height" constant="100" id="j2L-FN-3uM"/>
+                                                </constraints>
+                                                <state key="normal" image="ship_yellow" backgroundImage="frame_border_black"/>
+                                                <connections>
+                                                    <action selector="tapYellowShipButton:" destination="LBJ-GE-tNS" eventType="touchUpInside" id="WL1-YO-UtS"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wSY-x5-k13">
+                                        <rect key="frame" x="27.5" y="115.5" width="320" height="100"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1r-lN-bJX">
+                                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="Ebr-kg-Tfp"/>
+                                                    <constraint firstAttribute="width" constant="100" id="ilq-3p-YX2"/>
+                                                </constraints>
+                                                <state key="normal" image="ship_purple" backgroundImage="frame_border_black"/>
+                                                <connections>
+                                                    <action selector="tapPurpleShipButton:" destination="LBJ-GE-tNS" eventType="touchUpInside" id="Ngq-gF-Mkd"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GxR-aH-ryL">
+                                                <rect key="frame" x="110" y="0.0" width="100" height="100"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="100" id="2BG-QU-3fo"/>
+                                                    <constraint firstAttribute="height" constant="100" id="dkJ-Dx-KWZ"/>
+                                                </constraints>
+                                                <state key="normal" image="ship_silver" backgroundImage="frame_border_black"/>
+                                                <connections>
+                                                    <action selector="tapSilverShipButton:" destination="LBJ-GE-tNS" eventType="touchUpInside" id="1Ei-LM-1DE"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nZp-ze-L0Y">
+                                                <rect key="frame" x="220" y="0.0" width="100" height="100"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="GQB-Nk-nrg"/>
+                                                    <constraint firstAttribute="width" constant="100" id="Yhy-ap-eEZ"/>
+                                                </constraints>
+                                                <state key="normal" image="ship_pink" backgroundImage="frame_border_black"/>
+                                                <connections>
+                                                    <action selector="tapPinkShipButton:" destination="LBJ-GE-tNS" eventType="touchUpInside" id="7cO-A5-a5g"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="QgA-yD-JlX">
+                                        <rect key="frame" x="63" y="231.5" width="249.5" height="100"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Best Score:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fbY-4Z-hjz">
+                                                <rect key="frame" x="0.0" y="0.0" width="88" height="100"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="xkf-gU-OhK"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Score:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sdb-mm-ENd">
+                                                <rect key="frame" x="138" y="0.0" width="111.5" height="100"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="IRo-2M-tvR"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XEw-yA-ZHp">
+                                        <rect key="frame" x="91" y="347" width="193" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="TUS-6X-mKT"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                        <state key="normal" title="Game Start"/>
+                                        <connections>
+                                            <segue destination="BV1-FR-VrT" kind="show" id="z9H-on-UKG"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="XEw-yA-ZHp" firstAttribute="centerY" secondItem="yHq-DP-wbA" secondAttribute="centerY" id="6MK-tn-fNt"/>
-                            <constraint firstItem="fbY-4Z-hjz" firstAttribute="centerX" secondItem="yHq-DP-wbA" secondAttribute="centerX" id="6cE-xh-3H8"/>
-                            <constraint firstItem="sdb-mm-ENd" firstAttribute="centerX" secondItem="yHq-DP-wbA" secondAttribute="centerX" id="96m-EE-DVx"/>
-                            <constraint firstItem="sdb-mm-ENd" firstAttribute="top" secondItem="fbY-4Z-hjz" secondAttribute="bottom" constant="60" id="BIA-6f-3wP"/>
-                            <constraint firstItem="XEw-yA-ZHp" firstAttribute="centerX" secondItem="yHq-DP-wbA" secondAttribute="centerX" id="XbM-fE-inV"/>
-                            <constraint firstItem="fbY-4Z-hjz" firstAttribute="top" secondItem="XEw-yA-ZHp" secondAttribute="bottom" constant="60" id="i4x-kp-tPw"/>
+                            <constraint firstItem="ayl-6Q-gpC" firstAttribute="leading" secondItem="8gW-PR-BUs" secondAttribute="leading" id="KSd-P1-Hq9"/>
+                            <constraint firstItem="8gW-PR-BUs" firstAttribute="trailing" secondItem="ayl-6Q-gpC" secondAttribute="trailing" id="awY-6Z-VWS"/>
+                            <constraint firstItem="8gW-PR-BUs" firstAttribute="bottom" secondItem="ayl-6Q-gpC" secondAttribute="bottom" id="dYG-7K-PjX"/>
+                            <constraint firstItem="ayl-6Q-gpC" firstAttribute="top" secondItem="8gW-PR-BUs" secondAttribute="top" constant="200" id="mQJ-qV-qID"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8gW-PR-BUs"/>
                     </view>
                     <connections>
                         <outlet property="bestScoreLabel" destination="fbY-4Z-hjz" id="TwD-6m-wMH"/>
+                        <outlet property="blueShipButton" destination="Sud-Ke-UIA" id="cfz-we-A4L"/>
                         <outlet property="currentScoreLabel" destination="sdb-mm-ENd" id="Ro1-XD-HBd"/>
+                        <outlet property="pinkShipButton" destination="nZp-ze-L0Y" id="PJA-Xm-xN5"/>
+                        <outlet property="purpleShipButton" destination="h1r-lN-bJX" id="Vzo-81-mvk"/>
+                        <outlet property="redShipButton" destination="qcR-Rd-yqw" id="DU7-An-deV"/>
+                        <outlet property="silverShipButton" destination="GxR-aH-ryL" id="dEe-Ek-WuX"/>
+                        <outlet property="yellowShipButton" destination="a13-Wp-AHD" id="tAL-t6-JcR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cIU-rh-rVw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -75,4 +175,14 @@
             <point key="canvasLocation" x="473" y="118"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="frame_border_black" width="512" height="512"/>
+        <image name="frame_border_red" width="512" height="512"/>
+        <image name="ship_blue" width="1024" height="1024"/>
+        <image name="ship_pink" width="1024" height="1024"/>
+        <image name="ship_purple" width="1024" height="1024"/>
+        <image name="ship_red" width="1024" height="1024"/>
+        <image name="ship_silver" width="1024" height="1024"/>
+        <image name="ship_yellow" width="1024" height="1024"/>
+    </resources>
 </document>

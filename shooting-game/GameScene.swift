@@ -32,6 +32,7 @@ class GameScene: SKScene {
     }
 
     var spaceship: SpaceShip!
+    var shipType: SpaceShip.ShipType?
     var scoreLabel: SKLabelNode?
     var touchPosition: CGPoint?
 
@@ -47,7 +48,7 @@ class GameScene: SKScene {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
 
-        spaceship = SpaceShip(shipType: .red, moveSpeed: 1, addedViewFrame: frame)
+        spaceship = SpaceShip(shipType: shipType ?? .red, moveSpeed: 1, addedViewFrame: frame)
         spaceship.delegate = self
         spaceship.setHitPoint(hitPoint: 5)
         spaceship.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
