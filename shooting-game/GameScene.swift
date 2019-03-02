@@ -31,8 +31,9 @@ class GameScene: SKScene {
         }
     }
 
-    var spaceship: SpaceShip?
+    var spaceship: SpaceShip!
     var scoreLabel: SKLabelNode?
+    var touchPosition: CGPoint?
 
     let planets = ["asteroid1", "asteroid2", "asteroid3"]
     let itemTypes: [PowerItem.ItemType] = [.speed, .stone]
@@ -46,12 +47,11 @@ class GameScene: SKScene {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
 
-        let ship = SpaceShip(shipType: .blue, moveSpeed: 1, addedViewFrame: frame)
-        ship.delegate = self
-        ship.setHitPoint(hitPoint: 5)
-        ship.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
-        addChild(ship)
-        spaceship = ship
+        spaceship = SpaceShip(shipType: .blue, moveSpeed: 1, addedViewFrame: frame)
+        spaceship.delegate = self
+        spaceship.setHitPoint(hitPoint: 5)
+        spaceship.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
+        addChild(spaceship)
 
         asteroidTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true ) { _ in
             self.addAsteroid()
@@ -72,6 +72,7 @@ class GameScene: SKScene {
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touchPosition = convertPoint(fromView: touches.first!.location(in: view))
         addBullet()
         bulletTimer?.invalidate()
         bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
@@ -80,17 +81,20 @@ class GameScene: SKScene {
     }
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let spaceship = spaceship,
-            let touch = touches.first else {
-            return
-        }
-        let movement = convertPoint(fromView: touch.location(in: view)) - spaceship.position
-        spaceship.position += movement * spaceship.moveSpeed / 5
+        touchPosition = convertPoint(fromView: touches.first!.location(in: view))
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isPaused { endGame() }
         bulletTimer?.invalidate()
+        touchPosition = nil
+    }
+
+    override func update(_ currentTime: TimeInterval) {
+        guard let position = touchPosition else {
+            return
+        }
+        spaceship.moveToPosition(touchPosition: position)
     }
 
     func gameOver() {
@@ -157,9 +161,6 @@ extension GameScene: SpaceShipDelegate {
     }
 
     func addBullet() {
-        guard let spaceship = spaceship else {
-            return
-        }
         let bullet = Bullet(bulletType: .missile, position: spaceship.position)
         bullet.setPhysicsBody(categoryBitMask: missileCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
         addChild(bullet)
@@ -183,8 +184,7 @@ extension GameScene: SKPhysicsContactDelegate {
             target = contact.bodyA
         }
 
-        guard let spaceship = spaceship,
-            let effectingNode = effecting.node,
+        guard let effectingNode = effecting.node,
             let targetNode = target.node,
             let explosion = SKEmitterNode(fileNamed: "Explosion") else { return }
         explosion.position = effectingNode.position

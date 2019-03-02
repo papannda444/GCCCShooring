@@ -2,8 +2,9 @@
 
 # 無効にするルール
 disabled_rules:
-  - force_cast
-  - force_try
+  - force_cast //使っていいものに対して使うため
+  - force_try //上同
+  - implicitly_unwrapped_optional //上同
 
 # defaultルール以外にopt-inから採用するルール
 opt_in_rules:
@@ -27,7 +28,7 @@ opt_in_rules:
   - function_default_parameter_at_end
   - identical_operands
   - implicit_return
-  - implicitly_unwrapped_optional
+  #- implicitly_unwrapped_optional
   - joined_default_parameter
   - last_where
   - legacy_random
