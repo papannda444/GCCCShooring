@@ -2,9 +2,9 @@
 
 # 無効にするルール
 disabled_rules:
-  - force_cast //使っていいものに対して使うため
-  - force_try //上同
-  - implicitly_unwrapped_optional //上同
+  - force_cast #使っていいものに対して使うため
+  - force_try #上同
+  - implicitly_unwrapped_optional #上同
 
 # defaultルール以外にopt-inから採用するルール
 opt_in_rules:
