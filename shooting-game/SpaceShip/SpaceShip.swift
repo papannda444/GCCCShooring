@@ -27,7 +27,6 @@ protocol SpaceShip {
     func moveToPosition(touchPosition position: CGPoint)
     func powerUp(itemType: PowerItem.ItemType)
     func touchViewBegin(touchedViewFrame frame: CGRect)
-    func touchViewEnd()
 }
 
 extension SpaceShip {
@@ -45,5 +44,9 @@ extension SpaceShip {
 
     func isShipState(equal state: SpaceShipState) -> Bool {
         return self.state == state
+    }
+
+    func touchViewEnd() {
+        bulletTimer?.invalidate()
     }
 }

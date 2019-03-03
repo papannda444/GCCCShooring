@@ -87,8 +87,4 @@ class BlueShip: SKSpriteNode, SpaceShip {
                                       action: SKAction.sequence([moveToTop, remove]))
         }
     }
-
-    func touchViewEnd() {
-        bulletTimer?.invalidate()
-    }
 }
