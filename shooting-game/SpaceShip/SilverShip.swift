@@ -31,7 +31,7 @@ class SilverShip: SKSpriteNode, SpaceShip {
         let texture = SKTexture(imageNamed: SpaceShipType.silver.rawValue)
         self.init(texture: texture, color: .clear, size: texture.size())
         self.moveSpeed = moveSpeed
-        position = CGPoint(x: 0, y: -frame.height / 2 + self.frame.height)
+        position = CGPoint(x: 0, y: frame.height / 2 - self.frame.height)
         scale(to: CGSize(width: 80, height: 80))
     }
 
