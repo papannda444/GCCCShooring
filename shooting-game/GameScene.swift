@@ -14,7 +14,6 @@ class GameScene: SKScene {
     var endGame: () -> Void = {}
 
     var powerItemTimer: Timer?
-    var bulletTimer: Timer?
 
     var asteroidTimer: Timer?
     var timerForAsteroud: Timer?
@@ -32,7 +31,7 @@ class GameScene: SKScene {
     }
 
     var spaceship: SpaceShip!
-    var shipType: SpaceShip.ShipType?
+    var shipType = SpaceShipType()
     var scoreLabel: SKLabelNode?
     var touchPosition: CGPoint?
 
@@ -41,18 +40,31 @@ class GameScene: SKScene {
 
     let spaceshipCategory: UInt32 = 0b0001
     let missileCategory: UInt32   = 0b0010
-    let asteroidCategory: UInt32  = 0b0100
+    let enemyCategory: UInt32     = 0b0100
     let powerItemCategory: UInt32 = 0b1000
 
     override func didMove(to view: SKView) {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
 
-        spaceship = SpaceShip(shipType: shipType ?? .red, moveSpeed: 1, addedViewFrame: frame)
+        switch shipType {
+        case .red:
+            spaceship = RedShip(moveSpeed: 2, displayViewFrame: frame)
+        case .blue:
+            spaceship = BlueShip(moveSpeed: 2, displayViewFrame: frame)
+        case .yellow:
+            spaceship = YellowShip(moveSpeed: 3, displayViewFrame: frame)
+        case .purple:
+            spaceship = PurpleShip(moveSpeed: 1.5, displayViewFrame: frame)
+        case .silver:
+            spaceship = SilverShip(moveSpeed: 1, displayViewFrame: frame)
+        case .pink:
+            spaceship = PinkShip(moveSpeed: 1, displayViewFrame: frame)
+        }
         spaceship.delegate = self
         spaceship.setHitPoint(hitPoint: 5)
-        spaceship.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
-        addChild(spaceship)
+        spaceship.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: enemyCategory + powerItemCategory)
+        addChild(spaceship as! SKNode)
 
         asteroidTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true ) { _ in
             self.addAsteroid()
@@ -74,11 +86,7 @@ class GameScene: SKScene {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         touchPosition = convertPoint(fromView: touches.first!.location(in: view))
-        addBullet()
-        bulletTimer?.invalidate()
-        bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
-            self?.addBullet()
-        }
+        spaceship.touchViewBegin(touchedViewFrame: frame)
     }
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -87,8 +95,8 @@ class GameScene: SKScene {
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isPaused { endGame() }
-        bulletTimer?.invalidate()
         touchPosition = nil
+        spaceship.touchViewEnd()
     }
 
     override func update(_ currentTime: TimeInterval) {
@@ -132,7 +140,7 @@ class GameScene: SKScene {
         asteroid.position = CGPoint(x: positionX, y: frame.height / 2 + asteroid.frame.height)
         asteroid.scale(to: CGSize(width: 70, height: 70))
         asteroid.physicsBody = SKPhysicsBody(circleOfRadius: asteroid.frame.width / 2)
-        asteroid.physicsBody?.categoryBitMask = asteroidCategory
+        asteroid.physicsBody?.categoryBitMask = enemyCategory
         asteroid.physicsBody?.contactTestBitMask = missileCategory + spaceshipCategory
         asteroid.physicsBody?.collisionBitMask = 0
         addChild(asteroid)
@@ -156,19 +164,26 @@ class GameScene: SKScene {
 
 extension GameScene: SpaceShipDelegate {
     func displayHeart(hearts: [SKSpriteNode]) {
-        for heart in hearts {
+        for (index, heart) in hearts.enumerated() {
+            heart.position = CGPoint(x: -frame.width / 2 + heart.frame.height * CGFloat(index + 1), y: frame.height / 2 - heart.frame.height)
             addChild(heart)
         }
     }
 
-    func addBullet() {
-        let bullet = Bullet(bulletType: .red, position: spaceship.position)
-        bullet.setPhysicsBody(categoryBitMask: missileCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
+    func addBullet(bulletType: Bullet.BulletType, position: CGPoint, _ positions: CGPoint..., action: SKAction) {
+        let bullet = Bullet(bulletType: bulletType, position: position)
+        bullet.setPhysicsBody(categoryBitMask: missileCategory, contactTestBitMask: enemyCategory + powerItemCategory)
+        bullet.run(action)
         addChild(bullet)
-
-        let moveToTop = SKAction.moveTo(y: frame.height + 10, duration: 0.3)
-        let remove = SKAction.removeFromParent()
-        bullet.run(SKAction.sequence([moveToTop, remove]))
+        if positions.isEmpty {
+            return
+        }
+        for position in positions {
+            let bullet = Bullet(bulletType: bulletType, position: position)
+            bullet.setPhysicsBody(categoryBitMask: missileCategory, contactTestBitMask: enemyCategory + powerItemCategory)
+            bullet.run(action)
+            addChild(bullet)
+        }
     }
 }
 
@@ -177,7 +192,7 @@ extension GameScene: SKPhysicsContactDelegate {
         var effecting: SKPhysicsBody
         var target: SKPhysicsBody
 
-        if contact.bodyA.categoryBitMask & (asteroidCategory + powerItemCategory) != 0 {
+        if contact.bodyA.categoryBitMask & (enemyCategory + powerItemCategory) != 0 {
             effecting = contact.bodyA
             target = contact.bodyB
         } else {
