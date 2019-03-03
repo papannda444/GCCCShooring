@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		DC00F89822216EDF00C86005 /* CGPointExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00F89722216EDF00C86005 /* CGPointExtension.swift */; };
+		DC00F8AA222BF74F00C86005 /* SpaceShipProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00F8A9222BF74F00C86005 /* SpaceShipProtocol.swift */; };
+		DC00F8AC222BFEEF00C86005 /* SpaceShipState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00F8AB222BFEEF00C86005 /* SpaceShipState.swift */; };
 		DC1F6C0421D0A8DB000E2878 /* PowerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1F6C0321D0A8DB000E2878 /* PowerItem.swift */; };
 		DC9CBC38221104E200BEA075 /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9CBC37221104E200BEA075 /* Bullet.swift */; };
 		DC9CBC3A22110C0600BEA075 /* SpaceShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9CBC3922110C0600BEA075 /* SpaceShip.swift */; };
@@ -27,6 +29,8 @@
 
 /* Begin PBXFileReference section */
 		DC00F89722216EDF00C86005 /* CGPointExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPointExtension.swift; sourceTree = "<group>"; };
+		DC00F8A9222BF74F00C86005 /* SpaceShipProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceShipProtocol.swift; sourceTree = "<group>"; };
+		DC00F8AB222BFEEF00C86005 /* SpaceShipState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceShipState.swift; sourceTree = "<group>"; };
 		DC1F6C0321D0A8DB000E2878 /* PowerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerItem.swift; sourceTree = "<group>"; };
 		DC9CBC37221104E200BEA075 /* Bullet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
 		DC9CBC3922110C0600BEA075 /* SpaceShip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceShip.swift; sourceTree = "<group>"; };
@@ -65,6 +69,16 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		DC00F8A8222BF72C00C86005 /* SpaceShip */ = {
+			isa = PBXGroup;
+			children = (
+				DC9CBC3922110C0600BEA075 /* SpaceShip.swift */,
+				DC00F8A9222BF74F00C86005 /* SpaceShipProtocol.swift */,
+				DC00F8AB222BFEEF00C86005 /* SpaceShipState.swift */,
+			);
+			path = SpaceShip;
+			sourceTree = "<group>";
+		};
 		DCBA1D0621CF3EE20046AB45 = {
 			isa = PBXGroup;
 			children = (
@@ -93,7 +107,7 @@
 				DCBA1D1821CF3EE20046AB45 /* GameScene.swift */,
 				DC9CBC37221104E200BEA075 /* Bullet.swift */,
 				DC1F6C0321D0A8DB000E2878 /* PowerItem.swift */,
-				DC9CBC3922110C0600BEA075 /* SpaceShip.swift */,
+				DC00F8A8222BF72C00C86005 /* SpaceShip */,
 				DC9CBC3B221118AA00BEA075 /* Alien.swift */,
 				DCBA1D1A21CF3EE20046AB45 /* GameViewController.swift */,
 				DCBA1D3D21CF925C0046AB45 /* TopViewController.swift */,
@@ -209,7 +223,9 @@
 				DCBA1D1321CF3EE20046AB45 /* AppDelegate.swift in Sources */,
 				DC9CBC38221104E200BEA075 /* Bullet.swift in Sources */,
 				DC9CBC3C221118AA00BEA075 /* Alien.swift in Sources */,
+				DC00F8AA222BF74F00C86005 /* SpaceShipProtocol.swift in Sources */,
 				DC00F89822216EDF00C86005 /* CGPointExtension.swift in Sources */,
+				DC00F8AC222BFEEF00C86005 /* SpaceShipState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
