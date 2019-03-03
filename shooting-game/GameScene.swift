@@ -32,7 +32,7 @@ class GameScene: SKScene {
     }
 
     var spaceship: SpaceShip!
-    var shipType: SpaceShip.ShipType?
+    var shipType = SpaceShipType()
     var scoreLabel: SKLabelNode?
     var touchPosition: CGPoint?
 

@@ -11,7 +11,7 @@ import SpriteKit
 import UIKit
 
 class GameViewController: UIViewController {
-    var shipType: SpaceShip.ShipType?
+    var shipType = SpaceShipType()
 
     override func viewDidLoad() {
         super.viewDidLoad()

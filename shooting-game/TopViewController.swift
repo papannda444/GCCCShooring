@@ -18,7 +18,7 @@ class TopViewController: UIViewController {
     @IBOutlet private weak var silverShipButton: UIButton!
     @IBOutlet private weak var pinkShipButton: UIButton!
 
-    private var shipType: SpaceShip.ShipType?
+    private var shipType = SpaceShipType()
     private var redFrame: UIImage?
     private var blackFrame: UIImage?
 
