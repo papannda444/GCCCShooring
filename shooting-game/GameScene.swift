@@ -14,7 +14,6 @@ class GameScene: SKScene {
     var endGame: () -> Void = {}
 
     var powerItemTimer: Timer?
-    var bulletTimer: Timer?
 
     var asteroidTimer: Timer?
     var timerForAsteroud: Timer?
@@ -87,11 +86,7 @@ class GameScene: SKScene {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         touchPosition = convertPoint(fromView: touches.first!.location(in: view))
-        addBullet()
-        bulletTimer?.invalidate()
-        bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
-            self?.addBullet()
-        }
+        spaceship.touchViewBegin(touchedViewFrame: frame)
     }
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -100,8 +95,8 @@ class GameScene: SKScene {
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isPaused { endGame() }
-        bulletTimer?.invalidate()
         touchPosition = nil
+        spaceship.touchViewEnd()
     }
 
     override func update(_ currentTime: TimeInterval) {
@@ -174,14 +169,20 @@ extension GameScene: SpaceShipDelegate {
         }
     }
 
-    func addBullet() {
-        let bullet = Bullet(bulletType: .red, position: spaceship.position)
-        bullet.setPhysicsBody(categoryBitMask: missileCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
+    func addBullet(bulletType: Bullet.BulletType, position: CGPoint, _ positions: CGPoint..., action: SKAction) {
+        let bullet = Bullet(bulletType: bulletType, position: position)
+        bullet.setPhysicsBody(categoryBitMask: missileCategory, contactTestBitMask: enemyCategory + powerItemCategory)
+        bullet.run(action)
         addChild(bullet)
-
-        let moveToTop = SKAction.moveTo(y: frame.height + 10, duration: 0.3)
-        let remove = SKAction.removeFromParent()
-        bullet.run(SKAction.sequence([moveToTop, remove]))
+        if positions.isEmpty {
+            return
+        }
+        for position in positions {
+            let bullet = Bullet(bulletType: bulletType, position: position)
+            bullet.setPhysicsBody(categoryBitMask: missileCategory, contactTestBitMask: enemyCategory + powerItemCategory)
+            bullet.run(action)
+            addChild(bullet)
+        }
     }
 }
 
