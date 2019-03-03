@@ -164,7 +164,8 @@ class GameScene: SKScene {
 
 extension GameScene: SpaceShipDelegate {
     func displayHeart(hearts: [SKSpriteNode]) {
-        for heart in hearts {
+        for (index, heart) in hearts.enumerated() {
+            heart.position = CGPoint(x: -frame.width / 2 + heart.frame.height * CGFloat(index + 1), y: frame.height / 2 - heart.frame.height)
             addChild(heart)
         }
     }
