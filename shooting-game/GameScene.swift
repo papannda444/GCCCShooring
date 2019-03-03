@@ -40,7 +40,7 @@ class GameScene: SKScene {
 
     let spaceshipCategory: UInt32 = 0b0001
     let missileCategory: UInt32   = 0b0010
-    let asteroidCategory: UInt32  = 0b0100
+    let enemyCategory: UInt32     = 0b0100
     let powerItemCategory: UInt32 = 0b1000
 
     override func didMove(to view: SKView) {
@@ -63,7 +63,7 @@ class GameScene: SKScene {
         }
         spaceship.delegate = self
         spaceship.setHitPoint(hitPoint: 5)
-        spaceship.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
+        spaceship.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: enemyCategory + powerItemCategory)
         addChild(spaceship as! SKNode)
 
         asteroidTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true ) { _ in
@@ -140,7 +140,7 @@ class GameScene: SKScene {
         asteroid.position = CGPoint(x: positionX, y: frame.height / 2 + asteroid.frame.height)
         asteroid.scale(to: CGSize(width: 70, height: 70))
         asteroid.physicsBody = SKPhysicsBody(circleOfRadius: asteroid.frame.width / 2)
-        asteroid.physicsBody?.categoryBitMask = asteroidCategory
+        asteroid.physicsBody?.categoryBitMask = enemyCategory
         asteroid.physicsBody?.contactTestBitMask = missileCategory + spaceshipCategory
         asteroid.physicsBody?.collisionBitMask = 0
         addChild(asteroid)
@@ -192,7 +192,7 @@ extension GameScene: SKPhysicsContactDelegate {
         var effecting: SKPhysicsBody
         var target: SKPhysicsBody
 
-        if contact.bodyA.categoryBitMask & (asteroidCategory + powerItemCategory) != 0 {
+        if contact.bodyA.categoryBitMask & (enemyCategory + powerItemCategory) != 0 {
             effecting = contact.bodyA
             target = contact.bodyB
         } else {
