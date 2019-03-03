@@ -48,11 +48,24 @@ class GameScene: SKScene {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
 
-        spaceship = SpaceShip(shipType: shipType ?? .red, moveSpeed: 1, addedViewFrame: frame)
+        switch shipType {
+        case .red:
+            spaceship = RedShip(moveSpeed: 2, displayViewFrame: frame)
+        case .blue:
+            spaceship = BlueShip(moveSpeed: 2, displayViewFrame: frame)
+        case .yellow:
+            spaceship = YellowShip(moveSpeed: 3, displayViewFrame: frame)
+        case .purple:
+            spaceship = PurpleShip(moveSpeed: 1.5, displayViewFrame: frame)
+        case .silver:
+            spaceship = SilverShip(moveSpeed: 1, displayViewFrame: frame)
+        case .pink:
+            spaceship = PinkShip(moveSpeed: 1, displayViewFrame: frame)
+        }
         spaceship.delegate = self
         spaceship.setHitPoint(hitPoint: 5)
         spaceship.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: asteroidCategory + powerItemCategory)
-        addChild(spaceship)
+        addChild(spaceship as! SKNode)
 
         asteroidTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true ) { _ in
             self.addAsteroid()
