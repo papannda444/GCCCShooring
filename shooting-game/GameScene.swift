@@ -11,7 +11,7 @@ import GameplayKit
 import SpriteKit
 
 class GameScene: SKScene {
-    var endGame: () -> Void = {}
+    var gameSceneClose: () -> Void = {}
 
     var gameClearTimer: Timer?
     var clearTime: TimeInterval = 100.00 {
@@ -117,7 +117,7 @@ class GameScene: SKScene {
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if isPaused { endGame() }
+        if isPaused { gameSceneClose() }
         touchPosition = nil
         spaceship.touchViewEnd()
     }
