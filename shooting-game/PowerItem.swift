@@ -13,6 +13,7 @@ class PowerItem: SKSpriteNode {
     enum ItemType: String {
         case speed
         case stone
+        case heal
     }
 
     var type: ItemType

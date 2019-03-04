@@ -48,7 +48,11 @@ class GameScene: SKScene {
     var touchPosition: CGPoint?
 
     let planets = ["enemy_red", "enemy_yellow"]
-    let itemTypes: [PowerItem.ItemType] = [.speed, .stone]
+    let itemTypes: [PowerItem.ItemType] = [
+        .speed, .speed, .speed,
+        .stone, .stone, .stone,
+        .heal   //回復アイテムの出現率低め
+    ]
 
     let spaceshipCategory: UInt32 = 0b0001
     let missileCategory: UInt32   = 0b0010
@@ -210,6 +214,9 @@ class GameScene: SKScene {
 extension GameScene: SpaceShipDelegate {
     func displayHeart(hearts: [SKSpriteNode]) {
         for (index, heart) in hearts.enumerated() {
+            if heart.inParentHierarchy(self) {
+                continue
+            }
             heart.position = CGPoint(x: -frame.width / 2 + heart.frame.height * CGFloat(index + 1), y: frame.height / 2 - heart.frame.height)
             addChild(heart)
         }
