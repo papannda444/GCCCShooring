@@ -24,7 +24,7 @@ class GameViewController: UIViewController {
             return
         }
         if let gameScene = scene as? GameScene {
-            gameScene.endGame = {
+            gameScene.gameSceneClose = {
                 self.dismiss(animated: false, completion: nil)
             }
             gameScene.shipType = shipType
