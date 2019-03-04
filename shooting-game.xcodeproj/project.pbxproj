@@ -17,9 +17,13 @@
 		DC00F8B6222C0E3B00C86005 /* PurpleShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00F8B5222C0E3B00C86005 /* PurpleShip.swift */; };
 		DC00F8B8222C0E6500C86005 /* SilverShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00F8B7222C0E6500C86005 /* SilverShip.swift */; };
 		DC00F8BA222C0E8300C86005 /* PinkShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00F8B9222C0E8300C86005 /* PinkShip.swift */; };
+		DC00F8BE222D188800C86005 /* EnemyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00F8BD222D188800C86005 /* EnemyType.swift */; };
+		DC00F8C0222D18E900C86005 /* EnemyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00F8BF222D18E900C86005 /* EnemyState.swift */; };
+		DC00F8C2222D1A9B00C86005 /* RedEnemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00F8C1222D1A9B00C86005 /* RedEnemy.swift */; };
+		DC00F8C4222D1AA500C86005 /* YellowEnemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00F8C3222D1AA500C86005 /* YellowEnemy.swift */; };
 		DC1F6C0421D0A8DB000E2878 /* PowerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1F6C0321D0A8DB000E2878 /* PowerItem.swift */; };
 		DC9CBC38221104E200BEA075 /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9CBC37221104E200BEA075 /* Bullet.swift */; };
-		DC9CBC3C221118AA00BEA075 /* Alien.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9CBC3B221118AA00BEA075 /* Alien.swift */; };
+		DC9CBC3C221118AA00BEA075 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9CBC3B221118AA00BEA075 /* Enemy.swift */; };
 		DCBA1D1321CF3EE20046AB45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBA1D1221CF3EE20046AB45 /* AppDelegate.swift */; };
 		DCBA1D1521CF3EE20046AB45 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DCBA1D1421CF3EE20046AB45 /* GameScene.sks */; };
 		DCBA1D1721CF3EE20046AB45 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = DCBA1D1621CF3EE20046AB45 /* Actions.sks */; };
@@ -44,9 +48,13 @@
 		DC00F8B5222C0E3B00C86005 /* PurpleShip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurpleShip.swift; sourceTree = "<group>"; };
 		DC00F8B7222C0E6500C86005 /* SilverShip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilverShip.swift; sourceTree = "<group>"; };
 		DC00F8B9222C0E8300C86005 /* PinkShip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinkShip.swift; sourceTree = "<group>"; };
+		DC00F8BD222D188800C86005 /* EnemyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyType.swift; sourceTree = "<group>"; };
+		DC00F8BF222D18E900C86005 /* EnemyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyState.swift; sourceTree = "<group>"; };
+		DC00F8C1222D1A9B00C86005 /* RedEnemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedEnemy.swift; sourceTree = "<group>"; };
+		DC00F8C3222D1AA500C86005 /* YellowEnemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YellowEnemy.swift; sourceTree = "<group>"; };
 		DC1F6C0321D0A8DB000E2878 /* PowerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerItem.swift; sourceTree = "<group>"; };
 		DC9CBC37221104E200BEA075 /* Bullet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
-		DC9CBC3B221118AA00BEA075 /* Alien.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alien.swift; sourceTree = "<group>"; };
+		DC9CBC3B221118AA00BEA075 /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 		DCBA1D0F21CF3EE20046AB45 /* shooting-game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "shooting-game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCBA1D1221CF3EE20046AB45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DCBA1D1421CF3EE20046AB45 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -97,6 +105,18 @@
 			path = SpaceShip;
 			sourceTree = "<group>";
 		};
+		DC00F8BC222D177B00C86005 /* Enemy */ = {
+			isa = PBXGroup;
+			children = (
+				DC9CBC3B221118AA00BEA075 /* Enemy.swift */,
+				DC00F8C1222D1A9B00C86005 /* RedEnemy.swift */,
+				DC00F8C3222D1AA500C86005 /* YellowEnemy.swift */,
+				DC00F8BF222D18E900C86005 /* EnemyState.swift */,
+				DC00F8BD222D188800C86005 /* EnemyType.swift */,
+			);
+			path = Enemy;
+			sourceTree = "<group>";
+		};
 		DCBA1D0621CF3EE20046AB45 = {
 			isa = PBXGroup;
 			children = (
@@ -126,7 +146,7 @@
 				DC9CBC37221104E200BEA075 /* Bullet.swift */,
 				DC1F6C0321D0A8DB000E2878 /* PowerItem.swift */,
 				DC00F8A8222BF72C00C86005 /* SpaceShip */,
-				DC9CBC3B221118AA00BEA075 /* Alien.swift */,
+				DC00F8BC222D177B00C86005 /* Enemy */,
 				DCBA1D1A21CF3EE20046AB45 /* GameViewController.swift */,
 				DCBA1D3D21CF925C0046AB45 /* TopViewController.swift */,
 				DCBA1D1C21CF3EE20046AB45 /* Main.storyboard */,
@@ -238,17 +258,21 @@
 				DCBA1D1921CF3EE20046AB45 /* GameScene.swift in Sources */,
 				DC1F6C0421D0A8DB000E2878 /* PowerItem.swift in Sources */,
 				DCBA1D1B21CF3EE20046AB45 /* GameViewController.swift in Sources */,
+				DC00F8C0222D18E900C86005 /* EnemyState.swift in Sources */,
 				DC00F8B8222C0E6500C86005 /* SilverShip.swift in Sources */,
 				DCBA1D1321CF3EE20046AB45 /* AppDelegate.swift in Sources */,
 				DC9CBC38221104E200BEA075 /* Bullet.swift in Sources */,
-				DC9CBC3C221118AA00BEA075 /* Alien.swift in Sources */,
+				DC00F8BE222D188800C86005 /* EnemyType.swift in Sources */,
+				DC9CBC3C221118AA00BEA075 /* Enemy.swift in Sources */,
 				DC00F8AA222BF74F00C86005 /* SpaceShip.swift in Sources */,
 				DC00F8B2222C0D8000C86005 /* SpaceShipType.swift in Sources */,
+				DC00F8C4222D1AA500C86005 /* YellowEnemy.swift in Sources */,
 				DC00F89822216EDF00C86005 /* CGPointExtension.swift in Sources */,
 				DC00F8B6222C0E3B00C86005 /* PurpleShip.swift in Sources */,
 				DC00F8B0222C0D3F00C86005 /* BlueShip.swift in Sources */,
 				DC00F8B4222C0E1900C86005 /* YellowShip.swift in Sources */,
 				DC00F8AC222BFEEF00C86005 /* SpaceShipState.swift in Sources */,
+				DC00F8C2222D1A9B00C86005 /* RedEnemy.swift in Sources */,
 				DC00F8AE222C002300C86005 /* RedShip.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
