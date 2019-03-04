@@ -23,6 +23,8 @@ enum SpaceShipState: String {
             self = .speed
         case .stone:
             self = .stone
+        case .heal:
+            self = .normal
         }
     }
 }

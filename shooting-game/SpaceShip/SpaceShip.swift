@@ -19,6 +19,7 @@ protocol SpaceShip {
     var state: SpaceShipState { get set }
     var moveSpeed: CGFloat { get set }
     var hearts: [SKSpriteNode] { get set }
+    var maxHitPoint: Int { get set }
     var bulletTimer: Timer? { get set }
     var timerForPowerItem: Timer? { get set }
     var powerUpTime: Float { get set }
@@ -31,15 +32,13 @@ protocol SpaceShip {
 
 extension SpaceShip {
     mutating func setHitPoint(hitPoint: Int) {
+        self.maxHitPoint = hitPoint
         for _ in 1...hitPoint {
             let heart = SKSpriteNode(imageNamed: "heart")
             heart.scale(to: CGSize(width: 50, height: 50))
             hearts.append(heart)
         }
-        guard let delegate = delegate else {
-            return
-        }
-        delegate.displayHeart(hearts: hearts)
+        delegate?.displayHeart(hearts: hearts)
     }
 
     func isShipState(equal state: SpaceShipState) -> Bool {

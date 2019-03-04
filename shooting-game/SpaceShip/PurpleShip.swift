@@ -15,6 +15,7 @@ class PurpleShip: SKSpriteNode, SpaceShip {
     var state = SpaceShipState()
     var moveSpeed: CGFloat = 0.0
     var hearts: [SKSpriteNode] = []
+    var maxHitPoint: Int = 0
     var bulletTimer: Timer?
     var timerForPowerItem: Timer?
     var powerUpTime: Float = 5.0 {
@@ -73,6 +74,14 @@ class PurpleShip: SKSpriteNode, SpaceShip {
                 self?.powerUpTime = 0.0
                 self?.moveSpeed = prevSpeed
             }
+        case .heal:
+            if hearts.count >= maxHitPoint {
+                return
+            }
+            let heart = SKSpriteNode(imageNamed: "heart")
+            heart.scale(to: CGSize(width: 50, height: 50))
+            hearts.append(heart)
+            delegate?.displayHeart(hearts: hearts)
         }
     }
 
