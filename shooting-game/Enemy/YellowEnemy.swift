@@ -19,7 +19,7 @@ class YellowEnemy: SKSpriteNode, Enemy {
     convenience init(moveSpeed: CGFloat, displayViewFrame frame: CGRect) {
         let texture = SKTexture(imageNamed: EnemyType.yellow.rawValue)
         self.init(texture: texture, color: .clear, size: texture.size())
-        scale(to: CGSize(width: 80, height: 80))
+        scale(to: CGSize(width: 70, height: 70))
     }
 
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {

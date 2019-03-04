@@ -24,17 +24,9 @@ class GameScene: SKScene {
         }
     }
 
+    var enemyTimer: Timer?
     var powerItemTimer: Timer?
 
-    var asteroidTimer: Timer?
-    var timerForAsteroud: Timer?
-    var asteroudDuration: TimeInterval = 6.0 {
-        didSet {
-            if asteroudDuration < 2.0 {
-                timerForAsteroud?.invalidate()
-            }
-        }
-    }
     var score: Int = 0 {
         didSet {
             scoreLabel?.text = "Score: \(score)"
@@ -47,7 +39,7 @@ class GameScene: SKScene {
     var timeLabel: SKLabelNode?
     var touchPosition: CGPoint?
 
-    let planets = ["enemy_red", "enemy_yellow"]
+    let enemyTypes: [EnemyType] = [.red, .yellow]
     let itemTypes: [PowerItem.ItemType] = [
         .speed, .speed, .speed,
         .stone, .stone, .stone,
@@ -82,11 +74,8 @@ class GameScene: SKScene {
         spaceship.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: enemyCategory + powerItemCategory)
         addChild(spaceship as! SKNode)
 
-        asteroidTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true ) { _ in
-            self.addAsteroid()
-        }
-        timerForAsteroud = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
-            self.asteroudDuration -= 0.5
+        enemyTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true ) { _ in
+            self.addEnemy()
         }
         powerItemTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { _ in
             self.addPowerItem()
@@ -135,7 +124,7 @@ class GameScene: SKScene {
 
     func gameEnd() {
         isPaused = true
-        asteroidTimer?.invalidate()
+        enemyTimer?.invalidate()
         powerItemTimer?.invalidate()
         gameClearTimer?.invalidate()
         let bestScore = UserDefaults.standard.integer(forKey: "bestScore")
@@ -182,21 +171,27 @@ class GameScene: SKScene {
         addChild(touchScreenLabel)
     }
 
-    func addAsteroid() {
-        let name = planets.randomElement()!
-        let asteroid = SKSpriteNode(imageNamed: name)
-        let positionX = frame.width * (CGFloat.random(in: 0...1) - 0.5)
-        asteroid.position = CGPoint(x: positionX, y: frame.height / 2 + asteroid.frame.height)
-        asteroid.scale(to: CGSize(width: 70, height: 70))
-        asteroid.physicsBody = SKPhysicsBody(circleOfRadius: asteroid.frame.width / 2)
-        asteroid.physicsBody?.categoryBitMask = enemyCategory
-        asteroid.physicsBody?.contactTestBitMask = missileCategory + spaceshipCategory
-        asteroid.physicsBody?.collisionBitMask = 0
-        addChild(asteroid)
-
-        let move = SKAction.moveTo(y: -frame.height / 2 - asteroid.frame.height, duration: asteroudDuration)
-        let remove = SKAction.removeFromParent()
-        asteroid.run(SKAction.sequence([move, remove]))
+    func addEnemy() {
+        let name = enemyTypes.randomElement()!
+        var enemy: Enemy
+        switch name {
+        case .red:
+            enemy = RedEnemy(moveSpeed: 2, displayViewFrame: frame)
+            enemy.setHitPoint(hitPoint: 2)
+        case .yellow:
+            enemy = YellowEnemy(moveSpeed: 2, displayViewFrame: frame)
+            enemy.setHitPoint(hitPoint: 2)
+        case .blue:
+            enemy = RedEnemy(moveSpeed: 2, displayViewFrame: frame)
+            enemy.setHitPoint(hitPoint: 2)
+        }
+        enemy.setPhysicsBody(categoryBitMask: enemyCategory, contactTestBitMask: missileCategory + spaceshipCategory)
+        enemy.createEnemyMovement(displayViewFrame: frame)
+        guard let enemyNode = enemy as? SKNode else {
+            return
+        }
+        addChild(enemyNode)
+        enemyNode.run(enemy.enemyMove.randomElement()!)
     }
 
     func addPowerItem() {
