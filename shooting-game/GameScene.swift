@@ -13,6 +13,17 @@ import SpriteKit
 class GameScene: SKScene {
     var endGame: () -> Void = {}
 
+    var gameClearTimer: Timer?
+    var clearTime: TimeInterval = 100.00 {
+        didSet {
+            timeLabel?.text = "\(String(format: "time: %.2f", clearTime))"
+            if clearTime <= 0 {
+                timeLabel?.text = "\(String(format: "time: %.2f", 0.00))"
+                gameClear()
+            }
+        }
+    }
+
     var powerItemTimer: Timer?
 
     var asteroidTimer: Timer?
@@ -33,6 +44,7 @@ class GameScene: SKScene {
     var spaceship: SpaceShip!
     var shipType = SpaceShipType()
     var scoreLabel: SKLabelNode?
+    var timeLabel: SKLabelNode?
     var touchPosition: CGPoint?
 
     let planets = ["enemy_red", "enemy_yellow"]
@@ -82,6 +94,17 @@ class GameScene: SKScene {
         score.position = CGPoint(x: -frame.width / 2 + score.frame.width / 2 + 50, y: frame.height / 2 - score.frame.height * 5)
         addChild(score)
         scoreLabel = score
+
+        let time = SKLabelNode(text: "\(String(format: "time: %.2f", clearTime))")
+        time.fontName = "Times New Roman"
+        time.fontSize = 40
+        time.position = CGPoint(x: 0, y: frame.height / 2 - time.frame.height)
+        addChild(time)
+        timeLabel = time
+
+        gameClearTimer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { [weak self] _ in
+            self?.clearTime -= 0.01
+        }
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -106,10 +129,11 @@ class GameScene: SKScene {
         spaceship.moveToPosition(touchPosition: position)
     }
 
-    func gameOver() {
+    func gameEnd() {
         isPaused = true
         asteroidTimer?.invalidate()
         powerItemTimer?.invalidate()
+        gameClearTimer?.invalidate()
         let bestScore = UserDefaults.standard.integer(forKey: "bestScore")
         if score > bestScore {
             UserDefaults.standard.set(score, forKey: "bestScore")
@@ -118,6 +142,27 @@ class GameScene: SKScene {
         if score > currentScore {
             UserDefaults.standard.set(score, forKey: "currentScore")
         }
+    }
+
+    func gameClear() {
+        gameEnd()
+
+        let gameOverLabel = SKLabelNode(text: "Game Clear")
+        gameOverLabel.fontName = "Papyrus"
+        gameOverLabel.fontSize = 100
+        gameOverLabel.fontColor = .blue
+        gameOverLabel.position = CGPoint.zero
+        addChild(gameOverLabel)
+
+        let touchScreenLabel = SKLabelNode(text: "Touch Screen")
+        touchScreenLabel.fontName = "Papyrus"
+        touchScreenLabel.fontSize = 50
+        touchScreenLabel.position = CGPoint(x: 0, y: -gameOverLabel.frame.height)
+        addChild(touchScreenLabel)
+    }
+
+    func gameOver() {
+        gameEnd()
 
         let gameOverLabel = SKLabelNode(text: "Game Over")
         gameOverLabel.fontName = "Papyrus"
