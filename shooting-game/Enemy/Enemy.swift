@@ -26,11 +26,19 @@ extension Enemy {
 
     mutating func createEnemyMovement(displayViewFrame frame: CGRect) {
         let positionX = frame.width * (CGFloat.random(in: 0...1) - 0.5)
-        let position = SKAction.move(to: CGPoint(x: positionX, y: frame.height / 2 + 100), duration: 0.0)
-        let rotate = SKAction.rotate(toAngle: CGFloat.degreeToRadian(degree: 180), duration: 0.0)
-        let move = SKAction.moveTo(y: -frame.height / 2 - 100, duration: 4.0)
-        let remove = SKAction.removeFromParent()
-        enemyMove.append(SKAction.sequence([position, rotate, move, remove]))
+        let topToBottom = SKAction.sequence([
+            SKAction.move(to: CGPoint(x: positionX, y: frame.height / 2 + 100), duration: 0.0),
+            SKAction.rotate(toAngle: CGFloat.degreeToRadian(degree: 180), duration: 0.0),
+            SKAction.moveTo(y: -frame.height / 2 - 100, duration: 4.0),
+            SKAction.removeFromParent()
+        ])
+        enemyMove.append(topToBottom)
+        let bottomToTop = SKAction.sequence([
+            SKAction.move(to: CGPoint(x: positionX, y: -frame.height / 2 - 100), duration: 0.0),
+            SKAction.moveTo(y: frame.height / 2 + 100, duration: 4.0),
+            SKAction.removeFromParent()
+        ])
+        enemyMove.append(bottomToTop)
     }
 
     func isShipState(equal state: EnemyState) -> Bool {
