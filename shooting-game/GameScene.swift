@@ -54,10 +54,11 @@ class GameScene: SKScene {
         .heal   //回復アイテムの出現率低め
     ]
 
-    let spaceshipCategory: UInt32 = 0b0001
-    let missileCategory: UInt32   = 0b0010
-    let enemyCategory: UInt32     = 0b0100
-    let powerItemCategory: UInt32 = 0b1000
+    let spaceshipCategory: UInt32   = 0b00001
+    let bulletCategory: UInt32      = 0b00010
+    let powerItemCategory: UInt32   = 0b00100
+    let enemyCategory: UInt32       = 0b01000
+    let enemyBulletCategory: UInt32 = 0b10000
 
     override func didMove(to view: SKView) {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
@@ -190,7 +191,7 @@ class GameScene: SKScene {
         asteroid.scale(to: CGSize(width: 70, height: 70))
         asteroid.physicsBody = SKPhysicsBody(circleOfRadius: asteroid.frame.width / 2)
         asteroid.physicsBody?.categoryBitMask = enemyCategory
-        asteroid.physicsBody?.contactTestBitMask = missileCategory + spaceshipCategory
+        asteroid.physicsBody?.contactTestBitMask = bulletCategory + spaceshipCategory
         asteroid.physicsBody?.collisionBitMask = 0
         addChild(asteroid)
 
@@ -202,7 +203,7 @@ class GameScene: SKScene {
     func addPowerItem() {
         let type = itemTypes.randomElement()!
         let item = PowerItem(itemType: type, addedViewFrame: frame)
-        item.setPhysicsBody(categoryBitMask: powerItemCategory, contactTestBitMask: spaceshipCategory + missileCategory)
+        item.setPhysicsBody(categoryBitMask: powerItemCategory, contactTestBitMask: spaceshipCategory + bulletCategory)
         addChild(item)
 
         let move = SKAction.moveTo(y: -frame.height / 2 - item.frame.height, duration: 5.0)
@@ -224,7 +225,7 @@ extension GameScene: SpaceShipDelegate {
 
     func addBullet(bulletType: Bullet.BulletType, position: CGPoint, _ positions: CGPoint..., action: SKAction) {
         let bullet = Bullet(bulletType: bulletType, position: position)
-        bullet.setPhysicsBody(categoryBitMask: missileCategory, contactTestBitMask: enemyCategory + powerItemCategory)
+        bullet.setPhysicsBody(categoryBitMask: bulletCategory, contactTestBitMask: enemyCategory + powerItemCategory)
         bullet.run(action)
         addChild(bullet)
         if positions.isEmpty {
@@ -232,7 +233,7 @@ extension GameScene: SpaceShipDelegate {
         }
         for position in positions {
             let bullet = Bullet(bulletType: bulletType, position: position)
-            bullet.setPhysicsBody(categoryBitMask: missileCategory, contactTestBitMask: enemyCategory + powerItemCategory)
+            bullet.setPhysicsBody(categoryBitMask: bulletCategory, contactTestBitMask: enemyCategory + powerItemCategory)
             bullet.run(action)
             addChild(bullet)
         }
@@ -241,37 +242,40 @@ extension GameScene: SpaceShipDelegate {
 
 extension GameScene: SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
-        var effecting: SKPhysicsBody
-        var target: SKPhysicsBody
+        var shipContent: SKPhysicsBody
+        var affectToShip: SKPhysicsBody
 
-        if contact.bodyA.categoryBitMask & (enemyCategory + powerItemCategory) != 0 {
-            effecting = contact.bodyA
-            target = contact.bodyB
+        if contact.bodyA.categoryBitMask & (spaceshipCategory | bulletCategory) != 0 {
+            shipContent = contact.bodyA
+            affectToShip = contact.bodyB
         } else {
-            effecting = contact.bodyB
-            target = contact.bodyA
+            shipContent = contact.bodyB
+            affectToShip = contact.bodyA
         }
 
-        guard let effectingNode = effecting.node,
-            let targetNode = target.node,
-            let explosion = SKEmitterNode(fileNamed: "Explosion") else { return }
-        explosion.position = effectingNode.position
-        addChild(explosion)
-        run(SKAction.wait(forDuration: 1.0)) {
-            explosion.removeFromParent()
-        }
-        effectingNode.removeFromParent()
-
-        if effecting.categoryBitMask == powerItemCategory {
-            guard let item = effectingNode as? PowerItem else {
-                return
+        if let item = affectToShip.node as? PowerItem {
+            affectToShip.node?.removeFromParent()
+            if let bullet = shipContent.node as? Bullet {
+                bullet.removeFromParent()
             }
             spaceship.powerUp(itemType: item.type)
-        } else if target.categoryBitMask == missileCategory {
-            targetNode.removeFromParent()
-            score += 5
-        } else if target.categoryBitMask == spaceshipCategory {
-            if spaceship.isShipState(equal: .stone) {
+            return
+        }
+
+        if let ship = shipContent.node as? SpaceShip {
+            affectToShip.node?.removeFromParent()
+            //爆発の処理をエネミー側で行いたい
+            guard let enemyNode = affectToShip.node,
+                let explosion = SKEmitterNode(fileNamed: "Explosion") else {
+                    return
+            }
+            explosion.position = enemyNode.position
+            addChild(explosion)
+            run(SKAction.wait(forDuration: 1.0)) {
+                explosion.removeFromParent()
+            }
+            //下記の処理をスペースシップ側で行いたい
+            if ship.isShipState(equal: .stone) {
                 score += 5
                 return
             }
@@ -279,7 +283,20 @@ extension GameScene: SKPhysicsContactDelegate {
                 return
             }
             heart.removeFromParent()
-            if spaceship.hearts.isEmpty { gameOver() }
+            if ship.hearts.isEmpty { gameOver() }
+        } else if let bullet = shipContent.node as? Bullet {
+            score += 5
+            bullet.removeFromParent()
+            affectToShip.node?.removeFromParent()
+            guard let enemyNode = affectToShip.node,
+                let explosion = SKEmitterNode(fileNamed: "Explosion") else {
+                    return
+            }
+            explosion.position = enemyNode.position
+            addChild(explosion)
+            run(SKAction.wait(forDuration: 1.0)) {
+                explosion.removeFromParent()
+            }
         }
     }
 }
