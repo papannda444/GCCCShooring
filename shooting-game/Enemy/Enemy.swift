@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-protocol Enemy {
+protocol Enemy: AnyObject {
     var state: EnemyState { get set }
     var enemyMove: [SKAction] { get set }
     var hitPoint: Int { get set }
@@ -20,11 +20,11 @@ protocol Enemy {
 }
 
 extension Enemy {
-    mutating func setHitPoint(hitPoint: Int) {
+    func setHitPoint(hitPoint: Int) {
         self.hitPoint = hitPoint
     }
 
-    mutating func createEnemyMovement(displayViewFrame frame: CGRect) {
+    func createEnemyMovement(displayViewFrame frame: CGRect) {
         let positionX = frame.width * (CGFloat.random(in: 0...1) - 0.5)
         let topToBottom = SKAction.sequence([
             SKAction.move(to: CGPoint(x: positionX, y: frame.height / 2 + 100), duration: 0.0),
@@ -43,5 +43,14 @@ extension Enemy {
 
     func isShipState(equal state: EnemyState) -> Bool {
         return self.state == state
+    }
+}
+
+extension Enemy where Self: SKSpriteNode {
+    func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32) {
+        physicsBody = SKPhysicsBody(circleOfRadius: frame.width / 2)
+        physicsBody?.categoryBitMask = categoryBitMask
+        physicsBody?.contactTestBitMask = contactTestBitMask
+        physicsBody?.collisionBitMask = 0
     }
 }
