@@ -14,7 +14,7 @@ protocol SpaceShipDelegate: AnyObject {
     func addBullet(bulletType: Bullet.BulletType, position: CGPoint, _ positions: CGPoint..., action: SKAction)
 }
 
-protocol SpaceShip {
+protocol SpaceShip: AnyObject {
     var delegate: SpaceShipDelegate? { get set }
     var state: SpaceShipState { get set }
     var moveSpeed: CGFloat { get set }
@@ -31,7 +31,7 @@ protocol SpaceShip {
 }
 
 extension SpaceShip {
-    mutating func setHitPoint(hitPoint: Int) {
+    func setHitPoint(hitPoint: Int) {
         self.maxHitPoint = hitPoint
         for _ in 1...hitPoint {
             let heart = SKSpriteNode(imageNamed: "heart")
@@ -47,5 +47,47 @@ extension SpaceShip {
 
     func touchViewEnd() {
         bulletTimer?.invalidate()
+    }
+}
+
+extension SpaceShip where Self: SKSpriteNode {
+    func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32) {
+        physicsBody = SKPhysicsBody(circleOfRadius: frame.width / 2)
+        physicsBody?.categoryBitMask = categoryBitMask
+        physicsBody?.contactTestBitMask = contactTestBitMask
+        physicsBody?.collisionBitMask = 0
+    }
+
+    func moveToPosition(touchPosition position: CGPoint) {
+        let movement = position - self.position
+        self.position += movement * moveSpeed / 10
+    }
+
+    func powerUp(itemType: PowerItem.ItemType) {
+        state.shipPowerUp(itemType: itemType)
+        switch itemType {
+        case .speed:
+            let prevSpeed = moveSpeed
+            moveSpeed *= 1.5
+            timerForPowerItem = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
+                self?.powerUpTime = 0.0
+                self?.moveSpeed = prevSpeed
+            }
+        case .stone:
+            let prevSpeed = moveSpeed
+            moveSpeed /= 2
+            timerForPowerItem = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
+                self?.powerUpTime = 0.0
+                self?.moveSpeed = prevSpeed
+            }
+        case .heal:
+            if hearts.count >= maxHitPoint {
+                return
+            }
+            let heart = SKSpriteNode(imageNamed: "heart")
+            heart.scale(to: CGSize(width: 50, height: 50))
+            hearts.append(heart)
+            delegate?.displayHeart(hearts: hearts)
+        }
     }
 }
