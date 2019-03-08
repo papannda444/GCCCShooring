@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-protocol Enemy {
+protocol Enemy: AnyObject {
     var state: EnemyState { get set }
     var enemyMove: [SKAction] { get set }
     var hitPoint: Int { get set }
@@ -20,11 +20,11 @@ protocol Enemy {
 }
 
 extension Enemy {
-    mutating func setHitPoint(hitPoint: Int) {
+    func setHitPoint(hitPoint: Int) {
         self.hitPoint = hitPoint
     }
 
-    mutating func createEnemyMovement(displayViewFrame frame: CGRect) {
+    func createEnemyMovement(displayViewFrame frame: CGRect) {
         let positionX = frame.width * (CGFloat.random(in: 0...1) - 0.5)
         let topToBottom = SKAction.sequence([
             SKAction.move(to: CGPoint(x: positionX, y: frame.height / 2 + 100), duration: 0.0),

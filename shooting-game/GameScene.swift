@@ -33,7 +33,7 @@ class GameScene: SKScene {
         }
     }
 
-    var spaceship: SpaceShip!
+    var spaceShip: SpaceShip!
     var shipType = SpaceShipType()
     var scoreLabel: SKLabelNode?
     var timeLabel: SKLabelNode?
@@ -58,22 +58,22 @@ class GameScene: SKScene {
 
         switch shipType {
         case .red:
-            spaceship = RedShip(moveSpeed: 2, displayViewFrame: frame)
+            spaceShip = RedShip(moveSpeed: 2, displayViewFrame: frame)
         case .blue:
-            spaceship = BlueShip(moveSpeed: 2, displayViewFrame: frame)
+            spaceShip = BlueShip(moveSpeed: 2, displayViewFrame: frame)
         case .yellow:
-            spaceship = YellowShip(moveSpeed: 3, displayViewFrame: frame)
+            spaceShip = YellowShip(moveSpeed: 3, displayViewFrame: frame)
         case .purple:
-            spaceship = PurpleShip(moveSpeed: 1.5, displayViewFrame: frame)
+            spaceShip = PurpleShip(moveSpeed: 1.5, displayViewFrame: frame)
         case .silver:
-            spaceship = SilverShip(moveSpeed: 1, displayViewFrame: frame)
+            spaceShip = SilverShip(moveSpeed: 1, displayViewFrame: frame)
         case .pink:
-            spaceship = PinkShip(moveSpeed: 1, displayViewFrame: frame)
+            spaceShip = PinkShip(moveSpeed: 1, displayViewFrame: frame)
         }
-        spaceship.delegate = self
-        spaceship.setHitPoint(hitPoint: 5)
-        spaceship.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: enemyCategory + powerItemCategory)
-        addChild(spaceship as! SKNode)
+        spaceShip.delegate = self
+        spaceShip.setHitPoint(hitPoint: 5)
+        spaceShip.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: enemyCategory + powerItemCategory)
+        addChild(spaceShip as! SKNode)
 
         enemyTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true ) { _ in
             self.addEnemy()
@@ -103,7 +103,7 @@ class GameScene: SKScene {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         touchPosition = convertPoint(fromView: touches.first!.location(in: view))
-        spaceship.touchViewBegin(touchedViewFrame: frame)
+        spaceShip.touchViewBegin(touchedViewFrame: frame)
     }
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -113,14 +113,14 @@ class GameScene: SKScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isPaused { gameSceneClose() }
         touchPosition = nil
-        spaceship.touchViewEnd()
+        spaceShip.touchViewEnd()
     }
 
     override func update(_ currentTime: TimeInterval) {
         guard let position = touchPosition else {
             return
         }
-        spaceship.moveToPosition(touchPosition: position)
+        spaceShip.moveToPosition(touchPosition: position)
     }
 
     func gameEnd() {
@@ -253,7 +253,7 @@ extension GameScene: SKPhysicsContactDelegate {
             if let bullet = shipContent.node as? Bullet {
                 bullet.removeFromParent()
             }
-            spaceship.powerUp(itemType: item.type)
+            spaceShip.powerUp(itemType: item.type)
             return
         }
 
@@ -274,7 +274,7 @@ extension GameScene: SKPhysicsContactDelegate {
                 score += 5
                 return
             }
-            guard let heart = spaceship.hearts.popLast() else {
+            guard let heart = spaceShip.hearts.popLast() else {
                 return
             }
             heart.removeFromParent()
