@@ -45,12 +45,3 @@ extension Enemy {
         return self.state == state
     }
 }
-
-extension Enemy where Self: SKSpriteNode {
-    func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32) {
-        physicsBody = SKPhysicsBody(circleOfRadius: frame.width / 2)
-        physicsBody?.categoryBitMask = categoryBitMask
-        physicsBody?.contactTestBitMask = contactTestBitMask
-        physicsBody?.collisionBitMask = 0
-    }
-}

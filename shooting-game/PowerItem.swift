@@ -36,11 +36,4 @@ class PowerItem: SKSpriteNode {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32) {
-        physicsBody = SKPhysicsBody(circleOfRadius: frame.width / 2)
-        physicsBody?.categoryBitMask = categoryBitMask
-        physicsBody?.contactTestBitMask = contactTestBitMask
-        physicsBody?.collisionBitMask = 0
-    }
 }

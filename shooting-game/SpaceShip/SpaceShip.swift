@@ -51,13 +51,6 @@ extension SpaceShip {
 }
 
 extension SpaceShip where Self: SKSpriteNode {
-    func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32) {
-        physicsBody = SKPhysicsBody(circleOfRadius: frame.width / 2)
-        physicsBody?.categoryBitMask = categoryBitMask
-        physicsBody?.contactTestBitMask = contactTestBitMask
-        physicsBody?.collisionBitMask = 0
-    }
-
     func moveToPosition(touchPosition position: CGPoint) {
         let movement = position - self.position
         self.position += movement * moveSpeed / 10
