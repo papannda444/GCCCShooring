@@ -17,6 +17,7 @@ protocol Enemy: AnyObject {
     var killPoint: Int { get set }
 
     func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32)
+    func damaged()
 }
 
 extension Enemy {
@@ -43,5 +44,19 @@ extension Enemy {
 
     func isShipState(equal state: EnemyState) -> Bool {
         return self.state == state
+    }
+}
+
+extension Enemy where Self: SKSpriteNode {
+    func damaged() {
+        removeFromParent()
+        guard let explosion = SKEmitterNode(fileNamed: "Explosion") else {
+            return
+        }
+        explosion.position = position
+        self.parent?.addChild(explosion)
+        run(SKAction.wait(forDuration: 1.0)) {
+            explosion.removeFromParent()
+        }
     }
 }

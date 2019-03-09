@@ -262,35 +262,19 @@ extension GameScene: SKPhysicsContactDelegate {
         }
 
         if let ship = shipContent.node as? SpaceShip {
-            affectToShip.node?.removeFromParent()
-            //爆発の処理をエネミー側で行いたい
-            guard let enemyNode = affectToShip.node,
-                let explosion = SKEmitterNode(fileNamed: "Explosion") else {
-                    return
-            }
-            explosion.position = enemyNode.position
-            addChild(explosion)
-            run(SKAction.wait(forDuration: 1.0)) {
-                explosion.removeFromParent()
-            }
+            guard let enemy = affectToShip.node as? Enemy else {
                 return
             }
             if ship.isShipState(equal: .stone) {
+                enemy.damaged()
                 return
             }
             ship.damaged()
         } else if let bullet = shipContent.node as? Bullet {
             score += 5
             bullet.removeFromParent()
-            affectToShip.node?.removeFromParent()
-            guard let enemyNode = affectToShip.node,
-                let explosion = SKEmitterNode(fileNamed: "Explosion") else {
-                    return
-            }
-            explosion.position = enemyNode.position
-            addChild(explosion)
-            run(SKAction.wait(forDuration: 1.0)) {
-                explosion.removeFromParent()
+            if let enemy = affectToShip.node as? Enemy {
+                enemy.damaged()
             }
         }
     }
