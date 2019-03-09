@@ -102,6 +102,7 @@ class GameScene: SKScene {
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if isPaused { gameSceneClose() }
         touchPosition = convertPoint(fromView: touches.first!.location(in: view))
         spaceShip.touchViewBegin(touchedViewFrame: frame)
     }
@@ -111,7 +112,6 @@ class GameScene: SKScene {
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if isPaused { gameSceneClose() }
         touchPosition = nil
         spaceShip.touchViewEnd()
     }
@@ -233,6 +233,10 @@ extension GameScene: SpaceShipDelegate {
             addChild(bullet)
         }
     }
+
+    func lostAllHearts() {
+        gameOver()
+    }
 }
 
 extension GameScene: SKPhysicsContactDelegate {
@@ -258,39 +262,19 @@ extension GameScene: SKPhysicsContactDelegate {
         }
 
         if let ship = shipContent.node as? SpaceShip {
-            affectToShip.node?.removeFromParent()
-            //爆発の処理をエネミー側で行いたい
-            guard let enemyNode = affectToShip.node,
-                let explosion = SKEmitterNode(fileNamed: "Explosion") else {
-                    return
+            guard let enemy = affectToShip.node as? Enemy else {
+                return
             }
-            explosion.position = enemyNode.position
-            addChild(explosion)
-            run(SKAction.wait(forDuration: 1.0)) {
-                explosion.removeFromParent()
-            }
-            //下記の処理をスペースシップ側で行いたい
             if ship.isShipState(equal: .stone) {
-                score += 5
+                enemy.damaged()
                 return
             }
-            guard let heart = spaceShip.hearts.popLast() else {
-                return
-            }
-            heart.removeFromParent()
-            if ship.hearts.isEmpty { gameOver() }
+            ship.damaged()
         } else if let bullet = shipContent.node as? Bullet {
             score += 5
             bullet.removeFromParent()
-            affectToShip.node?.removeFromParent()
-            guard let enemyNode = affectToShip.node,
-                let explosion = SKEmitterNode(fileNamed: "Explosion") else {
-                    return
-            }
-            explosion.position = enemyNode.position
-            addChild(explosion)
-            run(SKAction.wait(forDuration: 1.0)) {
-                explosion.removeFromParent()
+            if let enemy = affectToShip.node as? Enemy {
+                enemy.damaged()
             }
         }
     }

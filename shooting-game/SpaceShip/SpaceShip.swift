@@ -12,6 +12,7 @@ import SpriteKit
 protocol SpaceShipDelegate: AnyObject {
     func displayHeart(hearts: [SKSpriteNode])
     func addBullet(bulletType: Bullet.BulletType, position: CGPoint, _ positions: CGPoint..., action: SKAction)
+    func lostAllHearts()
 }
 
 protocol SpaceShip: AnyObject {
@@ -39,6 +40,15 @@ extension SpaceShip {
             hearts.append(heart)
         }
         delegate?.displayHeart(hearts: hearts)
+    }
+
+    func damaged() {
+        guard let heart = hearts.popLast() else {
+            return
+        }
+        heart.removeFromParent()
+
+        if hearts.isEmpty { delegate?.lostAllHearts() }
     }
 
     func isShipState(equal state: SpaceShipState) -> Bool {
