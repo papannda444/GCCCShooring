@@ -233,6 +233,10 @@ extension GameScene: SpaceShipDelegate {
             addChild(bullet)
         }
     }
+
+    func lostAllHearts() {
+        gameOver()
+    }
 }
 
 extension GameScene: SKPhysicsContactDelegate {
@@ -269,16 +273,12 @@ extension GameScene: SKPhysicsContactDelegate {
             run(SKAction.wait(forDuration: 1.0)) {
                 explosion.removeFromParent()
             }
-            //下記の処理をスペースシップ側で行いたい
+                return
+            }
             if ship.isShipState(equal: .stone) {
-                score += 5
                 return
             }
-            guard let heart = spaceShip.hearts.popLast() else {
-                return
-            }
-            heart.removeFromParent()
-            if ship.hearts.isEmpty { gameOver() }
+            ship.damaged()
         } else if let bullet = shipContent.node as? Bullet {
             score += 5
             bullet.removeFromParent()
