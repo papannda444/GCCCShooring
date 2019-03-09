@@ -102,6 +102,7 @@ class GameScene: SKScene {
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if isPaused { gameSceneClose() }
         touchPosition = convertPoint(fromView: touches.first!.location(in: view))
         spaceShip.touchViewBegin(touchedViewFrame: frame)
     }
@@ -111,7 +112,6 @@ class GameScene: SKScene {
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if isPaused { gameSceneClose() }
         touchPosition = nil
         spaceShip.touchViewEnd()
     }
