@@ -117,7 +117,9 @@ class GameScene: SKScene {
     }
 
     override func update(_ currentTime: TimeInterval) {
-        if isPaused { return }
+        if isPaused {
+            return
+        }
         guard let position = touchPosition else {
             return
         }
