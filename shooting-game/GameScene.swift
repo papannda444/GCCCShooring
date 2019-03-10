@@ -117,6 +117,7 @@ class GameScene: SKScene {
     }
 
     override func update(_ currentTime: TimeInterval) {
+        if isPaused { return }
         guard let position = touchPosition else {
             return
         }
@@ -188,11 +189,8 @@ class GameScene: SKScene {
         }
         enemy.setPhysicsBody(categoryBitMask: enemyCategory, contactTestBitMask: bulletCategory + spaceshipCategory)
         enemy.createEnemyMovement(displayViewFrame: frame)
-        guard let enemyNode = enemy as? SKNode else {
-            return
-        }
-        addChild(enemyNode)
-        enemyNode.run(enemy.enemyMove.randomElement()!)
+        enemy.startMove()
+        addChild(enemy as! SKNode)
     }
 
     func addPowerItem() {
