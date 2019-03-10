@@ -218,20 +218,9 @@ extension GameScene: SpaceShipDelegate {
         }
     }
 
-    func addBullet(bulletType: Bullet.BulletType, position: CGPoint, _ positions: CGPoint..., action: SKAction) {
-        let bullet = Bullet(bulletType: bulletType, position: position)
+    func addBullet(bullet: SKSpriteNode) {
         bullet.setPhysicsBody(categoryBitMask: bulletCategory, contactTestBitMask: enemyCategory + powerItemCategory)
-        bullet.run(action)
         addChild(bullet)
-        if positions.isEmpty {
-            return
-        }
-        for position in positions {
-            let bullet = Bullet(bulletType: bulletType, position: position)
-            bullet.setPhysicsBody(categoryBitMask: bulletCategory, contactTestBitMask: enemyCategory + powerItemCategory)
-            bullet.run(action)
-            addChild(bullet)
-        }
     }
 
     func lostAllHearts() {

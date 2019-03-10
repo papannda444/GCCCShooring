@@ -47,13 +47,17 @@ class PurpleShip: SKSpriteNode, SpaceShip {
 
     func touchViewBegin(touchedViewFrame frame: CGRect) {
         bulletTimer?.invalidate()
-        let moveToTop = SKAction.moveTo(y: frame.height + 10, duration: 0.3)
-        let remove = SKAction.removeFromParent()
-        delegate?.addBullet(bulletType: .purple, position: position, action: SKAction.sequence([moveToTop, remove]))
+        let moveToTop = SKAction.sequence([
+            SKAction.moveTo(y: frame.height + 10, duration: 0.3),
+            SKAction.removeFromParent()
+        ])
+        let bullet = Bullet(bulletType: .purple, position: position)
+        bullet.run(moveToTop)
+        delegate?.addBullet(bullet: bullet)
         bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
-            self?.delegate?.addBullet(bulletType: .purple,
-                                      position: self?.position ?? .zero,
-                                      action: SKAction.sequence([moveToTop, remove]))
+            let bullet = Bullet(bulletType: .purple, position: self?.position ?? .zero)
+            bullet.run(moveToTop)
+            self?.delegate?.addBullet(bullet: bullet)
         }
     }
 }
