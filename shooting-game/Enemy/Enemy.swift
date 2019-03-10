@@ -49,14 +49,14 @@ extension Enemy {
 
 extension Enemy where Self: SKSpriteNode {
     func damaged() {
-        removeFromParent()
         guard let explosion = SKEmitterNode(fileNamed: "Explosion") else {
             return
         }
         explosion.position = position
         self.parent?.addChild(explosion)
-        run(SKAction.wait(forDuration: 1.0)) {
+        explosion.run(SKAction.wait(forDuration: 1.0)) {
             explosion.removeFromParent()
         }
+        removeFromParent()
     }
 }
