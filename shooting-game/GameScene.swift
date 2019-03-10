@@ -39,6 +39,9 @@ class GameScene: SKScene {
     var timeLabel: SKLabelNode?
     var touchPosition: CGPoint?
 
+    let pausedScene = SKNode()
+    let nonPausedScene = SKNode()
+
     let enemyTypes: [EnemyType] = [.red, .yellow]
     let itemTypes: [PowerItem.ItemType] = [
         .speed, .speed, .speed,
@@ -55,6 +58,8 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
+        addChild(pausedScene)
+        addChild(nonPausedScene)
 
         switch shipType {
         case .red:
@@ -73,7 +78,7 @@ class GameScene: SKScene {
         spaceShip.delegate = self
         spaceShip.setHitPoint(hitPoint: 5)
         spaceShip.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: enemyCategory + powerItemCategory)
-        addChild(spaceShip as! SKNode)
+        pausedScene.addChild(spaceShip as! SKNode)
 
         enemyTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true ) { _ in
             self.addEnemy()
@@ -102,7 +107,7 @@ class GameScene: SKScene {
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if isPaused { gameSceneClose() }
+        if pausedScene.isPaused { gameSceneClose() }
         touchPosition = convertPoint(fromView: touches.first!.location(in: view))
         spaceShip.touchViewBegin(touchedViewFrame: frame)
     }
@@ -117,7 +122,8 @@ class GameScene: SKScene {
     }
 
     override func update(_ currentTime: TimeInterval) {
-        if isPaused {
+        if pausedScene.isPaused {
+            spaceShip.touchViewEnd()
             return
         }
         guard let position = touchPosition else {
@@ -127,7 +133,7 @@ class GameScene: SKScene {
     }
 
     func gameEnd() {
-        isPaused = true
+        pausedScene.isPaused = true
         enemyTimer?.invalidate()
         powerItemTimer?.invalidate()
         gameClearTimer?.invalidate()
@@ -156,6 +162,18 @@ class GameScene: SKScene {
         touchScreenLabel.fontSize = 50
         touchScreenLabel.position = CGPoint(x: 0, y: -gameOverLabel.frame.height)
         addChild(touchScreenLabel)
+
+        var confetti: [SKNode?] = []
+        confetti.append(SKEmitterNode(fileNamed: "ConfettiBlue"))
+        confetti.append(SKEmitterNode(fileNamed: "ConfettiGreen"))
+        confetti.append(SKEmitterNode(fileNamed: "ConfettiOrange"))
+        confetti.append(SKEmitterNode(fileNamed: "ConfettiPink"))
+        confetti.append(SKEmitterNode(fileNamed: "ConfettiRed"))
+        confetti.append(SKEmitterNode(fileNamed: "ConfettiYellow"))
+        confetti.compactMap { $0 }.forEach {
+            $0.position = CGPoint(x: 0, y: frame.height / 2)
+            nonPausedScene.addChild($0)
+        }
     }
 
     func gameOver() {
@@ -192,14 +210,14 @@ class GameScene: SKScene {
         enemy.setPhysicsBody(categoryBitMask: enemyCategory, contactTestBitMask: bulletCategory + spaceshipCategory)
         enemy.createEnemyMovement(displayViewFrame: frame)
         enemy.startMove()
-        addChild(enemy as! SKNode)
+        pausedScene.addChild(enemy as! SKNode)
     }
 
     func addPowerItem() {
         let type = itemTypes.randomElement()!
         let item = PowerItem(itemType: type, addedViewFrame: frame)
         item.setPhysicsBody(categoryBitMask: powerItemCategory, contactTestBitMask: spaceshipCategory + bulletCategory)
-        addChild(item)
+        pausedScene.addChild(item)
 
         let move = SKAction.moveTo(y: -frame.height / 2 - item.frame.height, duration: 5.0)
         let remove = SKAction.removeFromParent()
@@ -220,7 +238,7 @@ extension GameScene: SpaceShipDelegate {
 
     func addBullet(bullet: SKSpriteNode) {
         bullet.setPhysicsBody(categoryBitMask: bulletCategory, contactTestBitMask: enemyCategory + powerItemCategory)
-        addChild(bullet)
+        pausedScene.addChild(bullet)
     }
 
     func lostAllHearts() {
