@@ -17,6 +17,7 @@ protocol Enemy: AnyObject {
     var killPoint: Int { get set }
 
     func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32)
+    func startMove()
     func damaged()
 }
 
@@ -58,5 +59,12 @@ extension Enemy where Self: SKSpriteNode {
             explosion.removeFromParent()
         }
         removeFromParent()
+    }
+
+    func startMove() {
+        guard let action = enemyMove.randomElement() else {
+            return
+        }
+        run(action)
     }
 }
