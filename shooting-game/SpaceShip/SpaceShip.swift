@@ -11,7 +11,7 @@ import SpriteKit
 
 protocol SpaceShipDelegate: AnyObject {
     func displayHeart(hearts: [SKSpriteNode])
-    func addBullet(bulletType: Bullet.BulletType, position: CGPoint, _ positions: CGPoint..., action: SKAction)
+    func addBullet(bullet: SKSpriteNode)
     func lostAllHearts()
 }
 
