@@ -98,7 +98,7 @@ extension SpaceShip where Self: SKSpriteNode {
                 return
             }
             let heart = SKSpriteNode(imageNamed: "heart")
-            heart.scale(to: CGSize(width: 50, height: 50))
+            heart.scale(to: CGSize(width: 70, height: 70))
             hearts.append(heart)
             delegate?.displayHeart(hearts: hearts)
         }
