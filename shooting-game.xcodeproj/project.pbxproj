@@ -30,6 +30,7 @@
 		DC1187C42235604100524E4B /* ConfettiGreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = DC1187C32235604100524E4B /* ConfettiGreen.sks */; };
 		DC1187C62235608300524E4B /* ConfettiOrange.sks in Resources */ = {isa = PBXBuildFile; fileRef = DC1187C52235608300524E4B /* ConfettiOrange.sks */; };
 		DC1187C8223638E200524E4B /* EnemyBullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1187C7223638E200524E4B /* EnemyBullet.swift */; };
+		DC1187CA22368FCC00524E4B /* SpaceShipLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1187C922368FCC00524E4B /* SpaceShipLevel.swift */; };
 		DC1F6C0421D0A8DB000E2878 /* PowerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1F6C0321D0A8DB000E2878 /* PowerItem.swift */; };
 		DC9CBC38221104E200BEA075 /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9CBC37221104E200BEA075 /* Bullet.swift */; };
 		DC9CBC3C221118AA00BEA075 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9CBC3B221118AA00BEA075 /* Enemy.swift */; };
@@ -70,6 +71,7 @@
 		DC1187C32235604100524E4B /* ConfettiGreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ConfettiGreen.sks; sourceTree = "<group>"; };
 		DC1187C52235608300524E4B /* ConfettiOrange.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ConfettiOrange.sks; sourceTree = "<group>"; };
 		DC1187C7223638E200524E4B /* EnemyBullet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyBullet.swift; sourceTree = "<group>"; };
+		DC1187C922368FCC00524E4B /* SpaceShipLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceShipLevel.swift; sourceTree = "<group>"; };
 		DC1F6C0321D0A8DB000E2878 /* PowerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerItem.swift; sourceTree = "<group>"; };
 		DC9CBC37221104E200BEA075 /* Bullet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
 		DC9CBC3B221118AA00BEA075 /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				DC00F8B7222C0E6500C86005 /* SilverShip.swift */,
 				DC00F8B9222C0E8300C86005 /* PinkShip.swift */,
 				DC00F8AB222BFEEF00C86005 /* SpaceShipState.swift */,
+				DC1187C922368FCC00524E4B /* SpaceShipLevel.swift */,
 				DC00F8B1222C0D8000C86005 /* SpaceShipType.swift */,
 			);
 			path = SpaceShip;
@@ -307,6 +310,7 @@
 				DC00F8BE222D188800C86005 /* EnemyType.swift in Sources */,
 				DC00F8FC222EE66A00C86005 /* CGFloatExtension.swift in Sources */,
 				DC9CBC3C221118AA00BEA075 /* Enemy.swift in Sources */,
+				DC1187CA22368FCC00524E4B /* SpaceShipLevel.swift in Sources */,
 				DC00F8AA222BF74F00C86005 /* SpaceShip.swift in Sources */,
 				DC00F8B2222C0D8000C86005 /* SpaceShipType.swift in Sources */,
 				DC00F8C4222D1AA500C86005 /* YellowEnemy.swift in Sources */,

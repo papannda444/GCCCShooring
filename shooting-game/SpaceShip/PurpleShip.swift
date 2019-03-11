@@ -27,6 +27,7 @@ class PurpleShip: SKSpriteNode, SpaceShip {
         }
     }
     var moveSpeed: CGFloat = 0.0
+    var level = SpaceShipLevel()
     var hearts: [SKSpriteNode] = []
     var maxHitPoint: Int = 0
     var bulletTimer: Timer?

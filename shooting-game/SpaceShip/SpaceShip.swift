@@ -20,6 +20,7 @@ protocol SpaceShip: AnyObject {
     var delegate: SpaceShipDelegate? { get set }
     var state: SpaceShipState { get set }
     var moveSpeed: CGFloat { get set }
+    var level: SpaceShipLevel { get set }
     var hearts: [SKSpriteNode] { get set }
     var maxHitPoint: Int { get set }
     var bulletTimer: Timer? { get set }
