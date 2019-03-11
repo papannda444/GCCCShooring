@@ -9,16 +9,23 @@
 import Foundation
 import SpriteKit
 
+protocol EnemyDelegate: AnyObject {
+    func enemyAttack(bullet: EnemyBullet)
+}
+
 protocol Enemy: AnyObject {
+    var delegate: EnemyDelegate? { get set }
     var state: EnemyState { get set }
     var enemyMove: [SKAction] { get set }
     var hitPoint: Int { get set }
-    var attackTimer: Timer? { get set }
+    var firstAttackTimer: Timer? { get set }
+    var secondAttackTimer: Timer? { get set }
     var killPoint: Int { get set }
 
     func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32)
     func startMove()
     func damaged()
+    func invalidateAttackTimer()
 }
 
 extension Enemy {
@@ -46,6 +53,11 @@ extension Enemy {
     func isShipState(equal state: EnemyState) -> Bool {
         return self.state == state
     }
+
+    func invalidateAttackTimer() {
+        firstAttackTimer?.invalidate()
+        secondAttackTimer?.invalidate()
+    }
 }
 
 extension Enemy where Self: SKSpriteNode {
@@ -59,12 +71,5 @@ extension Enemy where Self: SKSpriteNode {
             explosion.removeFromParent()
         }
         removeFromParent()
-    }
-
-    func startMove() {
-        guard let action = enemyMove.randomElement() else {
-            return
-        }
-        run(action)
     }
 }

@@ -146,6 +146,8 @@ class GameScene: SKScene {
         enemyTimer?.invalidate()
         powerItemTimer?.invalidate()
         gameClearTimer?.invalidate()
+        pausedScene.children.compactMap { $0 as? Enemy }.forEach { $0.invalidateAttackTimer() }
+        pausedScene.children.compactMap { $0 as? EnemyBullet }.forEach { $0.moveTimer?.invalidate() }
         let bestScore = UserDefaults.standard.integer(forKey: "bestScore")
         if score > bestScore {
             UserDefaults.standard.set(score, forKey: "bestScore")
@@ -216,6 +218,7 @@ class GameScene: SKScene {
             enemy = RedEnemy(moveSpeed: 2, displayViewFrame: frame)
             enemy.setHitPoint(hitPoint: 2)
         }
+        enemy.delegate = self
         enemy.setPhysicsBody(categoryBitMask: enemyCategory, contactTestBitMask: bulletCategory + spaceshipCategory)
         enemy.createEnemyMovement(displayViewFrame: frame)
         enemy.startMove()
@@ -266,6 +269,14 @@ extension GameScene: SpaceShipDelegate {
     }
 }
 
+extension GameScene: EnemyDelegate {
+    func enemyAttack(bullet: EnemyBullet) {
+        bullet.setPhysicsBody(categoryBitMask: enemyBulletCategory, contactTestBitMask: spaceshipCategory)
+        bullet.startMove(shipPosition: spaceShip.getPosition())
+        pausedScene.addChild(bullet)
+    }
+}
+
 extension GameScene: SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         var shipContent: SKPhysicsBody
@@ -289,14 +300,12 @@ extension GameScene: SKPhysicsContactDelegate {
         }
 
         if let ship = shipContent.node as? SpaceShip {
-            guard let enemy = affectToShip.node as? Enemy else {
-                return
+            if let enemyBullet = affectToShip.node as? EnemyBullet {
+                enemyBullet.removeFromParent()
+                ship.damaged()
+            } else if let enemy = affectToShip.node as? Enemy {
+                ship.damaged(enemy)
             }
-            if ship.isShipState(equal: .stone) {
-                enemy.damaged()
-                return
-            }
-            ship.damaged()
         } else if let bullet = shipContent.node as? Bullet {
             score += 5
             bullet.removeFromParent()
