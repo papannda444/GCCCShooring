@@ -12,6 +12,7 @@ import SpriteKit
 protocol SpaceShipDelegate: AnyObject {
     func displayHeart(hearts: [SKSpriteNode])
     func addBullet(bullet: SKSpriteNode)
+    func updateShipState(statusTexture: SKTexture?)
     func lostAllHearts()
 }
 

@@ -12,7 +12,20 @@ import SpriteKit
 class YellowShip: SKSpriteNode, SpaceShip {
     weak var delegate: SpaceShipDelegate?
 
-    var state = SpaceShipState()
+    var state = SpaceShipState() {
+        didSet {
+            let statusTexture: SKTexture?
+            switch state {
+            case .normal:
+                statusTexture = nil
+            default:
+                // state is .speed or .stone
+                statusTexture = SKTexture(imageNamed: state.rawValue)
+            }
+
+            delegate?.updateShipState(statusTexture: statusTexture)
+        }
+    }
     var moveSpeed: CGFloat = 0.0
     var hearts: [SKSpriteNode] = []
     var maxHitPoint: Int = 0

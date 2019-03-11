@@ -37,6 +37,7 @@ class GameScene: SKScene {
     var shipType = SpaceShipType()
     var scoreLabel: SKLabelNode?
     var timeLabel: SKLabelNode?
+    var shipStatusLabel: SKSpriteNode?
     var touchPosition: CGPoint?
 
     let pausedScene = SKNode()
@@ -100,6 +101,14 @@ class GameScene: SKScene {
         time.position = CGPoint(x: 0, y: frame.height / 2 - time.frame.height)
         addChild(time)
         timeLabel = time
+
+        let status = SKSpriteNode(imageNamed: "")
+        status.isHidden = true
+        status.scale(to: CGSize(width: 80, height: 80))
+        status.position = CGPoint(x: frame.width / 2 - status.frame.width,
+                                  y: frame.height / 2 - status.frame.height)
+        addChild(status)
+        shipStatusLabel = status
 
         gameClearTimer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { [weak self] _ in
             self?.clearTime -= 0.01
@@ -239,6 +248,17 @@ extension GameScene: SpaceShipDelegate {
     func addBullet(bullet: SKSpriteNode) {
         bullet.setPhysicsBody(categoryBitMask: bulletCategory, contactTestBitMask: enemyCategory + powerItemCategory)
         pausedScene.addChild(bullet)
+    }
+
+    func updateShipState(statusTexture: SKTexture?) {
+        guard let texture = statusTexture else {
+            shipStatusLabel?.isHidden = true
+            return
+        }
+        shipStatusLabel?.run(SKAction.setTexture(texture))
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.shipStatusLabel?.isHidden = false
+        }
     }
 
     func lostAllHearts() {
