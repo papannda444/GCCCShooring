@@ -25,6 +25,7 @@ protocol SpaceShip: AnyObject {
     var bulletTimer: Timer? { get set }
     var timerForPowerItem: Timer? { get set }
 
+    func getPosition() -> CGPoint
     func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32)
     func moveToPosition(touchPosition position: CGPoint)
     func powerUp(itemType: PowerItem.ItemType)
@@ -61,6 +62,10 @@ extension SpaceShip {
 }
 
 extension SpaceShip where Self: SKSpriteNode {
+    func getPosition() -> CGPoint {
+        return position
+    }
+
     func moveToPosition(touchPosition position: CGPoint) {
         let movement = position - self.position
         self.position += movement * moveSpeed / 10

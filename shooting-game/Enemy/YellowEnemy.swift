@@ -10,10 +10,13 @@ import Foundation
 import SpriteKit
 
 class YellowEnemy: SKSpriteNode, Enemy {
+    weak var delegate: EnemyDelegate?
+
     var state = EnemyState()
     var enemyMove: [SKAction] = []
     var hitPoint: Int = 0
-    var attackTimer: Timer?
+    var firstAttackTimer: Timer?
+    var secondAttackTimer: Timer?
     var killPoint: Int = 20
 
     convenience init(moveSpeed: CGFloat, displayViewFrame frame: CGRect) {
@@ -29,5 +32,21 @@ class YellowEnemy: SKSpriteNode, Enemy {
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func startMove() {
+        guard let action = enemyMove.randomElement() else {
+            return
+        }
+        run(action)
+
+        firstAttackTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] _ in
+            let bullet = EnemyBullet(enemyType: .yellow, position: self?.position ?? .zero)
+            self?.delegate?.enemyAttack(bullet: bullet)
+        }
+        secondAttackTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [weak self] _ in
+            let bullet = EnemyBullet(enemyType: .yellow, position: self?.position ?? .zero)
+            self?.delegate?.enemyAttack(bullet: bullet)
+        }
     }
 }

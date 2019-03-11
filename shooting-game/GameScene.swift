@@ -216,6 +216,7 @@ class GameScene: SKScene {
             enemy = RedEnemy(moveSpeed: 2, displayViewFrame: frame)
             enemy.setHitPoint(hitPoint: 2)
         }
+        enemy.delegate = self
         enemy.setPhysicsBody(categoryBitMask: enemyCategory, contactTestBitMask: bulletCategory + spaceshipCategory)
         enemy.createEnemyMovement(displayViewFrame: frame)
         enemy.startMove()
@@ -263,6 +264,13 @@ extension GameScene: SpaceShipDelegate {
 
     func lostAllHearts() {
         gameOver()
+    }
+}
+
+extension GameScene: EnemyDelegate {
+    func enemyAttack(bullet: EnemyBullet) {
+        bullet.startMove(shipPosition: spaceShip.getPosition())
+        pausedScene.addChild(bullet)
     }
 }
 

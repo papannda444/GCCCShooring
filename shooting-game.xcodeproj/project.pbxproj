@@ -29,6 +29,7 @@
 		DC1187C222355FD100524E4B /* ConfettiRed.sks in Resources */ = {isa = PBXBuildFile; fileRef = DC1187C122355FD100524E4B /* ConfettiRed.sks */; };
 		DC1187C42235604100524E4B /* ConfettiGreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = DC1187C32235604100524E4B /* ConfettiGreen.sks */; };
 		DC1187C62235608300524E4B /* ConfettiOrange.sks in Resources */ = {isa = PBXBuildFile; fileRef = DC1187C52235608300524E4B /* ConfettiOrange.sks */; };
+		DC1187C8223638E200524E4B /* EnemyBullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1187C7223638E200524E4B /* EnemyBullet.swift */; };
 		DC1F6C0421D0A8DB000E2878 /* PowerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1F6C0321D0A8DB000E2878 /* PowerItem.swift */; };
 		DC9CBC38221104E200BEA075 /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9CBC37221104E200BEA075 /* Bullet.swift */; };
 		DC9CBC3C221118AA00BEA075 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9CBC3B221118AA00BEA075 /* Enemy.swift */; };
@@ -68,6 +69,7 @@
 		DC1187C122355FD100524E4B /* ConfettiRed.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ConfettiRed.sks; sourceTree = "<group>"; };
 		DC1187C32235604100524E4B /* ConfettiGreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ConfettiGreen.sks; sourceTree = "<group>"; };
 		DC1187C52235608300524E4B /* ConfettiOrange.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ConfettiOrange.sks; sourceTree = "<group>"; };
+		DC1187C7223638E200524E4B /* EnemyBullet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyBullet.swift; sourceTree = "<group>"; };
 		DC1F6C0321D0A8DB000E2878 /* PowerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerItem.swift; sourceTree = "<group>"; };
 		DC9CBC37221104E200BEA075 /* Bullet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
 		DC9CBC3B221118AA00BEA075 /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				DC00F8C3222D1AA500C86005 /* YellowEnemy.swift */,
 				DC00F8BF222D18E900C86005 /* EnemyState.swift */,
 				DC00F8BD222D188800C86005 /* EnemyType.swift */,
+				DC1187C7223638E200524E4B /* EnemyBullet.swift */,
 			);
 			path = Enemy;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 				DC00F8C4222D1AA500C86005 /* YellowEnemy.swift in Sources */,
 				DC00F89822216EDF00C86005 /* CGPointExtension.swift in Sources */,
 				DC00F8B6222C0E3B00C86005 /* PurpleShip.swift in Sources */,
+				DC1187C8223638E200524E4B /* EnemyBullet.swift in Sources */,
 				DC00F8B0222C0D3F00C86005 /* BlueShip.swift in Sources */,
 				DC00F8B4222C0E1900C86005 /* YellowShip.swift in Sources */,
 				DC00F8AC222BFEEF00C86005 /* SpaceShipState.swift in Sources */,
