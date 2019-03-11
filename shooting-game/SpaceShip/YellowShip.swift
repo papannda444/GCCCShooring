@@ -37,7 +37,7 @@ class YellowShip: SKSpriteNode, SpaceShip {
         self.init(texture: texture, color: .clear, size: texture.size())
         self.moveSpeed = moveSpeed
         position = CGPoint(x: 0, y: frame.height / 2 - self.frame.height)
-        scale(to: CGSize(width: 80, height: 80))
+        scale(to: CGSize(width: 90, height: 90))
     }
 
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
