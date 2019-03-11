@@ -18,15 +18,6 @@ class RedShip: SKSpriteNode, SpaceShip {
     var maxHitPoint: Int = 0
     var bulletTimer: Timer?
     var timerForPowerItem: Timer?
-    var powerUpTime: Float = 5.0 {
-        didSet {
-            if powerUpTime <= 0.0 {
-                powerUpTime = 5.0
-                timerForPowerItem?.invalidate()
-                state = .normal
-            }
-        }
-    }
 
     convenience init(moveSpeed: CGFloat, displayViewFrame frame: CGRect) {
         let texture = SKTexture(imageNamed: SpaceShipType.red.rawValue)

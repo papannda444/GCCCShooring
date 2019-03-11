@@ -23,7 +23,6 @@ protocol SpaceShip: AnyObject {
     var maxHitPoint: Int { get set }
     var bulletTimer: Timer? { get set }
     var timerForPowerItem: Timer? { get set }
-    var powerUpTime: Float { get set }
 
     func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32)
     func moveToPosition(touchPosition position: CGPoint)
@@ -72,16 +71,16 @@ extension SpaceShip where Self: SKSpriteNode {
         case .speed:
             let prevSpeed = moveSpeed
             moveSpeed *= 1.5
-            timerForPowerItem = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
-                self?.powerUpTime = 0.0
+            timerForPowerItem = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] _ in
                 self?.moveSpeed = prevSpeed
+                self?.state = .normal
             }
         case .stone:
             let prevSpeed = moveSpeed
             moveSpeed /= 2
-            timerForPowerItem = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
-                self?.powerUpTime = 0.0
+            timerForPowerItem = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] _ in
                 self?.moveSpeed = prevSpeed
+                self?.state = .normal
             }
         case .heal:
             if hearts.count >= maxHitPoint {
