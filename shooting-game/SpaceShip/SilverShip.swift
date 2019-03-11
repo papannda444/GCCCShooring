@@ -26,6 +26,11 @@ class SilverShip: SKSpriteNode, SpaceShip {
             delegate?.updateShipState(statusTexture: statusTexture)
         }
     }
+    var level = SpaceShipLevel() {
+        didSet {
+            delegate?.levelUpShip(level: level)
+        }
+    }
     var moveSpeed: CGFloat = 0.0
     var hearts: [SKSpriteNode] = []
     var maxHitPoint: Int = 0

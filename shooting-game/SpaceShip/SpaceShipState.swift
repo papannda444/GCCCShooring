@@ -25,6 +25,8 @@ enum SpaceShipState: String {
             self = .stone
         case .heal:
             self = .normal
+        case .level:
+            self = .normal
         }
     }
 }

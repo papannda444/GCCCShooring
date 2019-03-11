@@ -14,6 +14,7 @@ class PowerItem: SKSpriteNode {
         case speed
         case stone
         case heal
+        case level
 
         init() {
             self = .speed
