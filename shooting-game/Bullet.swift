@@ -25,7 +25,20 @@ class Bullet: SKSpriteNode {
         let texture = SKTexture(imageNamed: type.rawValue)
         self.init(texture: texture, color: .clear, size: texture.size())
         self.type = type
-        self.scale(to: CGSize(width: 70, height: 70))
+        switch type {
+        case .red:
+            self.scale(to: CGSize(width: 60, height: 60))
+        case .blue:
+            self.scale(to: CGSize(width: 50, height: 50))
+        case .yellow:
+            self.scale(to: CGSize(width: 70, height: 70))
+        case .purple:
+            self.scale(to: CGSize(width: 40, height: 40))
+        case .silver:
+            self.scale(to: CGSize(width: 100, height: 100))
+        case .pink:
+            self.scale(to: CGSize(width: 30, height: 30))
+        }
         self.position = CGPoint(x: position.x, y: position.y + 50)
     }
 
