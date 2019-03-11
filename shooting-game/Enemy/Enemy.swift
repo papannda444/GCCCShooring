@@ -25,6 +25,7 @@ protocol Enemy: AnyObject {
     func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32)
     func startMove()
     func damaged()
+    func invalidateAttackTimer()
 }
 
 extension Enemy {
@@ -51,6 +52,11 @@ extension Enemy {
 
     func isShipState(equal state: EnemyState) -> Bool {
         return self.state == state
+    }
+
+    func invalidateAttackTimer() {
+        firstAttackTimer?.invalidate()
+        secondAttackTimer?.invalidate()
     }
 }
 

@@ -146,6 +146,8 @@ class GameScene: SKScene {
         enemyTimer?.invalidate()
         powerItemTimer?.invalidate()
         gameClearTimer?.invalidate()
+        pausedScene.children.compactMap { $0 as? Enemy }.forEach { $0.invalidateAttackTimer() }
+        pausedScene.children.compactMap { $0 as? EnemyBullet }.forEach { $0.moveTimer?.invalidate() }
         let bestScore = UserDefaults.standard.integer(forKey: "bestScore")
         if score > bestScore {
             UserDefaults.standard.set(score, forKey: "bestScore")
