@@ -37,6 +37,7 @@ class GameScene: SKScene {
     var shipType = SpaceShipType()
     var scoreLabel: SKLabelNode?
     var timeLabel: SKLabelNode?
+    var shipLevelLabel: SKLabelNode?
     var shipStatusLabel: SKSpriteNode?
     var touchPosition: CGPoint?
 
@@ -92,7 +93,8 @@ class GameScene: SKScene {
         let score = SKLabelNode(text: "Score: 0")
         score.fontName = "Papyrus"
         score.fontSize = 50
-        score.position = CGPoint(x: -frame.width / 2 + score.frame.width / 2 + 50, y: frame.height / 2 - score.frame.height * 4)
+        score.position = CGPoint(x: -frame.width / 2 + score.frame.width / 2 + 50,
+                                 y: frame.height / 2 - score.frame.height * 4)
         addChild(score)
         scoreLabel = score
 
@@ -103,11 +105,19 @@ class GameScene: SKScene {
         addChild(time)
         timeLabel = time
 
+        let level = SKLabelNode(text: "Lv: 1")
+        level.fontName = "Papyrus"
+        level.fontSize = 70
+        level.position = CGPoint(x: frame.width / 2 - level.frame.width,
+                                 y: frame.height / 2 - level.frame.height * 1.5)
+        addChild(level)
+        shipLevelLabel = level
+
         let status = SKSpriteNode(imageNamed: "")
         status.isHidden = true
         status.scale(to: CGSize(width: 80, height: 80))
         status.position = CGPoint(x: frame.width / 2 - status.frame.width,
-                                  y: frame.height / 2 - status.frame.height)
+                                  y: frame.height / 2 - status.frame.height - level.frame.height * 1.5)
         addChild(status)
         shipStatusLabel = status
 
@@ -266,6 +276,15 @@ extension GameScene: SpaceShipDelegate {
     }
 
     func levelUpShip(level: SpaceShipLevel) {
+        shipLevelLabel?.text = "Lv: \(level.rawValue)"
+        switch level {
+        case .one:
+            shipLevelLabel?.fontColor = .white
+        case .two:
+            shipLevelLabel?.fontColor = .yellow
+        case .three:
+            shipLevelLabel?.fontColor = .orange
+        }
     }
 
     func lostAllHearts() {
