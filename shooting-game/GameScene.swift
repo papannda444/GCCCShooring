@@ -269,6 +269,7 @@ extension GameScene: SpaceShipDelegate {
 
 extension GameScene: EnemyDelegate {
     func enemyAttack(bullet: EnemyBullet) {
+        bullet.setPhysicsBody(categoryBitMask: enemyBulletCategory, contactTestBitMask: spaceshipCategory)
         bullet.startMove(shipPosition: spaceShip.getPosition())
         pausedScene.addChild(bullet)
     }
@@ -297,14 +298,12 @@ extension GameScene: SKPhysicsContactDelegate {
         }
 
         if let ship = shipContent.node as? SpaceShip {
-            guard let enemy = affectToShip.node as? Enemy else {
-                return
+            if let enemyBullet = affectToShip.node as? EnemyBullet {
+                enemyBullet.removeFromParent()
+                ship.damaged()
+            } else if let enemy = affectToShip.node as? Enemy {
+                ship.damaged(enemy)
             }
-            if ship.isShipState(equal: .stone) {
-                enemy.damaged()
-                return
-            }
-            ship.damaged()
         } else if let bullet = shipContent.node as? Bullet {
             score += 5
             bullet.removeFromParent()

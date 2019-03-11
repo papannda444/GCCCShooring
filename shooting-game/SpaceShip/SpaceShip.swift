@@ -43,7 +43,12 @@ extension SpaceShip {
         delegate?.displayHeart(hearts: hearts)
     }
 
-    func damaged() {
+    func damaged(_ enemy: Enemy? = nil) {
+        if isShipState(equal: .stone) {
+            enemy?.damaged()
+            return
+        }
+
         guard let heart = hearts.popLast() else {
             return
         }
