@@ -8,10 +8,10 @@
 
 import Foundation
 
-enum SpaceShipLevel: String {
-    case one
-    case two
-    case three
+enum SpaceShipLevel: Int {
+    case one = 1
+    case two = 2
+    case three = 3
 
     init() {
         self = .one

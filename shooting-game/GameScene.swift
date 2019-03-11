@@ -47,7 +47,8 @@ class GameScene: SKScene {
     let itemTypes: [PowerItem.ItemType] = [
         .speed, .speed, .speed,
         .stone, .stone, .stone,
-        .heal   //回復アイテムの出現率低め
+        .heal, .heal, //回復アイテムの出現率低め
+        .level, .level //レベルアップアイテムの出現率低め
     ]
 
     let spaceshipCategory: UInt32   = 0b00001
@@ -262,6 +263,9 @@ extension GameScene: SpaceShipDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.shipStatusLabel?.isHidden = false
         }
+    }
+
+    func levelUpShip(level: SpaceShipLevel) {
     }
 
     func lostAllHearts() {

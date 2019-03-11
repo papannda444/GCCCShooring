@@ -13,14 +13,15 @@ protocol SpaceShipDelegate: AnyObject {
     func displayHeart(hearts: [SKSpriteNode])
     func addBullet(bullet: SKSpriteNode)
     func updateShipState(statusTexture: SKTexture?)
+    func levelUpShip(level: SpaceShipLevel)
     func lostAllHearts()
 }
 
 protocol SpaceShip: AnyObject {
     var delegate: SpaceShipDelegate? { get set }
     var state: SpaceShipState { get set }
-    var moveSpeed: CGFloat { get set }
     var level: SpaceShipLevel { get set }
+    var moveSpeed: CGFloat { get set }
     var hearts: [SKSpriteNode] { get set }
     var maxHitPoint: Int { get set }
     var bulletTimer: Timer? { get set }
@@ -95,6 +96,16 @@ extension SpaceShip where Self: SKSpriteNode {
                 self?.state = .normal
             }
         case .heal:
+            if hearts.count >= maxHitPoint {
+                return
+            }
+            let heart = SKSpriteNode(imageNamed: "heart")
+            heart.scale(to: CGSize(width: 70, height: 70))
+            hearts.append(heart)
+            delegate?.displayHeart(hearts: hearts)
+        case .level:
+            level.levelUp()
+
             if hearts.count >= maxHitPoint {
                 return
             }
