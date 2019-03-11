@@ -14,9 +14,13 @@ class PowerItem: SKSpriteNode {
         case speed
         case stone
         case heal
+
+        init() {
+            self = .speed
+        }
     }
 
-    var type: ItemType
+    var type = ItemType()
 
     convenience init(itemType type: ItemType, addedViewFrame viewFrame: CGRect) {
         let texture = SKTexture(imageNamed: type.rawValue)
@@ -28,7 +32,6 @@ class PowerItem: SKSpriteNode {
     }
 
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
-        type = .speed // default value, please to change convenience init
         super.init(texture: texture, color: color, size: size)
     }
 

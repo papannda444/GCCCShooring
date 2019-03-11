@@ -12,21 +12,25 @@ import SpriteKit
 class RedShip: SKSpriteNode, SpaceShip {
     weak var delegate: SpaceShipDelegate?
 
-    var state = SpaceShipState()
+    var state = SpaceShipState() {
+        didSet {
+            let statusTexture: SKTexture?
+            switch state {
+            case .normal:
+                statusTexture = nil
+            default:
+                // state is .speed or .stone
+                statusTexture = SKTexture(imageNamed: state.rawValue)
+            }
+
+            delegate?.updateShipState(statusTexture: statusTexture)
+        }
+    }
     var moveSpeed: CGFloat = 0.0
     var hearts: [SKSpriteNode] = []
     var maxHitPoint: Int = 0
     var bulletTimer: Timer?
     var timerForPowerItem: Timer?
-    var powerUpTime: Float = 5.0 {
-        didSet {
-            if powerUpTime <= 0.0 {
-                powerUpTime = 5.0
-                timerForPowerItem?.invalidate()
-                state = .normal
-            }
-        }
-    }
 
     convenience init(moveSpeed: CGFloat, displayViewFrame frame: CGRect) {
         let texture = SKTexture(imageNamed: SpaceShipType.red.rawValue)
