@@ -91,7 +91,7 @@ class GameScene: SKScene {
         let score = SKLabelNode(text: "Score: 0")
         score.fontName = "Papyrus"
         score.fontSize = 50
-        score.position = CGPoint(x: -frame.width / 2 + score.frame.width / 2 + 50, y: frame.height / 2 - score.frame.height * 5)
+        score.position = CGPoint(x: -frame.width / 2 + score.frame.width / 2 + 50, y: frame.height / 2 - score.frame.height * 4)
         addChild(score)
         scoreLabel = score
 
