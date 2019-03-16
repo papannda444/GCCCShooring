@@ -298,6 +298,10 @@ extension GameScene: EnemyDelegate {
         bullet.startMove(shipPosition: spaceShip.getPosition())
         pausedScene.addChild(bullet)
     }
+
+    func killedEnemy(score: Int) {
+        self.score += score
+    }
 }
 
 extension GameScene: SKPhysicsContactDelegate {
@@ -330,7 +334,6 @@ extension GameScene: SKPhysicsContactDelegate {
                 ship.damaged(enemy)
             }
         } else if let bullet = shipContent.node as? Bullet {
-            score += 5
             bullet.removeFromParent()
             if let enemy = affectToShip.node as? Enemy {
                 enemy.damaged()

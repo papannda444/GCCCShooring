@@ -17,7 +17,7 @@ class YellowEnemy: SKSpriteNode, Enemy {
     var hitPoint: Int = 0
     var firstAttackTimer: Timer?
     var secondAttackTimer: Timer?
-    var killPoint: Int = 20
+    var killPoint: Int = 5
 
     convenience init(moveSpeed: CGFloat, displayViewFrame frame: CGRect) {
         let texture = SKTexture(imageNamed: EnemyType.yellow.rawValue)
