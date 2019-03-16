@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class YellowShip: SKSpriteNode, SpaceShip {
+class YellowShip: SKSpriteNode {
     weak var delegate: SpaceShipDelegate?
 
     var state = SpaceShipState() {
@@ -53,7 +53,9 @@ class YellowShip: SKSpriteNode, SpaceShip {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
 
+extension YellowShip: SpaceShip {
     func touchViewBegin(touchedViewFrame frame: CGRect) {
         bulletTimer?.invalidate()
         let moveToTop = SKAction.sequence([

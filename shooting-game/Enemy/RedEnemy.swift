@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class RedEnemy: SKSpriteNode, Enemy {
+class RedEnemy: SKSpriteNode {
     weak var delegate: EnemyDelegate?
 
     var state = EnemyState()
@@ -33,7 +33,9 @@ class RedEnemy: SKSpriteNode, Enemy {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
 
+extension RedEnemy: Enemy {
     func startMove() {
         guard let action = enemyMove.randomElement() else {
             return
