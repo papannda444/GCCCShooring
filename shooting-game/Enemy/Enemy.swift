@@ -11,6 +11,7 @@ import SpriteKit
 
 protocol EnemyDelegate: AnyObject {
     func enemyAttack(bullet: EnemyBullet)
+    func killedEnemy(score: Int)
 }
 
 protocol Enemy: AnyObject {
@@ -62,6 +63,20 @@ extension Enemy {
 
 extension Enemy where Self: SKSpriteNode {
     func damaged() {
+        if action(forKey: "blink") != nil {
+            return
+        }
+
+        hitPoint -= 1
+        if hitPoint > 0 {
+            let blink = SKAction.repeat(SKAction.sequence([
+                SKAction.fadeAlpha(to: 0.0, duration: 0.05),
+                SKAction.fadeAlpha(to: 1.0, duration: 0.05)
+            ]), count: 3)
+            run(blink, withKey: "blink")
+            return
+        }
+
         guard let explosion = SKEmitterNode(fileNamed: "Explosion") else {
             return
         }
@@ -71,5 +86,6 @@ extension Enemy where Self: SKSpriteNode {
             explosion.removeFromParent()
         }
         removeFromParent()
+        delegate?.killedEnemy(score: killPoint)
     }
 }
