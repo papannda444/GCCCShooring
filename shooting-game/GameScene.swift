@@ -236,15 +236,11 @@ class GameScene: SKScene {
         pausedScene.addChild(enemy as! SKNode)
     }
 
-    func addPowerItem() {
+    func addPowerItem(_ powerItem: PowerItem? = nil) {
         let type = itemTypes.randomElement()!
-        let item = PowerItem(itemType: type, addedViewFrame: frame)
+        let item = powerItem ?? PowerItem(itemType: type, addedViewFrame: frame)
         item.setPhysicsBody(categoryBitMask: powerItemCategory, contactTestBitMask: spaceshipCategory + bulletCategory)
         pausedScene.addChild(item)
-
-        let move = SKAction.moveTo(y: -frame.height / 2 - item.frame.height, duration: 5.0)
-        let remove = SKAction.removeFromParent()
-        item.run(SKAction.sequence([move, remove]))
     }
 }
 
