@@ -11,7 +11,7 @@ import SpriteKit
 
 extension SKSpriteNode {
     func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32) {
-        physicsBody = SKPhysicsBody(circleOfRadius: frame.width / 2)
+        physicsBody = physicsBody ?? SKPhysicsBody(circleOfRadius: frame.width / 2)
         physicsBody?.categoryBitMask = categoryBitMask
         physicsBody?.contactTestBitMask = contactTestBitMask
         physicsBody?.collisionBitMask = 0
