@@ -43,6 +43,7 @@ class PinkShip: SKSpriteNode {
         self.moveSpeed = moveSpeed
         position = CGPoint(x: 0, y: frame.height / 2 - self.frame.height)
         scale(to: CGSize(width: 70, height: 70))
+        physicsBody = SKPhysicsBody(circleOfRadius: self.frame.width / 4)
     }
 
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
