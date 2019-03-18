@@ -221,13 +221,13 @@ class GameScene: SKScene {
         switch name {
         case .red:
             enemy = RedEnemy(moveSpeed: 2, displayViewFrame: frame)
-            enemy.setHitPoint(hitPoint: 2)
+            enemy.setHitPoint(hitPoint: 3)
         case .yellow:
             enemy = YellowEnemy(moveSpeed: 2, displayViewFrame: frame)
-            enemy.setHitPoint(hitPoint: 2)
+            enemy.setHitPoint(hitPoint: 3)
         case .blue:
             enemy = RedEnemy(moveSpeed: 2, displayViewFrame: frame)
-            enemy.setHitPoint(hitPoint: 2)
+            enemy.setHitPoint(hitPoint: 3)
         }
         enemy.delegate = self
         enemy.setPhysicsBody(categoryBitMask: enemyCategory, contactTestBitMask: bulletCategory + spaceshipCategory)
