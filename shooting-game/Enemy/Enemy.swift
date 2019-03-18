@@ -105,10 +105,10 @@ extension Enemy where Self: SKSpriteNode {
 
         hitPoint -= 1
         if hitPoint > 0 {
-            let blink = SKAction.repeat(SKAction.sequence([
+            let blink = SKAction.sequence([
                 SKAction.fadeAlpha(to: 0.0, duration: 0.05),
                 SKAction.fadeAlpha(to: 1.0, duration: 0.05)
-            ]), count: 3)
+            ])
             run(blink, withKey: "blink")
             return
         }
