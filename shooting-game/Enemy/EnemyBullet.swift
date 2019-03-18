@@ -40,8 +40,8 @@ class EnemyBullet: SKSpriteNode {
     }
 
     private func moveToShip(movement: CGPoint) {
-        if position.y < viewFrame.minY || viewFrame.maxY < position.y ||
-            position.x < viewFrame.minX || viewFrame.maxX < position.x {
+        if position.y < viewFrame.minY - 200 || viewFrame.maxY + 200 < position.y ||
+            position.x < viewFrame.minX - 200 || viewFrame.maxX + 200 < position.x {
             removeFromParent()
         }
         position += movement.unit * 5
