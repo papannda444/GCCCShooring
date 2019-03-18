@@ -12,11 +12,13 @@ import SpriteKit
 class EnemyBullet: SKSpriteNode {
     var enemyType = EnemyType()
     var moveTimer: Timer?
+    var viewFrame = CGRect()
 
-    convenience init(enemyType type: EnemyType, position: CGPoint) {
+    convenience init(enemyType type: EnemyType, position: CGPoint, displayedViewFrame frame: CGRect) {
         let texture = SKTexture(imageNamed: "enemy_bullet")
         self.init(texture: texture, color: .clear, size: texture.size())
         enemyType = type
+        viewFrame = frame
         scale(to: CGSize(width: 30, height: 30))
         self.position = CGPoint(x: position.x, y: position.y)
     }
@@ -38,6 +40,10 @@ class EnemyBullet: SKSpriteNode {
     }
 
     private func moveToShip(movement: CGPoint) {
+        if position.y < viewFrame.minY || viewFrame.maxY < position.y ||
+            position.x < viewFrame.minX || viewFrame.maxX < position.x {
+            removeFromParent()
+        }
         position += movement.unit * 5
     }
 }
