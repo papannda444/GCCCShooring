@@ -67,9 +67,26 @@ extension RedShip: SpaceShip {
         bullet.run(moveToTop)
         delegate?.addBullet(bullet: bullet)
         bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
-            let bullet = Bullet(bulletType: .red, position: self?.position ?? .zero)
+            guard let position = self?.position else {
+                return
+            }
+            let bullet = Bullet(bulletType: .red, position: position)
             bullet.run(moveToTop)
             self?.delegate?.addBullet(bullet: bullet)
+
+            if self?.level == .one {
+                return
+            }
+            let leftBullet = Bullet(bulletType: .red, position: CGPoint(x: position.x - 30, y: position.y - 30))
+            leftBullet.run(moveToTop)
+            self?.delegate?.addBullet(bullet: leftBullet)
+
+            if self?.level == .two {
+                return
+            }
+            let rightBullet = Bullet(bulletType: .red, position: CGPoint(x: position.x + 30, y: position.y - 30))
+            rightBullet.run(moveToTop)
+            self?.delegate?.addBullet(bullet: rightBullet)
         }
     }
 }
