@@ -23,6 +23,14 @@ class RedEnemy: SKSpriteNode {
         let texture = SKTexture(imageNamed: EnemyType.red.rawValue)
         self.init(texture: texture, color: .clear, size: texture.size())
         scale(to: CGSize(width: 70, height: 70))
+        firstAttackTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] _ in
+            let bullet = EnemyBullet(enemyType: .red, position: self?.position ?? .zero, displayedViewFrame: frame)
+            self?.delegate?.enemyAttack(bullet: bullet)
+        }
+        secondAttackTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [weak self] _ in
+            let bullet = EnemyBullet(enemyType: .red, position: self?.position ?? .zero, displayedViewFrame: frame)
+            self?.delegate?.enemyAttack(bullet: bullet)
+        }
     }
 
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
@@ -41,14 +49,5 @@ extension RedEnemy: Enemy {
             return
         }
         run(action)
-
-        firstAttackTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] _ in
-            let bullet = EnemyBullet(enemyType: .red, position: self?.position ?? .zero)
-            self?.delegate?.enemyAttack(bullet: bullet)
-        }
-        secondAttackTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [weak self] _ in
-            let bullet = EnemyBullet(enemyType: .red, position: self?.position ?? .zero)
-            self?.delegate?.enemyAttack(bullet: bullet)
-        }
     }
 }
