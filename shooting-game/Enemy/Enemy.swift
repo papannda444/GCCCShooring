@@ -23,7 +23,7 @@ protocol Enemy: AnyObject {
     var secondAttackTimer: Timer? { get set }
     var killPoint: Int { get set }
 
-    func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32)
+    func setPhysicsBody(categoryBitMask: UInt32)
     func startMove()
     func damaged()
     func invalidateAttackTimer()
@@ -99,29 +99,24 @@ extension Enemy {
 
 extension Enemy where Self: SKSpriteNode {
     func damaged() {
-        if action(forKey: "blink") != nil {
-            return
-        }
-
         hitPoint -= 1
-        if hitPoint > 0 {
-            let blink = SKAction.sequence([
-                SKAction.fadeAlpha(to: 0.0, duration: 0.05),
-                SKAction.fadeAlpha(to: 1.0, duration: 0.05)
-            ])
-            run(blink, withKey: "blink")
-            return
-        }
+        let blink = SKAction.sequence([
+            SKAction.fadeAlpha(to: 0.0, duration: 0.05),
+            SKAction.fadeAlpha(to: 1.0, duration: 0.05)
+        ])
+        run(blink, withKey: "blink")
 
-        guard let explosion = SKEmitterNode(fileNamed: "Explosion") else {
-            return
+        if hitPoint == 0 {
+            guard let explosion = SKEmitterNode(fileNamed: "Explosion") else {
+                return
+            }
+            explosion.position = position
+            self.parent?.addChild(explosion)
+            explosion.run(SKAction.wait(forDuration: 1.0)) {
+                explosion.removeFromParent()
+            }
+            removeFromParent()
+            delegate?.killedEnemy(score: killPoint)
         }
-        explosion.position = position
-        self.parent?.addChild(explosion)
-        explosion.run(SKAction.wait(forDuration: 1.0)) {
-            explosion.removeFromParent()
-        }
-        removeFromParent()
-        delegate?.killedEnemy(score: killPoint)
     }
 }

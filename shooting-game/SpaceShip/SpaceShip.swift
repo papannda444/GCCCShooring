@@ -15,6 +15,7 @@ protocol SpaceShipDelegate: AnyObject {
     func updateShipState(statusTexture: SKTexture?)
     func levelUpShip(level: SpaceShipLevel)
     func lostAllHearts()
+    func startSpecialAttack(spaceShip: SpaceShip)
 }
 
 protocol SpaceShip: AnyObject {
@@ -28,8 +29,9 @@ protocol SpaceShip: AnyObject {
     var timerForPowerItem: Timer? { get set }
 
     func getPosition() -> CGPoint
-    func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32)
+    func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32?)
     func moveToPosition(touchPosition position: CGPoint)
+    func damaged(_ enemy: Enemy?)
     func powerUp(itemType: PowerItem.ItemType)
     func touchViewBegin(touchedViewFrame frame: CGRect)
 }
@@ -45,26 +47,16 @@ extension SpaceShip {
         delegate?.displayHeart(hearts: hearts)
     }
 
-    func damaged(_ enemy: Enemy? = nil) {
-        if isShipState(equal: .stone) {
-            enemy?.damaged()
-            return
-        }
-
-        guard let heart = hearts.popLast() else {
-            return
-        }
-        heart.removeFromParent()
-
-        if hearts.isEmpty { delegate?.lostAllHearts() }
-    }
-
     func isShipState(equal state: SpaceShipState) -> Bool {
         return self.state == state
     }
 
     func touchViewEnd() {
         bulletTimer?.invalidate()
+    }
+
+    func damaged() {
+        self.damaged(nil)
     }
 }
 

@@ -80,7 +80,7 @@ class GameScene: SKScene {
         }
         spaceShip.delegate = self
         spaceShip.setHitPoint(hitPoint: 5)
-        spaceShip.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: enemyCategory + powerItemCategory)
+        spaceShip.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: enemyCategory + enemyBulletCategory + powerItemCategory)
         pausedScene.addChild(spaceShip as! SKNode)
 
         enemyTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true ) { _ in
@@ -230,7 +230,7 @@ class GameScene: SKScene {
             enemy.setHitPoint(hitPoint: 3)
         }
         enemy.delegate = self
-        enemy.setPhysicsBody(categoryBitMask: enemyCategory, contactTestBitMask: bulletCategory + spaceshipCategory)
+        enemy.setPhysicsBody(categoryBitMask: enemyCategory)
         enemy.createEnemyMovement(displayViewFrame: frame)
         enemy.startMove()
         pausedScene.addChild(enemy as! SKNode)
@@ -239,7 +239,7 @@ class GameScene: SKScene {
     func addPowerItem(_ powerItem: PowerItem? = nil) {
         let type = itemTypes.randomElement()!
         let item = powerItem ?? PowerItem(itemType: type, addedViewFrame: frame)
-        item.setPhysicsBody(categoryBitMask: powerItemCategory, contactTestBitMask: spaceshipCategory + bulletCategory)
+        item.setPhysicsBody(categoryBitMask: powerItemCategory)
         pausedScene.addChild(item)
     }
 }
@@ -286,11 +286,20 @@ extension GameScene: SpaceShipDelegate {
     func lostAllHearts() {
         gameOver()
     }
+
+    func startSpecialAttack(spaceShip: SpaceShip) {
+        switch spaceShip {
+        case is BlueShip:
+            spaceShip.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: powerItemCategory)
+        default:
+            break
+        }
+    }
 }
 
 extension GameScene: EnemyDelegate {
     func enemyAttack(bullet: EnemyBullet) {
-        bullet.setPhysicsBody(categoryBitMask: enemyBulletCategory, contactTestBitMask: spaceshipCategory)
+        bullet.setPhysicsBody(categoryBitMask: enemyBulletCategory)
         bullet.startMove(shipPosition: spaceShip.getPosition())
         pausedScene.addChild(bullet)
     }
