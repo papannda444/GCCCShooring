@@ -57,6 +57,20 @@ class RedShip: SKSpriteNode {
 }
 
 extension RedShip: SpaceShip {
+    func damaged(_ enemy: Enemy? = nil) {
+        if isShipState(equal: .stone) {
+            enemy?.damaged()
+            return
+        }
+
+        guard let heart = hearts.popLast() else {
+            return
+        }
+        heart.removeFromParent()
+
+        if hearts.isEmpty { delegate?.lostAllHearts() }
+    }
+
     func touchViewBegin(touchedViewFrame frame: CGRect) {
         bulletTimer?.invalidate()
         let moveToTop = SKAction.sequence([
