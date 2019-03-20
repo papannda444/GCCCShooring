@@ -28,7 +28,7 @@ protocol SpaceShip: AnyObject {
     var timerForPowerItem: Timer? { get set }
 
     func getPosition() -> CGPoint
-    func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32)
+    func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32?)
     func moveToPosition(touchPosition position: CGPoint)
     func powerUp(itemType: PowerItem.ItemType)
     func touchViewBegin(touchedViewFrame frame: CGRect)

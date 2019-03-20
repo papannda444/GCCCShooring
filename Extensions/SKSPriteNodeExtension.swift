@@ -10,10 +10,14 @@ import Foundation
 import SpriteKit
 
 extension SKSpriteNode {
-    func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32) {
+    func setPhysicsBody(categoryBitMask: UInt32) {
+        setPhysicsBody(categoryBitMask: categoryBitMask, contactTestBitMask: nil)
+    }
+
+    func setPhysicsBody(categoryBitMask: UInt32, contactTestBitMask: UInt32?) {
         physicsBody = physicsBody ?? SKPhysicsBody(circleOfRadius: frame.width / 2)
         physicsBody?.categoryBitMask = categoryBitMask
-        physicsBody?.contactTestBitMask = contactTestBitMask
+        physicsBody?.contactTestBitMask = contactTestBitMask ?? 0
         physicsBody?.collisionBitMask = 0
     }
 }
