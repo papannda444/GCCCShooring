@@ -15,6 +15,7 @@ protocol SpaceShipDelegate: AnyObject {
     func updateShipState(statusTexture: SKTexture?)
     func levelUpShip(level: SpaceShipLevel)
     func lostAllHearts()
+    func startSpecialAttack(spaceShip: SpaceShip)
 }
 
 protocol SpaceShip: AnyObject {

@@ -286,6 +286,15 @@ extension GameScene: SpaceShipDelegate {
     func lostAllHearts() {
         gameOver()
     }
+
+    func startSpecialAttack(spaceShip: SpaceShip) {
+        switch spaceShip {
+        case is BlueShip:
+            spaceShip.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: powerItemCategory)
+        default:
+            break
+        }
+    }
 }
 
 extension GameScene: EnemyDelegate {

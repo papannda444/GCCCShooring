@@ -29,6 +29,7 @@ class BlueShip: SKSpriteNode {
     var level = SpaceShipLevel() {
         didSet {
             delegate?.levelUpShip(level: level)
+            isInvisibleBodyUsed = true
         }
     }
     var moveSpeed: CGFloat = 0.0
@@ -36,6 +37,8 @@ class BlueShip: SKSpriteNode {
     var maxHitPoint: Int = 0
     var bulletTimer: Timer?
     var timerForPowerItem: Timer?
+    private var isInvisibleBodyUsed = true
+    private var invisibleTimer: Timer?
 
     convenience init(moveSpeed: CGFloat, displayViewFrame frame: CGRect) {
         let texture = SKTexture(imageNamed: SpaceShipType.blue.rawValue)
@@ -57,6 +60,42 @@ class BlueShip: SKSpriteNode {
 }
 
 extension BlueShip: SpaceShip {
+    func damaged(_ enemy: Enemy? = nil) {
+        if isShipState(equal: .stone) {
+            enemy?.damaged()
+            return
+        }
+        if !isInvisibleBodyUsed {
+            guard let heart = hearts.popLast() else {
+                return
+            }
+            heart.removeFromParent()
+
+            if hearts.isEmpty { delegate?.lostAllHearts() }
+            return
+        }
+
+        isInvisibleBodyUsed = false
+        let invisibleTime: TimeInterval
+        switch level {
+        case .one:
+            invisibleTime = 3
+        case .two:
+            invisibleTime = 6
+        case .three:
+            invisibleTime = 10
+        }
+        guard let prevContactTestBitMask = physicsBody?.contactTestBitMask else {
+            return
+        }
+        delegate?.startSpecialAttack(spaceShip: self)
+        run(SKAction.fadeAlpha(to: 0.3, duration: 0.0))
+        invisibleTimer = Timer.scheduledTimer(withTimeInterval: invisibleTime, repeats: false) { [weak self] _ in
+            self?.physicsBody?.contactTestBitMask = prevContactTestBitMask
+            self?.run(SKAction.fadeAlpha(to: 1.0, duration: 0.0))
+        }
+    }
+
     func touchViewBegin(touchedViewFrame frame: CGRect) {
         bulletTimer?.invalidate()
         let moveToTop = SKAction.sequence([
