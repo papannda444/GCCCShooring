@@ -291,6 +291,17 @@ extension GameScene: SpaceShipDelegate {
         switch spaceShip {
         case is BlueShip:
             spaceShip.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: powerItemCategory)
+        case is YellowShip:
+            switch spaceShip.level {
+            case .one:
+                pausedScene.children.compactMap { $0 as? EnemyBullet }.forEach { $0.removeFromParent() }
+            case .two:
+                pausedScene.children.compactMap { $0 as? EnemyBullet }.forEach { $0.removeFromParent() }
+                pausedScene.children.compactMap { $0 as? Enemy }.forEach { $0.damaged() }
+            case .three:
+                pausedScene.children.compactMap { $0 as? EnemyBullet }.forEach { $0.removeFromParent() }
+                pausedScene.children.compactMap { $0 as? Enemy }.forEach { $0.damaged(3) }
+            }
         default:
             break
         }
