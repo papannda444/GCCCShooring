@@ -25,13 +25,17 @@ protocol Enemy: AnyObject {
 
     func setPhysicsBody(categoryBitMask: UInt32)
     func startMove()
-    func damaged()
+    func damaged(_ damege: Int)
     func invalidateAttackTimer()
 }
 
 extension Enemy {
     func setHitPoint(hitPoint: Int) {
         self.hitPoint = hitPoint
+    }
+
+    func damaged() {
+        self.damaged(1)
     }
 
     func createEnemyMovement(displayViewFrame frame: CGRect) {
@@ -98,8 +102,8 @@ extension Enemy {
 }
 
 extension Enemy where Self: SKSpriteNode {
-    func damaged() {
-        hitPoint -= 1
+    func damaged(_ damage: Int) {
+        hitPoint -= damage
         let blink = SKAction.sequence([
             SKAction.fadeAlpha(to: 0.0, duration: 0.05),
             SKAction.fadeAlpha(to: 1.0, duration: 0.05)

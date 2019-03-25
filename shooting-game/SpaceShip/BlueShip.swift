@@ -65,35 +65,35 @@ extension BlueShip: SpaceShip {
             enemy?.damaged()
             return
         }
-        if !isInvisibleBodyUsed {
-            guard let heart = hearts.popLast() else {
+        if isInvisibleBodyUsed {
+            isInvisibleBodyUsed = false
+            let invisibleTime: TimeInterval
+            switch level {
+            case .one:
+                invisibleTime = 3
+            case .two:
+                invisibleTime = 6
+            case .three:
+                invisibleTime = 10
+            }
+            guard let prevContactTestBitMask = physicsBody?.contactTestBitMask else {
                 return
             }
-            heart.removeFromParent()
-
-            if hearts.isEmpty { delegate?.lostAllHearts() }
+            delegate?.startSpecialAttack(spaceShip: self)
+            run(SKAction.fadeAlpha(to: 0.3, duration: 0.0))
+            invisibleTimer = Timer.scheduledTimer(withTimeInterval: invisibleTime, repeats: false) { [weak self] _ in
+                self?.physicsBody?.contactTestBitMask = prevContactTestBitMask
+                self?.run(SKAction.fadeAlpha(to: 1.0, duration: 0.0))
+            }
             return
         }
 
-        isInvisibleBodyUsed = false
-        let invisibleTime: TimeInterval
-        switch level {
-        case .one:
-            invisibleTime = 3
-        case .two:
-            invisibleTime = 6
-        case .three:
-            invisibleTime = 10
-        }
-        guard let prevContactTestBitMask = physicsBody?.contactTestBitMask else {
+        guard let heart = hearts.popLast() else {
             return
         }
-        delegate?.startSpecialAttack(spaceShip: self)
-        run(SKAction.fadeAlpha(to: 0.3, duration: 0.0))
-        invisibleTimer = Timer.scheduledTimer(withTimeInterval: invisibleTime, repeats: false) { [weak self] _ in
-            self?.physicsBody?.contactTestBitMask = prevContactTestBitMask
-            self?.run(SKAction.fadeAlpha(to: 1.0, duration: 0.0))
-        }
+        heart.removeFromParent()
+
+        if hearts.isEmpty { delegate?.lostAllHearts() }
     }
 
     func touchViewBegin(touchedViewFrame frame: CGRect) {

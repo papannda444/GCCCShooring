@@ -29,6 +29,7 @@ class YellowShip: SKSpriteNode {
     var level = SpaceShipLevel() {
         didSet {
             delegate?.levelUpShip(level: level)
+            isSparkBombUsed = true
         }
     }
     var moveSpeed: CGFloat = 0.0
@@ -36,6 +37,7 @@ class YellowShip: SKSpriteNode {
     var maxHitPoint: Int = 0
     var bulletTimer: Timer?
     var timerForPowerItem: Timer?
+    private var isSparkBombUsed: Bool = true
 
     convenience init(moveSpeed: CGFloat, displayViewFrame frame: CGRect) {
         let texture = SKTexture(imageNamed: SpaceShipType.yellow.rawValue)
@@ -60,6 +62,11 @@ extension YellowShip: SpaceShip {
     func damaged(_ enemy: Enemy? = nil) {
         if isShipState(equal: .stone) {
             enemy?.damaged()
+            return
+        }
+        if isSparkBombUsed {
+            isSparkBombUsed = false
+            delegate?.startSpecialAttack(spaceShip: self)
             return
         }
 
