@@ -228,6 +228,7 @@
 				TargetAttributes = {
 					DCBA1D0E21CF3EE20046AB45 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -476,7 +477,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.papannda444.shooting-game";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -494,7 +495,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.papannda444.shooting-game";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
