@@ -350,9 +350,10 @@ extension GameScene: SKPhysicsContactDelegate {
                 ship.damaged(enemy)
             }
         } else if let bullet = shipContent.node as? Bullet {
-            bullet.removeFromParent()
             if let enemy = affectToShip.node as? Enemy {
-                enemy.damaged()
+                bullet.contact(enemy: enemy)
+            } else {
+                bullet.removeFromParent()
             }
         }
     }

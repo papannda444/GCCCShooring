@@ -22,6 +22,7 @@ protocol Enemy: AnyObject {
     var firstAttackTimer: Timer? { get set }
     var secondAttackTimer: Timer? { get set }
     var killPoint: Int { get set }
+    var poisonDamageTimer: Timer? { get set }
 
     func setPhysicsBody(categoryBitMask: UInt32)
     func startMove()
@@ -98,6 +99,26 @@ extension Enemy {
     func invalidateAttackTimer() {
         firstAttackTimer?.invalidate()
         secondAttackTimer?.invalidate()
+    }
+
+    func poisoning(level: Int) {
+        if state == .poison(level: level) {
+            return
+        }
+        state = .poison(level: level)
+        poisonDamageTimer?.invalidate()
+        poisonDamageTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self, state] _ in
+            switch state {
+            case .poison(level: 1):
+                self?.damaged()
+            case .poison(level: 2):
+                self?.damaged(2)
+            case .poison(level: 3):
+                self?.damaged(5)
+            default:
+                fatalError("Never called")
+            }
+        }
     }
 }
 

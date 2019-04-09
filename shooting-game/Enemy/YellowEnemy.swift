@@ -17,6 +17,7 @@ class YellowEnemy: SKSpriteNode {
     var hitPoint: Int = 0
     var firstAttackTimer: Timer?
     var secondAttackTimer: Timer?
+    var poisonDamageTimer: Timer?
     var killPoint: Int = 5
 
     convenience init(moveSpeed: CGFloat, displayViewFrame frame: CGRect) {

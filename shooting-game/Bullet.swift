@@ -17,14 +17,20 @@ class Bullet: SKSpriteNode {
         case purple = "bullet_purple"
         case silver = "bullet_silver"
         case pink = "bullet_pink"
+
+        init() {
+            self = .red
+        }
     }
 
-    var type: BulletType
+    var type = BulletType()
+    var level = SpaceShipLevel()
 
-    convenience init(bulletType type: BulletType, position: CGPoint) {
+    convenience init(bulletType type: BulletType, bulletLevel level: SpaceShipLevel, position: CGPoint) {
         let texture = SKTexture(imageNamed: type.rawValue)
         self.init(texture: texture, color: .clear, size: texture.size())
         self.type = type
+        self.level = level
         switch type {
         case .red:
             self.scale(to: CGSize(width: 60, height: 60))
@@ -43,12 +49,19 @@ class Bullet: SKSpriteNode {
     }
 
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
-        type = .red // default value, please to change convenience init
         super.init(texture: texture, color: color, size: size)
     }
 
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func contact(enemy: Enemy) {
+        enemy.damaged()
+        if type == .purple {
+            enemy.poisoning(level: level.rawValue)
+        }
+        removeFromParent()
     }
 }
