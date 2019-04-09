@@ -8,11 +8,22 @@
 
 import Foundation
 
-enum EnemyState: String {
+enum EnemyState: Equatable {
     case normal
-    case poison
+    case poison(level: Int)
 
     init() {
         self = .normal
+    }
+
+    static func == (leftState: EnemyState, rightState: EnemyState) -> Bool {
+        switch (leftState, rightState) {
+        case (.normal, .normal):
+            return true
+        case let (.poison(level: leftLevel), .poison(level: rightLevel)):
+            return leftLevel == rightLevel
+        default:
+            return false
+        }
     }
 }

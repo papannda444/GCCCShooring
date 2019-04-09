@@ -77,11 +77,11 @@ extension PinkShip: SpaceShip {
             SKAction.moveTo(y: frame.height + 10, duration: 0.3),
             SKAction.removeFromParent()
         ])
-        let bullet = Bullet(bulletType: .pink, position: position)
+        let bullet = Bullet(bulletType: .pink, bulletLevel: level, position: position)
         bullet.run(moveToTop)
         delegate?.addBullet(bullet: bullet)
-        bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
-            let bullet = Bullet(bulletType: .pink, position: self?.position ?? .zero)
+        bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self, level] _ in
+            let bullet = Bullet(bulletType: .pink, bulletLevel: level, position: self?.position ?? .zero)
             bullet.run(moveToTop)
             self?.delegate?.addBullet(bullet: bullet)
         }
