@@ -77,28 +77,32 @@ extension RedShip: SpaceShip {
             SKAction.moveTo(y: frame.height + 10, duration: 0.3),
             SKAction.removeFromParent()
         ])
-        let bullet = Bullet(bulletType: .red, position: position)
+        let bullet = Bullet(bulletType: .red, bulletLevel: level, position: position)
         bullet.run(moveToTop)
         delegate?.addBullet(bullet: bullet)
-        bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+        bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self, level] _ in
             guard let position = self?.position else {
                 return
             }
-            let bullet = Bullet(bulletType: .red, position: position)
+            let bullet = Bullet(bulletType: .red, bulletLevel: level, position: position)
             bullet.run(moveToTop)
             self?.delegate?.addBullet(bullet: bullet)
 
             if self?.level == .one {
                 return
             }
-            let leftBullet = Bullet(bulletType: .red, position: CGPoint(x: position.x - 30, y: position.y - 30))
+            let leftBullet = Bullet(bulletType: .red,
+                                    bulletLevel: level,
+                                    position: CGPoint(x: position.x - 30, y: position.y - 30))
             leftBullet.run(moveToTop)
             self?.delegate?.addBullet(bullet: leftBullet)
 
             if self?.level == .two {
                 return
             }
-            let rightBullet = Bullet(bulletType: .red, position: CGPoint(x: position.x + 30, y: position.y - 30))
+            let rightBullet = Bullet(bulletType: .red,
+                                     bulletLevel: level,
+                                     position: CGPoint(x: position.x + 30, y: position.y - 30))
             rightBullet.run(moveToTop)
             self?.delegate?.addBullet(bullet: rightBullet)
         }
