@@ -74,7 +74,7 @@ extension PurpleShip: SpaceShip {
     func touchViewBegin(touchedViewFrame frame: CGRect) {
         bulletTimer?.invalidate()
         let moveToTop = SKAction.sequence([
-            SKAction.moveTo(y: frame.height + 10, duration: 0.3),
+            SKAction.moveTo(y: frame.height + 10, duration: 0.6),
             SKAction.removeFromParent()
         ])
         let bullet = Bullet(bulletType: .purple, bulletLevel: level, position: position)
