@@ -73,16 +73,27 @@ extension SilverShip: SpaceShip {
 
     func touchViewBegin(touchedViewFrame frame: CGRect) {
         bulletTimer?.invalidate()
+        let duration: Double
+        switch level {
+        case .one:
+            duration = 3.0
+        case .two:
+            duration = 2.0
+        case .three:
+            duration = 1.0
+        }
         let moveToTop = SKAction.sequence([
-            SKAction.moveTo(y: frame.height + 10, duration: 0.3),
+            SKAction.moveTo(y: frame.height + 10, duration: duration),
             SKAction.removeFromParent()
         ])
+        moveToTop.timingMode = .easeIn
+        let transformHuge = SKAction.scale(by: 3, duration: duration)
         let bullet = Bullet(bulletType: .silver, bulletLevel: level, position: position)
-        bullet.run(moveToTop)
+        bullet.run(.group([moveToTop, transformHuge]))
         delegate?.addBullet(bullet: bullet)
-        bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self, level] _ in
+        bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.6, repeats: true) { [weak self, level] _ in
             let bullet = Bullet(bulletType: .silver, bulletLevel: level, position: self?.position ?? .zero)
-            bullet.run(moveToTop)
+            bullet.run(.group([moveToTop, transformHuge]))
             self?.delegate?.addBullet(bullet: bullet)
         }
     }
