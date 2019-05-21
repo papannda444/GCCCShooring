@@ -74,13 +74,13 @@ extension PinkShip: SpaceShip {
     func touchViewBegin(touchedViewFrame frame: CGRect) {
         bulletTimer?.invalidate()
         let moveToTop = SKAction.sequence([
-            SKAction.moveTo(y: frame.height + 10, duration: 0.3),
+            SKAction.moveTo(y: frame.height + 10, duration: 0.4),
             SKAction.removeFromParent()
         ])
         let bullet = Bullet(bulletType: .pink, bulletLevel: level, position: position)
         bullet.run(moveToTop)
         delegate?.addBullet(bullet: bullet)
-        bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self, level] _ in
+        bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { [weak self, level] _ in
             let bullet = Bullet(bulletType: .pink, bulletLevel: level, position: self?.position ?? .zero)
             bullet.run(moveToTop)
             self?.delegate?.addBullet(bullet: bullet)
