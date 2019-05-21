@@ -91,7 +91,7 @@ extension SilverShip: SpaceShip {
         let bullet = Bullet(bulletType: .silver, bulletLevel: level, position: position)
         bullet.run(.group([moveToTop, transformHuge]))
         delegate?.addBullet(bullet: bullet)
-        bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.6, repeats: true) { [weak self, level] _ in
+        bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self, level] _ in
             let bullet = Bullet(bulletType: .silver, bulletLevel: level, position: self?.position ?? .zero)
             bullet.run(.group([moveToTop, transformHuge]))
             self?.delegate?.addBullet(bullet: bullet)

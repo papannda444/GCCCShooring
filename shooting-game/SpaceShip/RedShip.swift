@@ -80,7 +80,7 @@ extension RedShip: SpaceShip {
         let bullet = Bullet(bulletType: .red, bulletLevel: level, position: position)
         bullet.run(moveToTop)
         delegate?.addBullet(bullet: bullet)
-        bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self, level] _ in
+        bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { [weak self, level] _ in
             guard let position = self?.position else {
                 return
             }
