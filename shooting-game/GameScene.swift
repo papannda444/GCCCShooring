@@ -48,8 +48,7 @@ class GameScene: SKScene {
     let itemTypes: [PowerItem.ItemType] = [
         .speed, .speed, .speed,
         .stone, .stone, .stone,
-        .heal, .heal, //回復アイテムの出現率低め
-        .level, .level //レベルアップアイテムの出現率低め
+        .heal, .heal //回復アイテムの出現率低め
     ]
 
     let spaceshipCategory: UInt32   = 0b00001
@@ -256,7 +255,7 @@ extension GameScene: SpaceShipDelegate {
     }
 
     func addBullet(bullet: SKSpriteNode) {
-        bullet.setPhysicsBody(categoryBitMask: bulletCategory, contactTestBitMask: enemyCategory + powerItemCategory)
+        bullet.setPhysicsBody(categoryBitMask: bulletCategory, contactTestBitMask: enemyCategory)
         pausedScene.addChild(bullet)
     }
 
@@ -315,7 +314,12 @@ extension GameScene: EnemyDelegate {
         pausedScene.addChild(bullet)
     }
 
-    func killedEnemy(score: Int) {
+    func killedEnemy(_ enemy: Enemy, score: Int) {
+        if Float.random(in: 0 ... 1) < 0.075 {
+            let powerUpItem = PowerItem(itemType: .level, addedViewFrame: frame)
+            powerUpItem.position = (enemy as? SKSpriteNode)?.position ?? .zero
+            addPowerItem(powerUpItem)
+        }
         self.score += score
     }
 }

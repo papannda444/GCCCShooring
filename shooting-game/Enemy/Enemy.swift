@@ -11,7 +11,7 @@ import SpriteKit
 
 protocol EnemyDelegate: AnyObject {
     func enemyAttack(bullet: EnemyBullet)
-    func killedEnemy(score: Int)
+    func killedEnemy(_: Enemy, score: Int)
 }
 
 protocol Enemy: AnyObject {
@@ -142,7 +142,7 @@ extension Enemy where Self: SKSpriteNode {
                 explosion.removeFromParent()
             }
             removeFromParent()
-            delegate?.killedEnemy(score: killPoint)
+            delegate?.killedEnemy(self, score: killPoint)
         }
     }
 }
