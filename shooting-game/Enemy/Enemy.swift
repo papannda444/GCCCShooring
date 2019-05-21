@@ -131,12 +131,13 @@ extension Enemy where Self: SKSpriteNode {
         ])
         run(blink, withKey: "blink")
 
-        if hitPoint == 0 {
-            guard let explosion = SKEmitterNode(fileNamed: "Explosion") else {
-                return
+        if hitPoint < 0 {
+            guard let explosion = SKEmitterNode(fileNamed: "Explosion"),
+                self.parent != nil else {
+                    return
             }
             explosion.position = position
-            self.parent?.addChild(explosion)
+            parent?.addChild(explosion)
             explosion.run(SKAction.wait(forDuration: 1.0)) {
                 explosion.removeFromParent()
             }
