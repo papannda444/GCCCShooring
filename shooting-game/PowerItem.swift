@@ -31,7 +31,7 @@ class PowerItem: SKSpriteNode {
         let positionX = viewFrame.width * (CGFloat.random(in: 0...1) - 0.5)
         position = CGPoint(x: positionX, y: viewFrame.height / 2 + self.frame.height)
 
-        run(.moveTo(y: -viewFrame.height / 2 - frame.height, duration: 5.0)) {
+        run(.moveBy(x: 0, y: -viewFrame.height - 100, duration: 5.0)) {
             self.removeFromParent()
         }
     }
