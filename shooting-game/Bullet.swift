@@ -59,8 +59,13 @@ class Bullet: SKSpriteNode {
 
     func contact(enemy: Enemy) {
         enemy.damaged()
-        if type == .purple {
+        switch type {
+        case .purple:
             enemy.poisoning(level: level.rawValue)
+        case .silver:
+            return
+        default:
+            break
         }
         removeFromParent()
     }
