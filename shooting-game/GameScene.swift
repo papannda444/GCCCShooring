@@ -51,11 +51,12 @@ class GameScene: SKScene {
         .heal, .heal //回復アイテムの出現率低め
     ]
 
-    let spaceshipCategory: UInt32   = 0b00001
-    let bulletCategory: UInt32      = 0b00010
-    let powerItemCategory: UInt32   = 0b00100
-    let enemyCategory: UInt32       = 0b01000
-    let enemyBulletCategory: UInt32 = 0b10000
+    let spaceshipCategory: UInt32   = 0b000001
+    let bulletCategory: UInt32      = 0b000010
+    let powerItemCategory: UInt32   = 0b000100
+    let warpCategory: UInt32        = 0b001000
+    let enemyCategory: UInt32       = 0b010000
+    let enemyBulletCategory: UInt32 = 0b100000
 
     override func didMove(to view: SKView) {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
@@ -75,10 +76,13 @@ class GameScene: SKScene {
         case .silver:
             spaceShip = SilverShip(moveSpeed: 1, displayViewFrame: frame)
         case .pink:
-            spaceShip = PinkShip(moveSpeed: 1, displayViewFrame: frame)
+            spaceShip = PinkShip(moveSpeed: 0, displayViewFrame: frame)
         }
         spaceShip.delegate = self
         spaceShip.setHitPoint(hitPoint: 5)
+        if let pink = spaceShip as? PinkShip {
+            pink.setWarps()
+        }
         spaceShip.setPhysicsBody(categoryBitMask: spaceshipCategory, contactTestBitMask: enemyCategory + enemyBulletCategory + powerItemCategory)
         pausedScene.addChild(spaceShip as! SKNode)
 
@@ -128,7 +132,7 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if pausedScene.isPaused { gameSceneClose() }
         touchPosition = convertPoint(fromView: touches.first!.location(in: view))
-        spaceShip.touchViewBegin(touchedViewFrame: frame)
+        spaceShip.touchViewBegin(touchPosition: touchPosition!, touchedViewFrame: frame)
     }
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -337,7 +341,7 @@ extension GameScene: SKPhysicsContactDelegate {
         var shipContent: SKPhysicsBody
         var affectToShip: SKPhysicsBody
 
-        if contact.bodyA.categoryBitMask & (spaceshipCategory | bulletCategory) != 0 {
+        if contact.bodyA.categoryBitMask & (spaceshipCategory | bulletCategory | warpCategory) != 0 {
             shipContent = contact.bodyA
             affectToShip = contact.bodyB
         } else {
@@ -346,20 +350,22 @@ extension GameScene: SKPhysicsContactDelegate {
         }
 
         if let item = affectToShip.node as? PowerItem {
-            affectToShip.node?.removeFromParent()
-            if let bullet = shipContent.node as? Bullet {
-                bullet.removeFromParent()
+            item.removeFromParent()
+            if let pink = spaceShip as? PinkShip,
+                shipContent.categoryBitMask == warpCategory {
+                shipContent.node?.removeFromParent()
+                pink.reuseWarp()
             }
             spaceShip.powerUp(itemType: item.type)
             return
         }
 
         if let ship = shipContent.node as? SpaceShip {
-            if let enemyBullet = affectToShip.node as? EnemyBullet {
-                enemyBullet.removeFromParent()
-                ship.damaged()
-            } else if let enemy = affectToShip.node as? Enemy {
+            (affectToShip.node as? EnemyBullet)?.removeFromParent()
+            if let enemy = affectToShip.node as? Enemy {
                 ship.damaged(enemy)
+            } else {
+                ship.damaged()
             }
         } else if let bullet = shipContent.node as? Bullet {
             if let enemy = affectToShip.node as? Enemy {
@@ -367,6 +373,17 @@ extension GameScene: SKPhysicsContactDelegate {
             } else {
                 bullet.removeFromParent()
             }
+        } else if let pink = spaceShip as? PinkShip,
+            let warp = shipContent.node {
+            if let enemy = affectToShip.node as? Enemy {
+                enemy.damaged(Int.max)
+                spaceShip.powerUp(itemType: .heal)
+            } else if let enemyBullet = affectToShip.node as? EnemyBullet {
+                enemyBullet.removeFromParent()
+                score += 1
+            }
+            warp.removeFromParent()
+            pink.reuseWarp()
         }
     }
 }

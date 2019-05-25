@@ -55,7 +55,19 @@ extension SpaceShip {
         return self.state == state
     }
 
+    func touchViewBegin(touchPosition position: CGPoint, touchedViewFrame frame: CGRect) {
+        switch self {
+        case let pink as PinkShip:
+            pink.touchViewBegin(touchPosition: position)
+        default:
+            touchViewBegin(touchedViewFrame: frame)
+        }
+    }
+
     func touchViewEnd() {
+        if self is PinkShip {
+            return
+        }
         bulletTimer?.invalidate()
     }
 
