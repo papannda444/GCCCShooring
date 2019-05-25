@@ -9,8 +9,12 @@
 import Foundation
 import SpriteKit
 
+enum DisplayNodes {
+    case heart, warp
+}
+
 protocol SpaceShipDelegate: AnyObject {
-    func displayHeart(hearts: [SKSpriteNode])
+    func displayNodes(kind: DisplayNodes, nodes: [SKSpriteNode])
     func addBullet(bullet: SKSpriteNode)
     func updateShipState(statusTexture: SKTexture?)
     func levelUpShip(level: SpaceShipLevel)
@@ -44,7 +48,7 @@ extension SpaceShip {
             heart.scale(to: CGSize(width: 70, height: 70))
             hearts.append(heart)
         }
-        delegate?.displayHeart(hearts: hearts)
+        delegate?.displayNodes(kind: .heart, nodes: hearts)
     }
 
     func isShipState(equal state: SpaceShipState) -> Bool {
@@ -94,7 +98,7 @@ extension SpaceShip where Self: SKSpriteNode {
             let heart = SKSpriteNode(imageNamed: "heart")
             heart.scale(to: CGSize(width: 70, height: 70))
             hearts.append(heart)
-            delegate?.displayHeart(hearts: hearts)
+            delegate?.displayNodes(kind: .heart, nodes: hearts)
         case .level:
             level.levelUp()
 
@@ -104,7 +108,7 @@ extension SpaceShip where Self: SKSpriteNode {
             let heart = SKSpriteNode(imageNamed: "heart")
             heart.scale(to: CGSize(width: 70, height: 70))
             hearts.append(heart)
-            delegate?.displayHeart(hearts: hearts)
+            delegate?.displayNodes(kind: .heart, nodes: hearts)
         }
     }
 }

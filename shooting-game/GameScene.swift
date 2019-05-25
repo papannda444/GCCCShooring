@@ -244,13 +244,21 @@ class GameScene: SKScene {
 }
 
 extension GameScene: SpaceShipDelegate {
-    func displayHeart(hearts: [SKSpriteNode]) {
-        for (index, heart) in hearts.enumerated() {
-            if heart.inParentHierarchy(self) {
+    func displayNodes(kind: DisplayNodes, nodes: [SKSpriteNode]) {
+        for (index, node) in nodes.enumerated() {
+            if node.inParentHierarchy(self) {
                 continue
             }
-            heart.position = CGPoint(x: -frame.width / 2 + heart.frame.height * CGFloat(index + 1), y: frame.height / 2 - heart.frame.height)
-            addChild(heart)
+            switch kind {
+            case .heart:
+                node.position = CGPoint(x: -frame.width / 2 + node.frame.height * CGFloat(index + 1),
+                                        y: frame.height / 2 - node.frame.height)
+            case .warp:
+                node.position = CGPoint(x: -frame.width / 2 + node.frame.height * CGFloat(index + 1),
+                                        y: frame.height / 2 - node.frame.height * 3)
+                node.setPhysicsBody(categoryBitMask: warpCategory)
+            }
+            addChild(node)
         }
     }
 
