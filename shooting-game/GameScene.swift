@@ -27,6 +27,9 @@ class GameScene: SKScene {
     var enemyTimer: Timer?
     var powerItemTimer: Timer?
 
+    var touchEndGameTimer: Timer?
+    var isTouchEndGame: Bool = false
+
     var score: Int = 0 {
         didSet {
             scoreLabel?.text = "Score: \(score)"
@@ -130,7 +133,12 @@ class GameScene: SKScene {
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if pausedScene.isPaused { gameSceneClose() }
+        if pausedScene.isPaused {
+            if !isTouchEndGame {
+                return
+            }
+            gameSceneClose()
+        }
         touchPosition = convertPoint(fromView: touches.first!.location(in: view))
         spaceShip.touchViewBegin(touchPosition: touchPosition!, touchedViewFrame: frame)
     }
@@ -160,6 +168,9 @@ class GameScene: SKScene {
         enemyTimer?.invalidate()
         powerItemTimer?.invalidate()
         gameClearTimer?.invalidate()
+        touchEndGameTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [weak self] _ in
+            self?.isTouchEndGame = true
+        }
         pausedScene.children.compactMap { $0 as? Enemy }.forEach { $0.invalidateAttackTimer() }
         pausedScene.children.compactMap { $0 as? EnemyBullet }.forEach { $0.moveTimer?.invalidate() }
         let bestScore = UserDefaults.standard.integer(forKey: "bestScore")
