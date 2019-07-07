@@ -32,6 +32,7 @@
 		DC1187C8223638E200524E4B /* EnemyBullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1187C7223638E200524E4B /* EnemyBullet.swift */; };
 		DC1187CA22368FCC00524E4B /* SpaceShipLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1187C922368FCC00524E4B /* SpaceShipLevel.swift */; };
 		DC1F6C0421D0A8DB000E2878 /* PowerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1F6C0321D0A8DB000E2878 /* PowerItem.swift */; };
+		DC5784FE22D2449900D15A70 /* BlueEnemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5784FD22D2449900D15A70 /* BlueEnemy.swift */; };
 		DC9CBC38221104E200BEA075 /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9CBC37221104E200BEA075 /* Bullet.swift */; };
 		DC9CBC3C221118AA00BEA075 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9CBC3B221118AA00BEA075 /* Enemy.swift */; };
 		DCBA1D1321CF3EE20046AB45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBA1D1221CF3EE20046AB45 /* AppDelegate.swift */; };
@@ -73,6 +74,7 @@
 		DC1187C7223638E200524E4B /* EnemyBullet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyBullet.swift; sourceTree = "<group>"; };
 		DC1187C922368FCC00524E4B /* SpaceShipLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceShipLevel.swift; sourceTree = "<group>"; };
 		DC1F6C0321D0A8DB000E2878 /* PowerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerItem.swift; sourceTree = "<group>"; };
+		DC5784FD22D2449900D15A70 /* BlueEnemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueEnemy.swift; sourceTree = "<group>"; };
 		DC9CBC37221104E200BEA075 /* Bullet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
 		DC9CBC3B221118AA00BEA075 /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 		DCBA1D0F21CF3EE20046AB45 /* shooting-game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "shooting-game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +135,7 @@
 			children = (
 				DC9CBC3B221118AA00BEA075 /* Enemy.swift */,
 				DC00F8C1222D1A9B00C86005 /* RedEnemy.swift */,
+				DC5784FD22D2449900D15A70 /* BlueEnemy.swift */,
 				DC00F8C3222D1AA500C86005 /* YellowEnemy.swift */,
 				DC00F8BF222D18E900C86005 /* EnemyState.swift */,
 				DC00F8BD222D188800C86005 /* EnemyType.swift */,
@@ -322,6 +325,7 @@
 				DC00F8B4222C0E1900C86005 /* YellowShip.swift in Sources */,
 				DC00F8AC222BFEEF00C86005 /* SpaceShipState.swift in Sources */,
 				DC00F8C2222D1A9B00C86005 /* RedEnemy.swift in Sources */,
+				DC5784FE22D2449900D15A70 /* BlueEnemy.swift in Sources */,
 				DC00F8AE222C002300C86005 /* RedShip.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

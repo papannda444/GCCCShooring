@@ -47,7 +47,7 @@ class GameScene: SKScene {
     let pausedScene = SKNode()
     let nonPausedScene = SKNode()
 
-    let enemyTypes: [EnemyType] = [.red, .yellow]
+    let enemyTypes: [EnemyType] = [.red, .yellow, .blue]
     let itemTypes: [PowerItem.ItemType] = [
         .speed, .speed, .speed,
         .stone, .stone, .stone,
@@ -240,7 +240,7 @@ class GameScene: SKScene {
             enemy = YellowEnemy(moveSpeed: 2, displayViewFrame: frame)
             enemy.setHitPoint(hitPoint: 3)
         case .blue:
-            enemy = RedEnemy(moveSpeed: 2, displayViewFrame: frame)
+            enemy = BlueEnemy(moveSpeed: 2, displayViewFrame: frame)
             enemy.setHitPoint(hitPoint: 3)
         }
         enemy.delegate = self
