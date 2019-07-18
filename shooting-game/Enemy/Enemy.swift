@@ -12,6 +12,7 @@ import SpriteKit
 protocol EnemyDelegate: AnyObject {
     func enemyAttack(bullet: EnemyBullet)
     func killedEnemy(_: Enemy, score: Int)
+    func scoreUp(of point: Int)
 }
 
 protocol Enemy: AnyObject {
@@ -127,6 +128,7 @@ extension Enemy {
 extension Enemy where Self: SKSpriteNode {
     func damaged(_ damage: Int) {
         hitPoint -= damage
+        delegate?.scoreUp(of: damage)
         let blink = SKAction.sequence([
             SKAction.fadeAlpha(to: 0.0, duration: 0.05),
             SKAction.fadeAlpha(to: 1.0, duration: 0.05)
