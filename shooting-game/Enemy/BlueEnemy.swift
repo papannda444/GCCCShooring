@@ -18,7 +18,8 @@ class BlueEnemy: SKSpriteNode {
     var firstAttackTimer: Timer?
     var secondAttackTimer: Timer?
     var poisonDamageTimer: Timer?
-    var killPoint: Int = 5
+    var pointTimer: Timer?
+    var killPoint: Int = 10
 
     convenience init(moveSpeed: CGFloat, displayViewFrame frame: CGRect) {
         let texture = SKTexture(imageNamed: EnemyType.blue.rawValue)
@@ -31,6 +32,12 @@ class BlueEnemy: SKSpriteNode {
         secondAttackTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [weak self] _ in
             let bullet = EnemyBullet(enemyType: .blue, position: self?.position ?? .zero, displayedViewFrame: frame)
             self?.delegate?.enemyAttack(bullet: bullet)
+        }
+        pointTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            self?.killPoint -= 2
+            if self?.killPoint ?? 0 <= 4 {
+                self?.pointTimer?.invalidate()
+            }
         }
     }
 

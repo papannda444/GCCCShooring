@@ -171,7 +171,7 @@ class GameScene: SKScene {
         touchEndGameTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [weak self] _ in
             self?.isTouchEndGame = true
         }
-        pausedScene.children.compactMap { $0 as? Enemy }.forEach { $0.invalidateAttackTimer() }
+        pausedScene.children.compactMap { $0 as? Enemy }.forEach { $0.invalidateTimer() }
         pausedScene.children.compactMap { $0 as? EnemyBullet }.forEach { $0.moveTimer?.invalidate() }
         let bestScore = UserDefaults.standard.integer(forKey: "bestScore")
         if score > bestScore {
