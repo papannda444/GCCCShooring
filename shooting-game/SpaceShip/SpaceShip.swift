@@ -20,6 +20,7 @@ protocol SpaceShipDelegate: AnyObject {
     func levelUpShip(level: SpaceShipLevel)
     func lostAllHearts()
     func startSpecialAttack(spaceShip: SpaceShip)
+    func scoreUp(of point: Int)
 }
 
 protocol SpaceShip: AnyObject {

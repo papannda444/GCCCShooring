@@ -12,6 +12,7 @@ import SpriteKit
 protocol EnemyDelegate: AnyObject {
     func enemyAttack(bullet: EnemyBullet)
     func killedEnemy(_: Enemy, score: Int)
+    func scoreUp(of point: Int)
 }
 
 protocol Enemy: AnyObject {
@@ -21,13 +22,14 @@ protocol Enemy: AnyObject {
     var hitPoint: Int { get set }
     var firstAttackTimer: Timer? { get set }
     var secondAttackTimer: Timer? { get set }
+    var pointTimer: Timer? { get set }
     var killPoint: Int { get set }
     var poisonDamageTimer: Timer? { get set }
 
     func setPhysicsBody(categoryBitMask: UInt32)
     func startMove()
     func damaged(_ damege: Int)
-    func invalidateAttackTimer()
+    func invalidateTimer()
 }
 
 extension Enemy {
@@ -96,9 +98,10 @@ extension Enemy {
         return self.state == state
     }
 
-    func invalidateAttackTimer() {
+    func invalidateTimer() {
         firstAttackTimer?.invalidate()
         secondAttackTimer?.invalidate()
+        pointTimer?.invalidate()
     }
 
     func poisoning(level: Int) {
@@ -125,6 +128,7 @@ extension Enemy {
 extension Enemy where Self: SKSpriteNode {
     func damaged(_ damage: Int) {
         hitPoint -= damage
+        delegate?.scoreUp(of: damage)
         let blink = SKAction.sequence([
             SKAction.fadeAlpha(to: 0.0, duration: 0.05),
             SKAction.fadeAlpha(to: 1.0, duration: 0.05)
@@ -143,6 +147,7 @@ extension Enemy where Self: SKSpriteNode {
             }
             removeFromParent()
             delegate?.killedEnemy(self, score: killPoint)
+            invalidateTimer()
         }
     }
 }
