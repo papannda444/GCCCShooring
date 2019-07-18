@@ -337,6 +337,10 @@ extension GameScene: SpaceShipDelegate {
             break
         }
     }
+
+    func scoreUp(of point: Int) {
+        self.score += point
+    }
 }
 
 extension GameScene: EnemyDelegate {

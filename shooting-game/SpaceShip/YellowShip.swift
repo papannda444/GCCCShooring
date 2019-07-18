@@ -62,6 +62,7 @@ extension YellowShip: SpaceShip {
     func damaged(_ enemy: Enemy? = nil) {
         if isShipState(equal: .stone) {
             enemy?.damaged()
+            delegate?.scoreUp(of: 1)
             return
         }
         if isSparkBombUsed {
