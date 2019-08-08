@@ -46,6 +46,8 @@
 		DCBA1D3B21CF5EFC0046AB45 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = DCBA1D3921CF5EFC0046AB45 /* Explosion.sks */; };
 		DCBA1D3C21CF5EFC0046AB45 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCBA1D3A21CF5EFC0046AB45 /* Assets.xcassets */; };
 		DCBA1D3E21CF925C0046AB45 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBA1D3D21CF925C0046AB45 /* TopViewController.swift */; };
+		DCC33FF622FC75B300927BD6 /* GameAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC33FF522FC75B300927BD6 /* GameAudio.swift */; };
+		DCC33FF922FC793B00927BD6 /* shooting-BGM.wav in Resources */ = {isa = PBXBuildFile; fileRef = DCC33FF822FC793B00927BD6 /* shooting-BGM.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +92,8 @@
 		DCBA1D3921CF5EFC0046AB45 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
 		DCBA1D3A21CF5EFC0046AB45 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DCBA1D3D21CF925C0046AB45 /* TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
+		DCC33FF522FC75B300927BD6 /* GameAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameAudio.swift; sourceTree = "<group>"; };
+		DCC33FF822FC793B00927BD6 /* shooting-BGM.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "shooting-BGM.wav"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,7 +192,9 @@
 				DC1F6C0321D0A8DB000E2878 /* PowerItem.swift */,
 				DC00F8A8222BF72C00C86005 /* SpaceShip */,
 				DC00F8BC222D177B00C86005 /* Enemy */,
+				DCC33FF722FC791A00927BD6 /* GameSounds */,
 				DCBA1D1A21CF3EE20046AB45 /* GameViewController.swift */,
+				DCC33FF522FC75B300927BD6 /* GameAudio.swift */,
 				DCBA1D3D21CF925C0046AB45 /* TopViewController.swift */,
 				DCBA1D1C21CF3EE20046AB45 /* Main.storyboard */,
 				DCBA1D1F21CF3EE30046AB45 /* Assets.xcassets */,
@@ -196,6 +202,14 @@
 				DCBA1D2421CF3EE30046AB45 /* Info.plist */,
 			);
 			path = "shooting-game";
+			sourceTree = "<group>";
+		};
+		DCC33FF722FC791A00927BD6 /* GameSounds */ = {
+			isa = PBXGroup;
+			children = (
+				DCC33FF822FC793B00927BD6 /* shooting-BGM.wav */,
+			);
+			path = GameSounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,6 +282,7 @@
 				DC1187C62235608300524E4B /* ConfettiOrange.sks in Resources */,
 				DCBA1D3C21CF5EFC0046AB45 /* Assets.xcassets in Resources */,
 				DC1187BB22355EE800524E4B /* ConfettiBlue.sks in Resources */,
+				DCC33FF922FC793B00927BD6 /* shooting-BGM.wav in Resources */,
 				DCBA1D2321CF3EE30046AB45 /* LaunchScreen.storyboard in Resources */,
 				DCBA1D1721CF3EE20046AB45 /* Actions.sks in Resources */,
 				DC1187C222355FD100524E4B /* ConfettiRed.sks in Resources */,
@@ -326,6 +341,7 @@
 				DC00F8AC222BFEEF00C86005 /* SpaceShipState.swift in Sources */,
 				DC00F8C2222D1A9B00C86005 /* RedEnemy.swift in Sources */,
 				DC5784FE22D2449900D15A70 /* BlueEnemy.swift in Sources */,
+				DCC33FF622FC75B300927BD6 /* GameAudio.swift in Sources */,
 				DC00F8AE222C002300C86005 /* RedShip.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
