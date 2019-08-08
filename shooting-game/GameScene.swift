@@ -400,7 +400,7 @@ extension GameScene: SKPhysicsContactDelegate {
         } else if let pink = spaceShip as? PinkShip,
             let warp = shipContent.node {
             if let enemy = affectToShip.node as? Enemy {
-                enemy.damaged(Int.max)
+                enemy.kill()
                 spaceShip.powerUp(itemType: .heal)
             } else if let enemyBullet = affectToShip.node as? EnemyBullet {
                 enemyBullet.removeFromParent()

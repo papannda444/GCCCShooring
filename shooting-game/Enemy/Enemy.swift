@@ -41,6 +41,10 @@ extension Enemy {
         self.damaged(1)
     }
 
+    func kill() {
+        damaged(hitPoint + 1)
+    }
+
     func createEnemyMovement(displayViewFrame frame: CGRect) {
         let positionX = frame.width * (CGFloat.random(in: 0...1) - 0.5)
         var path = CGMutablePath()
