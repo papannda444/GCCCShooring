@@ -6,15 +6,18 @@
 //  Copyright © 2018 三野田脩. All rights reserved.
 //
 
+import AVFoundation
 import GameplayKit
 import SpriteKit
 import UIKit
 
 class GameViewController: UIViewController {
     var shipType = SpaceShipType()
+    var audioPlayer: AVAudioPlayer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        playSound(resource: .bgm, numberOfLoops: -1)
 
         guard let view = self.view as? SKView else {
             return
@@ -26,6 +29,7 @@ class GameViewController: UIViewController {
         if let gameScene = scene as? GameScene {
             gameScene.gameSceneClose = {
                 self.dismiss(animated: false, completion: nil)
+                self.stopSound()
             }
             gameScene.shipType = shipType
         }
@@ -54,5 +58,22 @@ class GameViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+}
+
+extension GameViewController: AVAudioPlayerDelegate {
+    func playSound(resource: GameAudio, volume: Float = 1.0, numberOfLoops: Int = 0) {
+        guard let path = Bundle.main.path(forResource: resource.fileName, ofType: resource.fileType) else {
+            return
+        }
+        audioPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+        audioPlayer?.delegate = self
+        audioPlayer?.play()
+        audioPlayer?.volume = volume
+        audioPlayer?.numberOfLoops = numberOfLoops
+    }
+
+    func stopSound() {
+        audioPlayer?.stop()
     }
 }
